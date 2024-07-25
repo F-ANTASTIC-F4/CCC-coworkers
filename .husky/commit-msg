@@ -88,7 +88,7 @@ BRANCH_NAME=${BRANCH_NAME##*/} # Remove everything before the last /
 ISSUE_TICKET=$(echo "$BRANCH_NAME" | sed -n 's/^\([A-Z]*-[0-9]*\)-\(.*\)$/\1/p')
 
 if [ -n "$ISSUE_TICKET" ]; then
-  COMMIT_MSG="$ISSUE_TICKET $COMMIT_MSG"
+  COMMIT_MSG="$COMMIT_MSG (Jira Ticket : $ISSUE_TICKET)"
   echo "          Jira 티켓 번호: $ISSUE_TICKET / emoji $EMOJI      "
 else
   echo "            Jira 티켓 번호: ⚠️ 없어요 ⚠️ / emoji $EMOJI      "

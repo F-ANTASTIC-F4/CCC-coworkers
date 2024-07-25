@@ -1,0 +1,9 @@
+echo "🔍 푸시 전에 타입 검사 및 린트 규칙을 적용합니다..."
+
+pnpm run build
+if [ $? -ne 0 ]; then
+  echo "❌ 빌드에 실패했습니다. 오류를 수정한 후 다시 시도하세요."
+  exit 1
+fi
+
+echo "  ✅ git push에 성공했습니다.  "
