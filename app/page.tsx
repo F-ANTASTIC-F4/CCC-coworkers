@@ -1,4 +1,7 @@
+'use client';
+
 import ThemeToggle from '@/components/ThemeToggle';
+import { PasswordInput } from '@/components/ui/PasswordInput';
 import { Input } from '@/components/ui/input';
 import EyeIcon from '@/public/icons/visibility_on.svg';
 
@@ -22,6 +25,7 @@ export default function Home() {
       </div>
       <EyeIcon className="size-[200px]" fill="red" />
       <Input />
+      <PasswordInput />
     </div>
   );
 }
