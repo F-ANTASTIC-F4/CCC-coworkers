@@ -8,13 +8,13 @@ export default function Modal({
   children,
   setOpen,
   className = '',
-  isCloseIcon = false,
+  hasCloseIcon = false,
   setClose,
 }: {
   children: React.ReactNode;
   setOpen: boolean;
   className?: string;
-  isCloseIcon?: boolean;
+  hasCloseIcon?: boolean;
   setClose: () => void;
 }) {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -61,7 +61,7 @@ export default function Modal({
         className={`fixed bottom-0 flex h-fit w-full max-w-[384px] flex-col items-center justify-center rounded-tl-[24px] rounded-tr-[24px] bg-customBackground-secondary px-[16px] pb-[32px] ${isCloseIcon ? 'pt-[16px]' : 'pt-[32px]'} mobileAnimation md:otherAnimation md:static md:rounded-xl ${className} gap-[24px]`}
         ref={modalRef}
       >
-        {isCloseIcon && (
+        {hasCloseIcon && (
           <CloseICon className="ml-auto cursor-pointer" onClick={setClose} />
         )}
         {children}
