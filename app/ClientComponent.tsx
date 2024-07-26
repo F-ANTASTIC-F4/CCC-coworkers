@@ -12,7 +12,7 @@ function ClientComponent() {
       <button type="button" onClick={setOn}>
         모달
       </button>
-      <Modal setOpen={modalState} setClose={setOff} isCloseIcon>
+      <Modal setOpen={modalState} setClose={setOff}>
         <h1 className="text-[30px]">할 일 추가</h1>
         <input
           type="text"
