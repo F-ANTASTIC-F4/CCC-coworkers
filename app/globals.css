@@ -67,3 +67,33 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .mobileAnimation {
+    animation: popupIn 0.1s linear;
+  }
+  @keyframes popupIn {
+    0% {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .otherAnimation {
+    animation: modalIn 0.15s linear;
+  }
+  @keyframes modalIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
