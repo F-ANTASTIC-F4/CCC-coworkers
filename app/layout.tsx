@@ -1,6 +1,8 @@
 import ThemeProvider from '@/components/theme-provider';
+import Logo from '@/public/icons/logo_coworkers.svg';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import Link from 'next/link';
 
 import './globals.css';
 
@@ -29,6 +31,17 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <nav className="flex h-[60px] items-center bg-background-secondary">
+            <div className="flex h-full w-full items-center justify-between px-4 py-5 xl:mx-auto xl:w-[1200px] xl:p-0">
+              <Link href="/">
+                {/* REVIEW - svgr vs Nextjs Image 태그 */}
+                <Logo className="h-[20px] w-[102px] xl:h-[32px] xl:w-[158px]" />
+              </Link>
+              <Link href="/test" className="text-base font-semibold">
+                로그인
+              </Link>
+            </div>
+          </nav>
           {children}
         </ThemeProvider>
       </body>
