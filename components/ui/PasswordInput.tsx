@@ -1,3 +1,5 @@
+'use client';
+
 import cn from '@/lib/utils';
 import HidePasswordIcon from '@/public/icons/visibility_off.svg';
 import ShowPasswordIcon from '@/public/icons/visibility_on.svg';
