@@ -1,6 +1,8 @@
 import ThemeToggle from '@/components/ThemeToggle';
 import EyeIcon from '@/public/icons/visibility_on.svg';
 
+import ClientComponent from './ClientComponent';
+
 export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center space-y-4 py-4">
@@ -20,6 +22,7 @@ export default function Home() {
         <p className="text-3xl font-black">안녕하세요</p>
       </div>
       <EyeIcon className="size-[200px]" fill="red" />
+      <ClientComponent />
     </div>
   );
 }
