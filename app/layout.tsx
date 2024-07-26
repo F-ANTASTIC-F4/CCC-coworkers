@@ -22,7 +22,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    // NOTE - suppressHydrationWarning 추가하여 Extra attributes 오류 해결
+    // https://github.com/vercel/next.js/discussions/22388
+    <html lang="en" suppressHydrationWarning>
       <body className={pretendardFont.className}>
         <ThemeProvider
           attribute="class"
