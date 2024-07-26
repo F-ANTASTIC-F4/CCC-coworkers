@@ -58,7 +58,7 @@ export default function Modal({
       onClick={handleClickOutToClose}
     >
       <div
-        className={`fixed bottom-0 flex h-fit w-full max-w-[384px] flex-col items-center justify-center rounded-tl-[24px] rounded-tr-[24px] bg-customBackground-secondary px-[16px] pb-[32px] ${isCloseIcon ? 'pt-[16px]' : 'pt-[32px]'} mobileAnimation md:otherAnimation md:static md:rounded-xl ${className} gap-[24px]`}
+        className={`fixed bottom-0 flex h-fit w-full max-w-[384px] flex-col items-center justify-center rounded-tl-[24px] rounded-tr-[24px] bg-customBackground-secondary px-[16px] pb-[32px] ${hasCloseIcon ? 'pt-[16px]' : 'pt-[32px]'} mobileAnimation md:otherAnimation md:static md:rounded-xl ${className} gap-[24px]`}
         ref={modalRef}
       >
         {hasCloseIcon && (
