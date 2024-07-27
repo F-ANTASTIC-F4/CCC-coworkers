@@ -8,13 +8,20 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import WarningIcon from '@/public/icons/modal/warning_icon.svg';
+import WithDrawIcon from '@/public/icons/modal/with_draw_icon.svg';
 import React from 'react';
 
-function WithDrawalModal({ ...props }) {
+function WithDrawalTemplete({ ...props }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button size="x-small">회원 탈퇴</Button>
+        <button
+          type="button"
+          className="text-danger flex items-center text-[14px] font-normal text-status-danger"
+        >
+          <WithDrawIcon />
+          &nbsp;회원 탈퇴하기
+        </button>
       </DialogTrigger>
       <DialogContent>
         <WarningIcon />
@@ -38,4 +45,4 @@ function WithDrawalModal({ ...props }) {
   );
 }
 
-export default WithDrawalModal;
+export default WithDrawalTemplete;
