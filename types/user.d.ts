@@ -40,13 +40,4 @@ declare module '@ccc-types' {
     groupId: Id;
     userId: Id;
   }
-
-  export type GroupCreateRequestBody = Pick<Group, 'image' | 'name'>;
-  export type GroupUpdateRequestBody = Partial<GroupCreateRequestBody>;
-  export type GroupAddMemberRequestBody = Pick<Member, 'userId'>;
-  // GET {id}/invitation으로 생성한 토큰으로, 초대를 수락하는 엔드포인트
-  export interface AcceptInvitedMemberDto {
-    userId: Id;
-    token: string;
-  }
 }

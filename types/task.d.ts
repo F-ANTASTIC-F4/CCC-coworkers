@@ -29,45 +29,4 @@ declare module '@ccc-types' {
     id: Id;
     tasks: string[];
   }
-
-  interface RecurringCreateBase {
-    name: string;
-    description?: string | null;
-    displayIndex?: number;
-    frequencyType: 'MONTHLY' | 'WEEKLY' | 'DAILY' | 'ONCE';
-  }
-
-  export interface MonthlyRecurringCreateRequestBody
-    extends RecurringCreateBase {
-    frequencyType: 'MONTHLY';
-    monthDay: number;
-  }
-
-  export interface WeeklyRecurringCreateRequestBody
-    extends RecurringCreateBase {
-    frequencyType: 'WEEKLY';
-    weekDays: number[];
-  }
-
-  export interface DailyRecurringCreateRequestBody extends RecurringCreateBase {
-    frequencyType: 'DAILY';
-    frequency: 1;
-  }
-
-  export interface OnceRecurringCreateRequestBody extends RecurringCreateBase {
-    frequencyType: 'ONCE';
-  }
-
-  export type TaskRecurringCreateRequestBody =
-    | MonthlyRecurringCreateRequestBody
-    | WeeklyRecurringCreateRequestBody
-    | DailyRecurringCreateRequestBody
-    | OnceRecurringCreateRequestBody;
-
-  export interface TaskUpdateRequestBody {
-    name?: string;
-    description?: string;
-    displayIndex?: number;
-    done?: boolean;
-  }
 }

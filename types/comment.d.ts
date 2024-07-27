@@ -10,8 +10,4 @@ declare module '@ccc-types' {
     content: string;
     id: Id;
   }
-
-  export type CommentCreateRequestBody = Pick<Comment, 'content'>;
-
-  export type CommentUpdateRequestBody = Partial<CommentCreateRequestBody>;
 }
