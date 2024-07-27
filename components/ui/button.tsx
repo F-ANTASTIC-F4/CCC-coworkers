@@ -19,7 +19,7 @@ const buttonVariants = cva(commonClasses.base, {
       default: `font-semibold ${commonClasses.hoverActiveDisabled}`,
       danger: 'bg-status-danger text-[16px] text-white',
       outlined: commonClasses.outlinedCommon,
-      floating: `${commonClasses.floatingCommon}`,
+      floating: commonClasses.floatingCommon,
       'floating-outlined': commonClasses.outlinedCommon,
     },
     size: {
