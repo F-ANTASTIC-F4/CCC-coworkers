@@ -1,29 +1,23 @@
 'use client';
 
-import Modal from '@/components/modal/Modal';
-import useModalToggle from '@/hooks/useModalToggle';
+import InviteMemberModal from '@/components/modal-templete/InviteMemberModal';
+import LogoutModal from '@/components/modal-templete/LogoutModal';
+import MakeTodoModal from '@/components/modal-templete/MakeTodoModal';
+import ResetPasswordModal from '@/components/modal-templete/ResetPasswordModal';
+import TodoListModal from '@/components/modal-templete/TodoListModal';
+import WithDrawalModal from '@/components/modal-templete/WithDrawalModal';
 import React from 'react';
 
 function ClientComponent() {
-  const { state: modalState, setOn, setOff } = useModalToggle();
-
   return (
-    <div>
-      <button type="button" onClick={setOn}>
-        모달
-      </button>
-      <Modal setOpen={modalState} setClose={setOff}>
-        <h1 className="text-[30px]">할 일 추가</h1>
-        <input
-          type="text"
-          placeholder="할일을 입력하세요"
-          className="h-[40px] w-full pl-3"
-        />
-        <button className="h-[20px] w-full" type="button">
-          확인
-        </button>
-      </Modal>
-    </div>
+    <>
+      <InviteMemberModal />
+      <LogoutModal />
+      <MakeTodoModal />
+      <ResetPasswordModal />
+      <TodoListModal />
+      <WithDrawalModal />
+    </>
   );
 }
 
