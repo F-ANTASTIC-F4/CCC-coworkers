@@ -6,11 +6,11 @@ export default {
   argTypes: {
     variant: {
       options: ['default', 'danger', 'outlined', 'floating'],
-      control: 'select',
+      control: 'radio',
     },
     size: {
       options: ['x-small', 'default', 'icon'],
-      control: 'select',
+      control: 'radio',
     },
     disabled: {
       control: 'boolean',
