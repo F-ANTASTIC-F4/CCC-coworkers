@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      screens: {
+        sm: { max: '767px' },
+      },
       colors: {
         brand: {
           primary: '#10B981',
