@@ -1,11 +1,11 @@
 'use client';
 
 import Modal from '@/components/modal/Modal';
-import useOnOff from '@/hooks/useOnOff';
+import useModalToggle from '@/hooks/useModalToggle';
 import React from 'react';
 
 function ClientComponent() {
-  const { state: modalState, setOn, setOff } = useOnOff();
+  const { state: modalState, setOn, setOff } = useModalToggle();
 
   return (
     <div>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function useOnOff() {
+export default function useModalToggle() {
   const [state, setState] = React.useState(false);
 
   const setOn = () => {
