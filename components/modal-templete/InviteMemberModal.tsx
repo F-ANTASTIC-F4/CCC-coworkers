@@ -12,7 +12,7 @@ import React from 'react';
 export default function InviteMemberModal({ ...props }) {
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <button
           type="button"
           className="text-[14px] font-normal text-brand-primary"

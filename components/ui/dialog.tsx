@@ -1,5 +1,3 @@
-'use client';
-
 import cn from '@/lib/utils';
 import CloasIcon from '@/public/icons/modal/close_icon.svg';
 // eslint-disable-next-line import/no-extraneous-dependencies
