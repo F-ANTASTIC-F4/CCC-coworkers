@@ -12,8 +12,7 @@ import Image from 'next/image';
 export default function Home() {
   return (
     <>
-      {/* NOTE - 100vh - 헤더 높이 */}
-      <section className="flex h-[calc(100vh-60px)] flex-col items-center bg-[url('/images/landing_small.png')] bg-cover bg-center bg-no-repeat md:bg-[url('/images/landing_medium.png')] xl:bg-[url('/images/landing_large.png')]">
+      <section className="mt-[60px] flex h-[calc(100vh-60px)] flex-col items-center bg-[url('/images/landing_small.png')] bg-cover bg-center bg-no-repeat md:bg-[url('/images/landing_medium.png')] xl:bg-[url('/images/landing_large.png')]">
         <div className="flex w-full flex-col items-center justify-center pt-[55px] font-semibold md:pt-[100px]">
           <h1 className="mb-1 text-2xl md:mb-2 md:text-[40px] xl:mb-5 xl:text-5xl">
             함께 만들어가는 투두 리스트 🛠️
@@ -76,6 +75,7 @@ export default function Home() {
         {/* TODO - 화이트 모드 색상 고려할 것 */}
         <LandingCard className="bg-[#020617]">
           <LandingContainer>
+            {/* NOTE - 부모의 패딩 값만큼 right를 이동시켜야 합니다 */}
             <div className="absolute bottom-12 flex flex-col gap-y-4 md:right-40 md:top-1/2 md:-translate-y-1/2 md:justify-center xl:right-[174px]">
               <div className="flex size-12 items-center justify-center rounded-xl border bg-background-secondary">
                 <ThirdLandingCardIcon />
