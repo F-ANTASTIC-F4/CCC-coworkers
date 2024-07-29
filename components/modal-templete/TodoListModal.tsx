@@ -20,7 +20,7 @@ const formSchema = z.object({
     .max(20, { message: '최대로 입력할 수 있는 글자수는 20개입니다.' }),
 });
 
-function TodoListModal() {
+function TodoListModal({ className = '' }) {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -31,12 +31,13 @@ function TodoListModal() {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values);
+    form.reset();
     setIsOpen(false);
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
+      <DialogTrigger className={className} asChild>
         <button
           type="button"
           className="text-[14px] font-normal text-brand-primary"
@@ -57,7 +58,11 @@ function TodoListModal() {
                 name="todoList"
                 render={({ field }) => (
                   <FormItem>
-                    <Input placeholder="목록 명을 입력해주세요" {...field} />
+                    <Input
+                      placeholder="목록 명을 입력해주세요"
+                      {...field}
+                      autoFocus
+                    />
                     <FormMessage />
                   </FormItem>
                 )}

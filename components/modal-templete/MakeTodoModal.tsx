@@ -21,17 +21,17 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 
 const formSchema = z.object({
-  todoMemo: z
-    .string()
-    .min(2, { message: '최소 2자 이상 입력해주세요.' })
-    .max(30, { message: '최대로 입력할 수 있는 글자수는 30개입니다.' }),
   todoTitle: z
     .string()
     .min(2, { message: '최소 2자 이상 입력해주세요.' })
     .max(10, { message: '최대로 입력할 수 있는 글자수는 10개입니다.' }),
+  todoMemo: z
+    .string()
+    .min(2, { message: '최소 2자 이상 입력해주세요.' })
+    .max(30, { message: '최대로 입력할 수 있는 글자수는 30개입니다.' }),
 });
 
-function MakeTodoModal() {
+function MakeTodoModal({ className = '' }) {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -44,12 +44,13 @@ function MakeTodoModal() {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values);
+    form.reset();
     setIsOpen(false);
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild className={className}>
         <Button variant="floating">+ 할 일 추가</Button>
       </DialogTrigger>
       <DialogContent hasCloseIcon>
@@ -73,6 +74,7 @@ function MakeTodoModal() {
                     <Input
                       placeholder="할 일 제목을 입력해주세요."
                       {...field}
+                      autoFocus
                     />
                     <FormMessage />
                   </FormItem>

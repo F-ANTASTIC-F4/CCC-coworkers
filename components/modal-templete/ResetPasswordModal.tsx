@@ -22,7 +22,7 @@ const formSchema = z.object({
     .email({ message: '유효한 이메일 주소를 입력해주세요' }),
 });
 
-function ResetPasswordModal() {
+function ResetPasswordModal({ className = '' }) {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -33,12 +33,13 @@ function ResetPasswordModal() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    form.reset();
     setIsOpen(false);
   }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
+      <DialogTrigger className={className} asChild>
         <button
           type="button"
           className="text-[14px] font-medium text-brand-primary underline"

@@ -9,10 +9,10 @@ import {
 } from '@/components/ui/dialog';
 import React from 'react';
 
-export default function InviteMemberModal({ ...props }) {
+export default function InviteMemberModal({ className = '', ...props }) {
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger className={className} asChild>
         <button
           type="button"
           className="text-[14px] font-normal text-brand-primary"

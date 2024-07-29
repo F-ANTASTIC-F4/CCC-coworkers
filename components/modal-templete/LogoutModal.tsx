@@ -8,10 +8,10 @@ import {
 } from '@/components/ui/dialog';
 import React from 'react';
 
-function LogoutModal({ ...props }) {
+function LogoutModal({ className = '', ...props }) {
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild className={className}>
         <Button size="x-small">로그아웃</Button>
       </DialogTrigger>
       <DialogContent>

@@ -10,10 +10,17 @@ import {
 import WarningIcon from '@/public/icons/modal/warning_icon.svg';
 import React from 'react';
 
-function DeleteTodoModal({ title, ...props }: { title: string }) {
+function DeleteTodoModal({
+  title,
+  className,
+  ...props
+}: {
+  title: string;
+  className?: string;
+}) {
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild className={className}>
         <button type="button">삭제하기</button>
       </DialogTrigger>
       <DialogContent>
