@@ -30,7 +30,8 @@ export default function Home() {
       <section className="space-y-6 px-4 md:px-6 xl:mx-auto xl:w-[1000px] xl:space-y-20 xl:px-0">
         <LandingCard>
           <LandingContainer>
-            <div className="mt-12 flex flex-col gap-y-4">
+            {/* NOTE - 부모의 패딩 값만큼 right를 이동시켜야 합니다 */}
+            <div className="absolute top-12 flex flex-col gap-y-4 md:right-40 md:top-1/2 md:-translate-y-1/2 md:justify-center xl:right-[174px]">
               <div className="flex size-12 items-center justify-center rounded-xl border bg-background-secondary">
                 <FirstLandingCardIcon />
               </div>
@@ -52,7 +53,7 @@ export default function Home() {
         </LandingCard>
         <LandingCard className="bg-background-secondary">
           <LandingContainer>
-            <div className="absolute bottom-12 flex flex-col gap-y-4">
+            <div className="absolute bottom-12 flex flex-col gap-y-4 md:top-1/2 md:-translate-y-1/2 md:justify-center">
               <div className="flex size-12 items-center justify-center rounded-xl border bg-background-secondary">
                 <SecondLandingCardIcon />
               </div>
@@ -61,7 +62,7 @@ export default function Home() {
                 <br /> 초대해요
               </Label>
             </div>
-            <div className="absolute top-0 h-[273px] w-[235px] xl:h-[338px] xl:w-[291px]">
+            <div className="absolute top-0 h-[273px] w-[235px] md:right-40 xl:right-[174px] xl:h-[338px] xl:w-[291px]">
               <Image
                 src="/images/landing_card_second.png"
                 alt="second landing card"
@@ -75,7 +76,7 @@ export default function Home() {
         {/* TODO - 화이트 모드 색상 고려할 것 */}
         <LandingCard className="bg-[#020617]">
           <LandingContainer>
-            <div className="absolute bottom-12 flex flex-col gap-y-4">
+            <div className="absolute bottom-12 flex flex-col gap-y-4 md:right-40 md:top-1/2 md:-translate-y-1/2 md:justify-center xl:right-[174px]">
               <div className="flex size-12 items-center justify-center rounded-xl border bg-background-secondary">
                 <ThirdLandingCardIcon />
               </div>

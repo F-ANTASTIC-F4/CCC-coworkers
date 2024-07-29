@@ -9,7 +9,7 @@ const LandingCard = React.forwardRef<HTMLDivElement, LandingCardProps>(
     <div
       ref={ref}
       className={cn(
-        'flex h-[467px] flex-col rounded-xl border md:h-[354px] md:flex-row md:justify-center xl:h-[419px]',
+        'h-[467px] rounded-xl border md:h-[354px] md:justify-center xl:h-[419px]',
         className
       )}
       {...props}
@@ -27,7 +27,7 @@ const LandingContainer = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      'relative mx-auto h-full w-[235px] md:mx-0 md:w-full',
+      'relative mx-auto flex h-full w-[235px] flex-col md:w-full md:flex-row md:px-40 xl:px-[174px]',
       className
     )}
     {...props}
