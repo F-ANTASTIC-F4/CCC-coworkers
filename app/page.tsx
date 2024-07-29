@@ -1,3 +1,4 @@
+import { LandingCard } from '@/components/landing/LandingCard';
 import { Button } from '@/components/ui/button';
 
 export default function Home() {
@@ -18,8 +19,11 @@ export default function Home() {
           버튼 예제
         </Button>
       </section>
-      <section className="">
-        <h1>middle</h1>
+      <section className="space-y-6 px-4 md:px-6 xl:mx-auto xl:w-[1000px] xl:space-y-20 xl:px-0">
+        <LandingCard>hello</LandingCard>
+        <LandingCard className="bg-background-secondary">Hi</LandingCard>
+        {/* TODO - 화이트 모드 색상 고려할 것 */}
+        <LandingCard className="bg-[#020617]">bye</LandingCard>
       </section>
       <section className="h-screen bg-[url('/images/landing_bottom_small.png')] bg-cover bg-center bg-no-repeat md:bg-[url('/images/landing_bottom_medium.png')] xl:bg-[url('/images/landing_bottom_large.png')]">
         <div className="flex flex-col items-center justify-center pt-[123px] text-center md:pt-[176px] xl:pt-[230px]">
