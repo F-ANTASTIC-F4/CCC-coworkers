@@ -1,18 +1,10 @@
 import CheckIcon from '@/public/icons/user-history/check_icon.svg';
 import HamburgerIcon from '@/public/icons/user-history/hamburger_icon.svg';
+import { DateString, Task } from '@ccc-types';
 import React from 'react';
 
-export interface Task {
-  deletedAt: Date | string;
-  userId: number;
-  recurringId: number;
-  frequency: string;
-  date: Date | string;
-  doneAt: Date | string;
-  description: string;
-  name: string;
-  updatedAt: Date | string;
-  id: number;
+export interface HistoryTask extends Task {
+  deleteAt: DateString;
 }
 
 interface HistoryItemProps {

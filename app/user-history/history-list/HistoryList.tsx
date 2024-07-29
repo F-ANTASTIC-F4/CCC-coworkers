@@ -1,24 +1,16 @@
 'use client';
 
+import { DateString, Task } from '@ccc-types';
 import React from 'react';
 
 import HistoryItem from '../history-item/HistoryItem';
 
-interface Task {
-  deletedAt: Date | string;
-  userId: number;
-  recurringId: number;
-  frequency: string;
-  date: Date | string;
-  doneAt: Date | string;
-  description: string;
-  name: string;
-  updatedAt: Date | string;
-  id: number;
+interface HistoryTask extends Task {
+  deletedAt: DateString;
 }
 
 interface HistoryListProps {
-  tasks: Task[];
+  tasks: HistoryTask[];
 }
 
 const HistoryList = ({ tasks }: HistoryListProps) => (
