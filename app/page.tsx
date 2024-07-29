@@ -21,10 +21,14 @@ export default function Home() {
             Coworkers
           </h1>
         </div>
-        {/* TODO - 공통 컴포넌트 버튼 추가 */}
-        <Button className="absolute bottom-12 md:bottom-[120px]">
-          버튼 예제
-        </Button>
+        <div className="absolute bottom-12 w-full px-4 md:flex md:justify-center">
+          <Button
+            variant="floating"
+            className="w-full bg-gradient-to-r from-[#10B981] to-[#A3E635] md:bottom-[120px] md:w-[373px]"
+          >
+            지금 시작하기
+          </Button>
+        </div>
       </section>
       <section className="space-y-6 px-4 md:px-6 xl:mx-auto xl:w-[1000px] xl:space-y-20 xl:px-0">
         <LandingCard>
