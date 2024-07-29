@@ -12,8 +12,18 @@ import Image from 'next/image';
 export default function Home() {
   return (
     <>
-      <section className="mt-[60px] flex h-[calc(100vh-60px)] flex-col items-center bg-[url('/images/landing_small.png')] bg-cover bg-center bg-no-repeat md:bg-[url('/images/landing_medium.png')] xl:bg-[url('/images/landing_large.png')]">
-        <div className="flex w-full flex-col items-center justify-center pt-[55px] font-semibold md:pt-[100px]">
+      <section className="mt-[60px] flex h-[calc(100vh-60px)] flex-col items-center">
+        {/* NOTE - 상단 랜딩 이미지 */}
+        <div className="absolute -z-50 size-full">
+          <Image
+            src="/images/landing_top.png"
+            alt="top landing image"
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
+        <div className="mt-[55px] flex w-full flex-col items-center justify-center font-semibold md:mt-[100px]">
           <h1 className="mb-1 text-2xl md:mb-2 md:text-[40px] xl:mb-5 xl:text-5xl">
             함께 만들어가는 투두 리스트 🛠️
           </h1>
@@ -101,7 +111,17 @@ export default function Home() {
           </LandingContainer>
         </LandingCard>
       </section>
-      <section className="h-screen bg-[url('/images/landing_bottom_small.png')] bg-cover bg-center bg-no-repeat md:bg-[url('/images/landing_bottom_medium.png')] xl:bg-[url('/images/landing_bottom_large.png')]">
+      <section className="h-screen">
+        {/* NOTE - 하단 랜딩 이미지 */}
+        <div className="absolute -z-50 size-full">
+          <Image
+            src="/images/landing_bottom.png"
+            alt="bottom landing image"
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
         <div className="flex flex-col items-center justify-center pt-[123px] text-center md:pt-[176px] xl:pt-[230px]">
           <h1 className="mb-4 text-2xl font-semibold md:mb-6 md:text-[40px]">
             지금 바로 시작해보세요
