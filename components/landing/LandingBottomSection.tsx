@@ -10,7 +10,6 @@ export default function LandingBottomSection() {
           alt="bottom landing image"
           fill
           className="object-cover"
-          loading="lazy"
         />
       </div>
       <div className="flex flex-col items-center justify-center pt-[123px] text-center md:pt-[176px] xl:pt-[230px]">

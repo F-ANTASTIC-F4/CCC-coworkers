@@ -30,7 +30,6 @@ export default function LandingCardSection() {
               fill
               sizes="(min-width: 768px) 291px, 235px"
               className="object-contain"
-              loading="lazy"
             />
           </div>
         </LandingContainer>
@@ -53,7 +52,6 @@ export default function LandingCardSection() {
               fill
               sizes="(min-width: 768px) 291px, 235px"
               className="object-contain"
-              loading="lazy"
             />
           </div>
         </LandingContainer>
@@ -78,7 +76,6 @@ export default function LandingCardSection() {
               fill
               sizes="(min-width: 768px) 291px, 235px"
               className="object-contain"
-              loading="lazy"
             />
           </div>
         </LandingContainer>
