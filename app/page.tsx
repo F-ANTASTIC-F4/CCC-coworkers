@@ -28,6 +28,7 @@ export default function Home() {
             fill
             className="object-cover"
             priority
+            sizes="100vw"
           />
         </div>
         <div className="mt-[55px] flex w-full flex-col items-center justify-center font-semibold md:mt-[100px]">

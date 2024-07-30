@@ -8,6 +8,7 @@ import './globals.css';
 
 const pretendardFont = localFont({
   src: '../public/fonts/PretendardVariable.woff2',
+  preload: true,
   display: 'swap',
 });
 
