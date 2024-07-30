@@ -1,20 +1,24 @@
+import LandingBottomSection from '@/components/landing/LandingBottomSection';
+import LandingCardSection from '@/components/landing/LandingCardSection';
 import { Button } from '@/components/ui/button';
-import dynamic from 'next/dynamic';
+// NOTE - dynamic 비교
+// import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
-const LandingCardSection = dynamic(
-  () => import('@/components/landing/LandingCardSection'),
-  {
-    loading: () => <div>Card Section Loading...</div>,
-  }
-);
+// NOTE - dynamic 비교
+// const LandingCardSection = dynamic(
+//   () => import('@/components/landing/LandingCardSection'),
+//   {
+//     loading: () => <div>Card Section Loading...</div>,
+//   }
+// );
 
-const LandingBottomSection = dynamic(
-  () => import('@/components/landing/LandingBottomSection'),
-  {
-    loading: () => <div>Bottom Section Loading...</div>,
-  }
-);
+// const LandingBottomSection = dynamic(
+//   () => import('@/components/landing/LandingBottomSection'),
+//   {
+//     loading: () => <div>Bottom Section Loading...</div>,
+//   }
+// );
 
 export default function Home() {
   return (
