@@ -3,7 +3,7 @@
 import { DateString, Task } from '@ccc-types';
 import React from 'react';
 
-import HistoryItem from '../history-item/HistoryItem';
+import HistoryItem from './HistoryItem';
 
 interface HistoryTask extends Task {
   deletedAt: DateString;

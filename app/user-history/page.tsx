@@ -1,6 +1,6 @@
 import mockHistory from '@/public/mockData/myHistory.json';
 
-import HistoryList from './history-list/HistoryList';
+import HistoryList from './_components/HistoryList';
 
 function HistoryPage() {
   return (
