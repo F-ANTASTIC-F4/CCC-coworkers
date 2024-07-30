@@ -74,7 +74,6 @@ function MakeTodoModal({ className = '' }) {
                     <Input
                       placeholder="할 일 제목을 입력해주세요."
                       {...field}
-                      autoFocus
                     />
                     <FormMessage />
                   </FormItem>

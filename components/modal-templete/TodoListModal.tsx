@@ -58,11 +58,7 @@ function TodoListModal({ className = '' }) {
                 name="todoList"
                 render={({ field }) => (
                   <FormItem>
-                    <Input
-                      placeholder="목록 명을 입력해주세요"
-                      {...field}
-                      autoFocus
-                    />
+                    <Input placeholder="목록 명을 입력해주세요" {...field} />
                     <FormMessage />
                   </FormItem>
                 )}
