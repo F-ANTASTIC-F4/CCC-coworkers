@@ -7,7 +7,7 @@ export default function LandingTopSection() {
       {/* NOTE - 상단 랜딩 이미지 */}
       <div className="absolute -z-50 size-full">
         <Image
-          src="/images/landing_top.avif"
+          src="/images/landing_top.png"
           alt="top landing image"
           fill
           className="object-cover"

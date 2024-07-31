@@ -25,7 +25,7 @@ export default function LandingCardSection() {
           </div>
           <div className="absolute bottom-0 h-[273px] w-[235px] xl:h-[338px] xl:w-[291px]">
             <Image
-              src="/images/landing_card_first.avif"
+              src="/images/landing_card_first.png"
               alt="first landing card"
               fill
               sizes="(min-width: 768px) 291px, 235px"
@@ -47,7 +47,7 @@ export default function LandingCardSection() {
           </div>
           <div className="absolute top-0 h-[273px] w-[235px] md:right-40 xl:right-[174px] xl:h-[338px] xl:w-[291px]">
             <Image
-              src="/images/landing_card_second.avif"
+              src="/images/landing_card_second.png"
               alt="second landing card"
               fill
               sizes="(min-width: 768px) 291px, 235px"
@@ -71,7 +71,7 @@ export default function LandingCardSection() {
           </div>
           <div className="absolute top-0 h-[273px] w-[235px] xl:h-[338px] xl:w-[291px]">
             <Image
-              src="/images/landing_card_third.avif"
+              src="/images/landing_card_third.png"
               alt="third landing card"
               fill
               sizes="(min-width: 768px) 291px, 235px"

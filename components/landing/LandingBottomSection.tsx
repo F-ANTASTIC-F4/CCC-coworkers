@@ -6,7 +6,7 @@ export default function LandingBottomSection() {
       {/* NOTE - 하단 랜딩 이미지 */}
       <div className="absolute -z-50 size-full">
         <Image
-          src="/images/landing_bottom.avif"
+          src="/images/landing_bottom.png"
           alt="bottom landing image"
           fill
           className="object-cover"
