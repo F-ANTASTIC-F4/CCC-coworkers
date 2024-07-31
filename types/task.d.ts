@@ -9,6 +9,7 @@ declare module '@ccc-types' {
   }
 
   export interface Task {
+    deletedAt: DateString;
     recurringId: Id; // number($double)
     frequency: FrequencyType | string;
     userId: Id; // number($double)
@@ -18,10 +19,6 @@ declare module '@ccc-types' {
     updatedAt: DateString;
     name: string;
     id: Id; // number($double)
-  }
-
-  export interface TaskHistory extends Task {
-    deletedAt: DateString;
   }
 
   export interface GroupTask {
