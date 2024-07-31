@@ -17,23 +17,21 @@ const ImageInputWrapper = ({
   className = '',
   children,
   ...props
-}: ImageInputWrapperProps) => {
-  return (
-    <div
-      className={cn(
-        'bg-customBackground-tertiary relative flex h-[64px] w-[64px] items-center justify-center rounded-full border-[2px] border-customBorder-primary',
-        className
-      )}
-      {...props}
-    >
-      {children}
-      <EditButton
-        className="absolute bottom-[-4px] right-[-4px]"
-        stroke="var(--background)"
-      />
-    </div>
-  );
-};
+}: ImageInputWrapperProps) => (
+  <div
+    className={cn(
+      'bg-customBackground-tertiary relative flex h-[64px] w-[64px] items-center justify-center rounded-full border-[2px] border-customBorder-primary',
+      className
+    )}
+    {...props}
+  >
+    {children}
+    <EditButton
+      className="absolute bottom-[-4px] right-[-4px]"
+      stroke="var(--background)"
+    />
+  </div>
+);
 
 const ImageInputContent = ({
   className = '',
