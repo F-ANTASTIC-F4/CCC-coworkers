@@ -1,7 +1,8 @@
-import { DEFAULT_TOKEN_OPTIONS } from '@/lib/api/API_CONSTANTS';
-import { checkAccessToken, updateAccessToken } from '@/lib/api/auth';
+import { checkAccessToken } from '@/lib/api/auth';
 import applySetCookie from '@/lib/middlewares/utils';
 import { NextRequest, NextResponse } from 'next/server';
+
+/* eslint-disable consistent-return */
 
 export default async function validateTokenAndSetAuthHeader(
   request: NextRequest
@@ -32,7 +33,7 @@ export default async function validateTokenAndSetAuthHeader(
 
   const nextResponse = NextResponse.next();
 
-  if (nextResponse.headers.get('Authorization')) return nextResponse;
+  // if (nextResponse.headers.get('Authorization')) return nextResponse;
 
   try {
     nextResponse.headers.set('Authorization', `Bearer ${accessToken}`);
