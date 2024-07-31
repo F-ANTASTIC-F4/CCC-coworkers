@@ -11,7 +11,6 @@ export default function LandingTopSection() {
           alt="top landing image"
           fill
           className="object-cover"
-          placeholder="blur"
           priority
         />
       </div>
