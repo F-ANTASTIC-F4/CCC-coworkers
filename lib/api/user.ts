@@ -4,6 +4,7 @@ import { ENDPOINTS } from '@/lib/api/API_CONSTANTS';
 import client from '@/lib/api/client/server';
 import { Email, Nickname, Password, UrlType } from '@ccc-types';
 import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 export async function updateUser(user: {
@@ -47,10 +48,6 @@ type SendResetPasswordEmailRequestBody = {
   redirectUrl: UrlType;
 };
 
-type ResetPasswordRequestBody = PasswordAuthentication & {
-  token: string; // POST user/send-reset-password-email 요청으로 발송한 메일의 링크에 담긴 토큰
-};
-
 type PatchPasswordRequestBody = PasswordAuthentication;
 
 export async function sendResetPasswordEmail(
@@ -71,27 +68,30 @@ export async function sendResetPasswordEmail(
   return response;
 }
 
-// 비밀번호 재설정 이메일 전송
-// {redirectUrl}/reset-password?token=${token}로 이동할 수 있는 링크를 이메일로 전송합니다.
-// e.g. "https://coworkers.vercel.app/reset-password?token=1234567890"
-
 // 비밀번호 재설정 요청: 사용자가 비밀번호 재설정을 요청하면, 서버는 유효한 token을 생성하고 이를 포함한 링크를 이메일로 전송합니다.
 // 링크 클릭: 사용자가 이메일 링크를 클릭하면 서버는 token을 검증하고, 사용자에게 비밀번호 재설정 페이지를 제공하거나 로그인 페이지로 리디렉션합니다.
 // 세션 생성: 서버는 검증된 token을 바탕으로 사용자의 세션을 생성하고, 비밀번호 재설정 폼을 사용자에게 보여줍니다.
 export async function resetPassword(
-  data: ResetPasswordRequestBody
-): Promise<{ message: string }> {
-  const { data: response, error } = await client<{ message: string }>(
+  data: PasswordAuthentication
+): Promise<void> {
+  'use server';
+
+  const sessionToken = cookies().get('sessionToken')?.value;
+  const { error } = await client<{ message: string }>(
     ENDPOINTS.USER.PATCH_RESET_PASSWORD,
     {
       method: 'patch',
-      data,
+      data: {
+        ...data,
+        token: sessionToken,
+      },
     }
   );
   if (error) {
     throw new Error('비밀번호 재설정에 실패했습니다', { cause: error });
   }
-  return response;
+  cookies().set('sessionToken', '', { maxAge: -1, path: '/' });
+  redirect('/');
 }
 
 export async function updatePassword(
