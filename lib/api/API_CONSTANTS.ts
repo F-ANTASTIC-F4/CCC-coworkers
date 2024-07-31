@@ -41,10 +41,10 @@ export const ENDPOINTS = {
 
     GET_GROUP_TASKS: (id: Id) => `/groups/${id}/tasks`,
   },
-  COMMENTS: {
-    ACTIONS: (taskId: Id) => `/tasks/${taskId}/comments`,
-    ITEM_ACTIONS: (taskId: Id, commentId: Id) =>
-      `/tasks/${taskId}/comments/${commentId}`,
+  COMMENT: {
+    TASK: (taskId: Id) => `/tasks/${taskId}/comments`,
+    ARTICLE: (articleId: Id) => `/articles/${articleId}/comments`,
+    ACTIONS: (commentId: Id) => `/comments/${commentId}`,
   },
   AUTH: {
     POST_SIGNUP: `/auth/signUp`,
@@ -52,6 +52,11 @@ export const ENDPOINTS = {
     POST_REFRESH_TOKEN: `/auth/refresh-token`,
     POST_SIGNIN_PROVIDER: (provider: OAuthProvider) =>
       `/auth/signIn/${provider}`,
+  },
+  ARTICLE: {
+    ACTIONS: `/articles`,
+    ACTIONS_ITEM: (articleId: Id) => `/articles/${articleId}`,
+    LIKE: (articleId: Id) => `/articles/${articleId}/like`,
   },
 };
 
