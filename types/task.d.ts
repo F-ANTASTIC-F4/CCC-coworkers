@@ -20,6 +20,10 @@ declare module '@ccc-types' {
     id: Id; // number($double)
   }
 
+  export interface TaskHistory extends Task {
+    deletedAt: DateString;
+  }
+
   export interface GroupTask {
     groupId: Id;
     displayIndex: number;
