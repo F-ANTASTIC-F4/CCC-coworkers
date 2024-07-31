@@ -1,20 +1,12 @@
 'use client';
 
 import { formatToDate } from '@/utils/dateFormat';
-import { DateString, Task } from '@ccc-types';
+import { TaskHistory } from '@ccc-types';
 import React from 'react';
 
 import HistoryItem from './HistoryItem';
 
-interface HistoryTask extends Task {
-  deletedAt: DateString;
-}
-
-interface HistoryListProps {
-  tasks: HistoryTask[];
-}
-
-const HistoryList: React.FC<HistoryListProps> = ({ tasks }) => {
+const HistoryList = ({ tasks }: { tasks: TaskHistory[] }) => {
   const date = formatToDate(tasks[0].deletedAt, 'dotFormat');
 
   return (

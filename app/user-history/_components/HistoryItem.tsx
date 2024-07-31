@@ -1,17 +1,9 @@
 import CheckIcon from '@/public/icons/user-history/check_icon.svg';
 import HamburgerIcon from '@/public/icons/user-history/hamburger_icon.svg';
-import { DateString, Task } from '@ccc-types';
+import { TaskHistory } from '@ccc-types';
 import React from 'react';
 
-export interface HistoryTask extends Task {
-  deleteAt: DateString;
-}
-
-interface HistoryItemProps {
-  task: Task;
-}
-
-const HistoryItem = ({ task }: HistoryItemProps) => (
+const HistoryItem = ({ task }: { task: TaskHistory }) => (
   <div className="flex items-center gap-1 rounded-lg bg-customBackground-secondary px-[14px] py-[10px]">
     <CheckIcon />
     <p className="mr-[10px]">
