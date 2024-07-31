@@ -19,6 +19,7 @@ export default async function validateTokenAndSetAuthHeader(
   const isValid = accessToken ? await checkAccessToken(accessToken) : false;
 
   if (!isValid && refreshToken) {
+    console.log('엑세스 토큰이 없습니다!! 로그인 후 다시 시도해주세요');
     // TODO 리프레시토큰으로 엑세스토큰 재설정로직 (수정 예정)
     // const redirectResponse = NextResponse.redirect(request.url);
     // const newAccessToken = await updateAccessToken(refreshToken);
