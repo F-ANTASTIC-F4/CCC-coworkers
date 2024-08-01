@@ -24,10 +24,39 @@ declare module '@ccc-types' {
   export interface GroupTask {
     groupId: Id;
     displayIndex: number;
-    updateAt: DateString;
+    updatedAt: DateString;
     createdAt: DateString;
     name: Nickname;
     id: Id;
-    tasks: string[];
+    tasks: Task[];
+  }
+
+  export interface Comment {
+    userId: number;
+    taskId: number;
+    updatedAt: DateString;
+    createdAt: DateString;
+    content: string;
+    id: number;
+  }
+
+  export interface Recurring {
+    groupId: number;
+    taskListId: number;
+    monthDay: number;
+    weekDays: number[];
+    frequencyType: FrequencyType;
+    displayIndex: number;
+    updatedAt: DateString;
+    createdAt: DateString;
+    description: string;
+    name: string;
+    id: number;
+  }
+
+  export interface DetailTask extends Task {
+    comments: Comment[];
+    recurring: Recurring;
+    user: Pick<User, 'image' | 'nickname' | 'id'>;
   }
 }
