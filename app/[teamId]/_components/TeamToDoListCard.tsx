@@ -14,11 +14,9 @@ import { Pie, PieChart } from 'recharts';
 const chartConfig = {
   completed: {
     label: 'Completed',
-    color: 'hsl(var(--color-green-500))',
   },
   todo: {
     label: 'Todo',
-    color: 'hsl(var(--color-white))',
   },
 };
 
@@ -36,7 +34,11 @@ function TeamToDoListCard({
   const done = completedToDo === totalToDo;
 
   const chartData = [
-    { name: 'completed', total: completedToDo, fill: '#10B981' },
+    {
+      name: 'completed',
+      total: completedToDo,
+      fill: '#10B981',
+    },
     { name: 'todo', total: totalToDo - completedToDo, fill: '#FFF' },
   ];
 
@@ -47,7 +49,7 @@ function TeamToDoListCard({
         // NOTE - className에 동적 값이 적용되지 않아 style로 적용
         style={{ backgroundColor: leftStyleColor }}
       />
-      <p>{name}</p>
+      <p className="text-sm font-medium">{name}</p>
       <div className="flex items-center gap-x-1">
         <div className="flex h-[25px] items-center gap-x-[1px] rounded-xl bg-background px-2 py-1 text-brand-primary">
           <div className="size-4">
@@ -65,8 +67,8 @@ function TeamToDoListCard({
                     dataKey="total"
                     nameKey="name"
                     // TODO - 원의 크기는 밖 div, innerRadius와 outerRadius로 조정 가능합니다!
-                    innerRadius={4}
-                    outerRadius={6}
+                    innerRadius={6}
+                    outerRadius={8}
                     strokeWidth={0}
                   />
                 </PieChart>
