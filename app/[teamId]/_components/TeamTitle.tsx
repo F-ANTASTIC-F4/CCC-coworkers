@@ -1,3 +1,5 @@
+'use client';
+
 import Gear from '@/public/icons/gear.svg';
 import TitleThumbnail from '@/public/icons/thumbnail_team.svg';
 
