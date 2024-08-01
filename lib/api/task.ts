@@ -2,19 +2,19 @@
 
 import { ENDPOINTS } from '@/lib/api/API_CONSTANTS';
 import client from '@/lib/api/client/server';
-import { GroupTask, Id, Task } from '@ccc-types';
+import { Id, Recurring, Task } from '@ccc-types';
 
 export async function createTask(
   groupId: Id,
   taskListId: Id,
   data: Partial<
     Pick<
-      GroupTask,
+      Recurring,
       'name' | 'description' | 'displayIndex' | 'frequencyType' | 'monthDay'
     >
   >
-): Promise<GroupTask> {
-  const { data: response, error } = await client<GroupTask>(
+): Promise<Recurring> {
+  const { data: response, error } = await client<Recurring>(
     ENDPOINTS.TASK.ACTIONS(groupId, taskListId),
     {
       method: 'post',
