@@ -1,4 +1,4 @@
-import HamburgerIcon from '@/public/icons/user-history/hamburger_icon.svg';
+import EditDeleteDropdown from '@/components/dropdown-templete/EditDeleteDropdown';
 import { formatTimeOrDate } from '@/utils/dateFormat';
 import { Comment } from '@ccc-types';
 import Image from 'next/image';
@@ -7,9 +7,9 @@ import React from 'react';
 function CommentItem({ content, user }: Comment) {
   return (
     <div className="flex flex-col gap-[16px] border-b pb-[16px]">
-      <div className="flex w-full justify-between">
+      <div className="flex w-full items-start justify-between">
         <p className="text-sm font-normal text-text-primary">{content}</p>
-        <HamburgerIcon className="h-[16px] min-w-[16px] md:ml-[5px]" />
+        <EditDeleteDropdown className="h-[16px] min-w-[16px] md:ml-[5px]" />
       </div>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">

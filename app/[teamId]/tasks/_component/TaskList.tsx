@@ -69,6 +69,10 @@ function TaskList() {
     setCurrentDate((prev) => new Date(prev.getTime() + oneDay));
   };
 
+  const handleDateChange = React.useCallback((value: Date) => {
+    setCurrentDate(value);
+  }, []);
+
   const handleTasks = () => {
     setTaskList(MockDataList);
   };
@@ -80,7 +84,7 @@ function TaskList() {
   return (
     <div className="flex flex-col">
       <div className="flex items-center gap-3">
-        <span className="text-[16px] font-medium text-text-primary">
+        <span className="w-[90px] text-[16px] font-medium text-text-primary">
           {formatToDate(currentDate, 'monthAndDay')}
         </span>
         <div className="relative top-[1px] flex gap-1">
@@ -99,7 +103,7 @@ function TaskList() {
             <RightButtonIcon />
           </button>
         </div>
-        <DatePicker />
+        <DatePicker onClick={handleDateChange} />
         <TodoListModal className="ml-auto" />
       </div>
       <ul className="my-2 flex gap-3">

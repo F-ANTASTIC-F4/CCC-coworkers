@@ -1,3 +1,4 @@
+import EditDeleteDropdown from '@/components/dropdown-templete/EditDeleteDropdown';
 import {
   Sheet,
   SheetContent,
@@ -9,7 +10,6 @@ import CalenderNoBtnIcon from '@/public/icons/list/calender_no_btn.svg';
 import ClockIcon from '@/public/icons/list/clock_icon.svg';
 import SubmitIcon from '@/public/icons/list/comment_submit_icon.svg';
 import DailyIcon from '@/public/icons/list/daily_task_icon.svg';
-import HamburgerIcon from '@/public/icons/user-history/hamburger_icon.svg';
 import { formatToDate, formatToTime } from '@/utils/dateFormat';
 import { Comment } from '@ccc-types';
 import Image from 'next/image';
@@ -65,7 +65,7 @@ export default function CommentSheet({
   children: React.ReactNode;
 }) {
   const [isButtonDisabled, setIsButtonDisabled] = React.useState<boolean>(true);
-  const inputRef = React.useRef<HTMLInputElement>(null);
+  const inputRef = React.useRef<HTMLTextAreaElement>(null);
 
   // NOTE - 만들어주신 form을 사용하기엔 따로 에러메세지가 출력되지도 않고 그냥 글자가 있고 없고에 따라 버튼만 막아주면 될 듯하여 따로 사용하진 않았습니다!
   const handleSubmit = (e: FormEvent) => {
@@ -89,7 +89,7 @@ export default function CommentSheet({
       <SheetContent className="w-full md:max-w-[435px] xl:max-w-[778px]">
         <SheetTitle className="flex items-center justify-between">
           법인 설립 비용 안내드리기
-          <HamburgerIcon className="h-[24px] w-[24px]" />
+          <EditDeleteDropdown className="h-[24px] w-[24px]" />
         </SheetTitle>
         <div className="text-text-primar4 flex flex-col gap-4">
           <div className="flex items-center justify-between">
@@ -133,9 +133,8 @@ export default function CommentSheet({
           className="relative flex h-[50px] w-full items-center justify-between border-y"
           onSubmit={handleSubmit}
         >
-          <input
-            type="text"
-            className="text w-full bg-transparent text-text-default outline-none"
+          <textarea
+            className="text max-h-full w-full resize-none bg-transparent pt-3 text-text-default outline-none"
             placeholder="댓글을 달아주세요"
             ref={inputRef}
             onChange={handleChange}

@@ -1,8 +1,8 @@
+import EditDeleteDropdown from '@/components/dropdown-templete/EditDeleteDropdown';
 import CalenderNoBtnIcon from '@/public/icons/list/calender_no_btn.svg';
 import ClockIcon from '@/public/icons/list/clock_icon.svg';
 import CommentIcon from '@/public/icons/list/comment_icon.svg';
 import DailyIcon from '@/public/icons/list/daily_task_icon.svg';
-import HamburgerIcon from '@/public/icons/user-history/hamburger_icon.svg';
 import { formatToDate, formatToTime } from '@/utils/dateFormat';
 import { Task } from '@ccc-types';
 import React from 'react';
@@ -34,12 +34,7 @@ function TaskItem({ name, updatedAt, frequency, doneAt }: Task) {
               <CommentIcon />
               <p className={textClass}>3</p>
             </div>
-            <button
-              type="button"
-              aria-label="할 일 각각 수정하거나 삭제하는 버튼"
-            >
-              <HamburgerIcon className="h-[16px] w-[16px]" />
-            </button>
+            <EditDeleteDropdown title={name} />
           </div>
         </div>
         <div className="flex gap-3">
