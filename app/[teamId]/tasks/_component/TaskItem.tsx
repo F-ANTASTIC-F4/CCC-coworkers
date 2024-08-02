@@ -20,6 +20,7 @@ const frequencyTypeObj = {
 const textClass = `text-xs font-normal text-text-default`;
 
 function TaskItem({ name, updatedAt, frequency, doneAt }: Task) {
+  // NOTE - 따로 task를 완료했는지에 대한 값이 오지 않아 doneAt이 있는지를 기준으로 임시로 작성했습니다!
   const done = !!doneAt;
   const taskType = frequencyTypeObj[frequency];
 

@@ -67,6 +67,7 @@ export default function CommentSheet({
   const [isButtonDisabled, setIsButtonDisabled] = React.useState<boolean>(true);
   const inputRef = React.useRef<HTMLInputElement>(null);
 
+  // NOTE - 만들어주신 form을 사용하기엔 따로 에러메세지가 출력되지도 않고 그냥 글자가 있고 없고에 따라 버튼만 막아주면 될 듯하여 따로 사용하진 않았습니다!
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
   };

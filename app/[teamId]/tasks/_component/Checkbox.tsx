@@ -37,6 +37,7 @@ export default function CheckboxReactHookFormSingle({
   }
 
   const handleClick = (e: MouseEvent<HTMLElement>) => {
+    // NOTE - 시트를 여는 트리거의 이벤트 버블링을 막는 용도
     e.stopPropagation();
   };
 

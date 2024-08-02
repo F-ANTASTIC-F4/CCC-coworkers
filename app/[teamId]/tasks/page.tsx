@@ -9,6 +9,7 @@ function ListPage() {
         <h1 className="mr-auto mt-6 text-[18px] font-bold text-text-primary">
           할 일
         </h1>
+        {/** NOTE - 지금은 prop이 따로 없고 API 연동하면 내려줄 생각입니다! */}
         <TaskList />
       </div>
       <div className="fixed bottom-5 mx-auto flex w-full max-w-[1232px] justify-end px-4 xl:px-0">
