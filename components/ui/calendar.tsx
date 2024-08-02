@@ -1,7 +1,8 @@
 'use client';
 
 import cn from '@/lib/utils';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import NextIcon from '@/public/icons/calender/next_date_icon.svg';
+import PrevIcon from '@/public/icons/calender/prev_date_icon.svg';
 import * as React from 'react';
 import { DayPicker } from 'react-day-picker';
 
@@ -16,7 +17,7 @@ function Calendar({
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
-      className={cn('p-3', className)}
+      className={cn('rounded-3xl bg-background-secondary p-3', className)}
       classNames={{
         months: 'flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0',
         month: 'space-y-4',
@@ -37,8 +38,8 @@ function Calendar({
         day: cn('h-9 w-9 p-0 font-normal aria-selected:opacity-100'),
         day_range_end: 'day-range-end',
         day_selected:
-          'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground',
-        day_today: 'bg-accent text-accent-foreground',
+          'rounded-[10px] bg-brand-primary text-background-secondary focus:text-primary-foreground',
+        day_today: 'bg-transparent text-brand-primary',
         day_outside:
           'day-outside text-muted-foreground opacity-50 aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30',
         day_disabled: 'text-muted-foreground opacity-50',
@@ -49,9 +50,9 @@ function Calendar({
       }}
       components={{
         // eslint-disable-next-line @typescript-eslint/no-shadow, react/no-unstable-nested-components, @typescript-eslint/no-unused-vars
-        IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" />,
+        IconLeft: ({ ...props }) => <PrevIcon />,
         // eslint-disable-next-line @typescript-eslint/no-shadow, react/no-unstable-nested-components, @typescript-eslint/no-unused-vars
-        IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" />,
+        IconRight: ({ ...props }) => <NextIcon />,
       }}
       {...props}
     />
