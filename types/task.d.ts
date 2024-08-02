@@ -16,6 +16,14 @@ declare module '@ccc-types' {
     id: Id;
   }
 
+  export type TasksDone = Task[];
+
+  export interface DataStructure {
+    tasksDone: TasksDone;
+  }
+
+  export type TaskHistory = DataStructure[];
+
   export interface GroupTask {
     groupId: Id;
     displayIndex: number;
