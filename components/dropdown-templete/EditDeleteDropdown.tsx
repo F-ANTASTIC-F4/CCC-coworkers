@@ -4,20 +4,21 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import BasicEditIcon from '@/public/icons/basic_edit_icon.svg';
 import HamburgerIcon from '@/public/icons/user-history/hamburger_icon.svg';
 import * as React from 'react';
 
 import DeleteTodoModal from '../modal-templete/DeleteTodoModal';
 
-interface DropdownProps {
-  title?: string;
-  className?: string;
-}
-
 function EditDeleteDropdown({
   title = '',
   className = 'w-[16px] h-[16px]',
-}: DropdownProps) {
+  buttonType = 'hamburger',
+}: {
+  title?: string;
+  className?: string;
+  buttonType: 'hamburger' | 'basic';
+}) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -26,9 +27,13 @@ function EditDeleteDropdown({
           aria-label="수정 및 삭제 기능 제공 드롭다운"
           className="outline-none"
         >
-          <HamburgerIcon
-            className={`${className} hover:stroke-text-tertiary`}
-          />
+          {buttonType === 'hamburger' ? (
+            <HamburgerIcon
+              className={`${className} hover:fill-text-tertiary`}
+            />
+          ) : (
+            <BasicEditIcon />
+          )}
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
