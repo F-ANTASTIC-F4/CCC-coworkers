@@ -83,11 +83,11 @@ function TaskList() {
 
   return (
     <div className="flex flex-col">
-      <div className="flex items-center gap-3">
-        <span className="w-[90px] text-[16px] font-medium text-text-primary">
+      <div className="flex items-center">
+        <span className="w-[100px] text-[16px] font-medium text-text-primary">
           {formatToDate(currentDate, 'monthAndDay')}
         </span>
-        <div className="relative top-[1px] flex gap-1">
+        <div className="relative top-[1px] mr-4 flex gap-2">
           <button
             type="button"
             aria-label="날짜 변경 버튼(왼쪽)"
