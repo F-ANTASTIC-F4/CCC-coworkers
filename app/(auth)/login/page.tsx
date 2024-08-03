@@ -5,7 +5,7 @@ import LoginForm from './_components/loginForm';
 
 export default function Login() {
   return (
-    <div className="m-auto w-full max-w-[460px]">
+    <div className="m-auto mt-[90px] w-full max-w-[460px]">
       <h2 className="mb-[80px] text-center text-[40px] font-medium">로그인</h2>
       <LoginForm />
       <p className="mt-[24px] text-center text-[16px] font-medium">
@@ -18,7 +18,7 @@ export default function Login() {
         </Link>
       </p>
       <div className="relative mb-[16px] mt-[48px] text-center before:absolute before:inset-y-1/2 before:left-0 before:z-[-1] before:h-px before:w-full before:bg-[#ffffff]">
-        <p className="inline-block bg-[#000000] px-[24px] text-[16px]">OR</p>
+        <p className="inline-block bg-background px-[24px] text-[16px]">OR</p>
       </div>
       <div className="flex items-center justify-between">
         <p className="text-[16px] font-medium">간편 로그인하기</p>
