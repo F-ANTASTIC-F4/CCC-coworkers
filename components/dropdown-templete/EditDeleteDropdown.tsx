@@ -17,7 +17,7 @@ function EditDeleteDropdown({
 }: {
   title?: string;
   className?: string;
-  buttonType: 'hamburger' | 'basic';
+  buttonType?: 'hamburger' | 'basic';
 }) {
   return (
     <DropdownMenu>
