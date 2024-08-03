@@ -4,7 +4,7 @@ import SignupForm from './_components/signUpForm';
 
 export default function Signup() {
   return (
-    <div className="m-auto w-full max-w-[460px]">
+    <div className="m-auto mt-[90px] w-full max-w-[460px]">
       <h2 className="mb-[80px] text-center text-[40px] font-medium">
         회원가입
       </h2>
