@@ -5,6 +5,7 @@ import {
   ArticleDetail,
   CursorBasedPagination,
   Group,
+  GroupList,
   GroupTask,
   Id,
   OffsetBasedPagination,
@@ -106,6 +107,18 @@ async function getGroup(groupId: Id): Promise<Group> {
   return data;
 }
 
+async function getGroupList(): Promise<GroupList> {
+  const { data, error } = await client<GroupList>(ENDPOINTS.USER.GROUP_LIST, {
+    method: 'get',
+  });
+  if (error) {
+    throw new Error('그룹 정보를 가져오는 중 에러가 발생했습니다.', {
+      cause: error,
+    });
+  }
+  return data;
+}
+
 async function getComments(taskId: Id): Promise<Comment[]> {
   const { data, error } = await client<Comment[]>(
     ENDPOINTS.COMMENT.ACTIONS(taskId),
@@ -172,6 +185,7 @@ const fetchAPI = {
   User: getUser,
   UserHistory: getUserHistory,
   Group: getGroup,
+  GroupList: getGroupList,
   GroupSpecificTasks: getGroupSpecificTasks,
   Task: getTask,
   TaskList: getTaskList,

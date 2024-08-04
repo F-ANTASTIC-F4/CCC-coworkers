@@ -4,6 +4,7 @@ import { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 export const ENDPOINTS = {
   USER: {
     ACTIONS: `/user`,
+    GROUP_LIST: `/groups`,
     GET_HISTORY: `/user/history`,
     POST_SEND_RESET_PASSWORD_EMAIL: `/user/send-reset-password-email`,
     PATCH_RESET_PASSWORD: `/user/reset-password`,
