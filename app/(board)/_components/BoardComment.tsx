@@ -7,7 +7,7 @@ function BoardComment() {
   return (
     <div className="flex h-[113px] flex-col justify-between rounded-lg bg-background-secondary p-4 md:h-[123px] md:px-6 md:py-5">
       <div className="flex justify-between">
-        <p className="text-sm md:text-base">
+        <p className="text-sm text-text-primary md:text-base">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime,
           dignissimos vero quas a sequi aperiam fugiat? Sunt mollitia numquam
         </p>
