@@ -4,10 +4,10 @@ import { Client, HttpClientConfig } from '@/lib/api/HttpClient';
 import FetchError from '@/lib/api/HttpClient/FetchError';
 import { cookies } from 'next/headers';
 
-const BASE_URL = 'http://localhost:3000';
-// process.env.NODE_ENV === 'production'
-//   ? process.env.NEXT_PUBLIC_APP_BASE_URL || ''
-//   : 'http://localhost:3000';
+const BASE_URL =
+  process.env.NODE_ENV === 'production'
+    ? process.env.NEXT_PUBLIC_APP_BASE_URL || ''
+    : 'http://localhost:3000';
 
 const clientInstance = new Client({
   baseURL: BASE_URL + process.env.NEXT_PUBLIC_PROXY_URL,
