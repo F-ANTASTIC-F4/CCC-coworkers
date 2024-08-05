@@ -110,7 +110,7 @@ function TaskList() {
         <li
           key={taskList?.id}
           onClick={handleTasks}
-          className={`cursor-pointer text-base font-medium text-text-default ${taskList?.id === MockDataList.id && 'text- text-text-primary'}`}
+          className={`cursor-pointer text-base font-medium text-text-default ${taskList?.id === MockDataList.id && 'border-b-2 border-text-primary pb-[3px] text-text-primary'}`}
         >
           {taskList?.name}
         </li>
