@@ -25,7 +25,7 @@ function TaskItem({ name, updatedAt, frequency, doneAt }: Task) {
   const taskType = frequencyTypeObj[frequency];
 
   return (
-    <CommentSheet>
+    <CommentSheet done={done}>
       <div className="flex w-full cursor-pointer flex-col gap-3 rounded-[10px] bg-background-secondary px-[14px] py-[12px]">
         <div className="flex w-full justify-between">
           <CheckboxReactHookFormSingle task={name} done={done} />

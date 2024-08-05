@@ -1,4 +1,5 @@
 import EditDeleteDropdown from '@/components/dropdown-templete/EditDeleteDropdown';
+import { Button } from '@/components/ui/button';
 import {
   Sheet,
   SheetContent,
@@ -6,6 +7,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
+import CheckIcon from '@/public/icons/button/check_icon.svg';
 import CalenderNoBtnIcon from '@/public/icons/list/calender_no_btn.svg';
 import ClockIcon from '@/public/icons/list/clock_icon.svg';
 import SubmitIcon from '@/public/icons/list/comment_submit_icon.svg';
@@ -61,9 +63,12 @@ const textClass = `text-xs font-normal text-text-default`;
 
 export default function CommentSheet({
   children,
+  done,
 }: {
   children: React.ReactNode;
+  done: boolean;
 }) {
+  const [isTaskDone, setIsTaskDone] = React.useState<boolean>(done);
   const [isButtonDisabled, setIsButtonDisabled] = React.useState<boolean>(true);
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
 
@@ -83,12 +88,24 @@ export default function CommentSheet({
     }
   };
 
+  const handleTaskToggle = () => {
+    setIsTaskDone((prev) => !prev);
+  };
+
   return (
     <Sheet>
       <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent className="w-full md:max-w-[435px] xl:max-w-[778px]">
+        {isTaskDone && (
+          <div className="flex items-center gap-[6px] text-brand-tertiary">
+            <CheckIcon />
+            <p>완료</p>
+          </div>
+        )}
         <SheetTitle className="flex items-center justify-between">
-          법인 설립 비용 안내드리기
+          <p className={isTaskDone ? 'line-through' : ''}>
+            법인 설립 비용 안내드리기
+          </p>
           <EditDeleteDropdown className="h-[24px] w-[24px]" />
         </SheetTitle>
         <div className="text-text-primar4 flex flex-col gap-4">
@@ -153,6 +170,14 @@ export default function CommentSheet({
         {commentMockData.map((commentData) => (
           <CommentItem key={commentData.id} {...commentData} />
         ))}
+        <Button
+          variant={isTaskDone ? 'floating-outlined' : 'floating'}
+          className="absolute bottom-4 right-4"
+          onClick={handleTaskToggle}
+        >
+          <CheckIcon className="stroke-brand-primary" />
+          &nbsp;{isTaskDone ? '완료 취소하기' : '완료하기'}
+        </Button>
       </SheetContent>
     </Sheet>
   );
