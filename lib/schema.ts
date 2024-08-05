@@ -44,11 +44,6 @@ const authValidationSchema = z
     path: ['passwordConfirm'],
     message: '비밀번호가 일치하지 않습니다.',
   });
-
-export { loginValidationSchema, authValidationSchema };
-
-import * as z from 'zod';
-
 const imageSchema = z
   .union([
     // NOTE: union: file혹은 string 중 일치하는 값
@@ -81,4 +76,8 @@ const createTeamValidationSchema = z.object({
   name: teamNameSchema,
 });
 
-export default createTeamValidationSchema;
+export {
+  createTeamValidationSchema,
+  loginValidationSchema,
+  authValidationSchema,
+};
