@@ -43,11 +43,11 @@ function BestBoardCard({ className }: { className?: string }) {
         </div>
         <div className="flex items-center gap-2 text-slate-400">
           <div className="flex items-center gap-1">
-            <CommentIcon />
+            <CommentIcon className="size-4" />
             <p>n</p>
           </div>
           <div className="flex items-center gap-1">
-            <HeartIcon />
+            <HeartIcon className="size-4" />
             <p>n</p>
           </div>
         </div>
