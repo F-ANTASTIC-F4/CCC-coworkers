@@ -6,6 +6,7 @@ import {
   CursorBasedPagination,
   Group,
   GroupTask,
+  History,
   Id,
   OffsetBasedPagination,
   Task,
@@ -24,13 +25,10 @@ async function getUser(): Promise<User> {
   return data;
 }
 
-async function getUserHistory(): Promise<{ taskDone: Task[] }> {
-  const { data, error } = await client<{ taskDone: Task[] }>(
-    ENDPOINTS.USER.GET_HISTORY,
-    {
-      method: 'get',
-    }
-  );
+async function getUserHistory(): Promise<History[]> {
+  const { data, error } = await client<History[]>(ENDPOINTS.USER.GET_HISTORY, {
+    method: 'get',
+  });
   if (error) {
     throw new Error('유저의 히스토리를 가져오는 중 에러가 발생했습니다.', {
       cause: error,

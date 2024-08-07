@@ -16,6 +16,10 @@ declare module '@ccc-types' {
     id: Id;
   }
 
+  interface History {
+    tasksDone: Task[];
+  }
+
   export interface GroupTask {
     groupId: Id;
     taskListId: Id;
