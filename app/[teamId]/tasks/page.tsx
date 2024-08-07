@@ -1,4 +1,4 @@
-import MakeTodoModal from '@/components/modal-templete/MakeTodoModal';
+import MakeTodoModal from '@/components/modal-template/MakeTodoModal';
 
 import TaskList from './_component/TaskList';
 

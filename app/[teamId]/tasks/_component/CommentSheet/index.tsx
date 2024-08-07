@@ -1,4 +1,4 @@
-import EditDeleteDropdown from '@/components/dropdown-templete/EditDeleteDropdown';
+import EditDeleteDropdown from '@/components/dropdown-template/EditDeleteDropdown';
 import { Button } from '@/components/ui/button';
 import {
   Sheet,

@@ -4,7 +4,7 @@
 
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import DatePicker from '@/app/[teamId]/tasks/_component/DatePicker';
-import TodoListModal from '@/components/modal-templete/TodoListModal';
+import TodoListModal from '@/components/modal-template/TodoListModal';
 import LeftButtonIcon from '@/public/icons/list/left_button_icon.svg';
 import RightButtonIcon from '@/public/icons/list/right_button_icon.svg';
 import { formatToDate } from '@/utils/dateFormat';

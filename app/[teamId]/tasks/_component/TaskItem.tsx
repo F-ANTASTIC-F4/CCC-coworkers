@@ -1,4 +1,4 @@
-import EditDeleteDropdown from '@/components/dropdown-templete/EditDeleteDropdown';
+import EditDeleteDropdown from '@/components/dropdown-template/EditDeleteDropdown';
 import CalenderNoBtnIcon from '@/public/icons/list/calender_no_btn.svg';
 import ClockIcon from '@/public/icons/list/clock_icon.svg';
 import CommentIcon from '@/public/icons/list/comment_icon.svg';

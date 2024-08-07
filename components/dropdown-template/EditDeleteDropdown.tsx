@@ -8,7 +8,7 @@ import BasicEditIcon from '@/public/icons/basic_edit_icon.svg';
 import HamburgerIcon from '@/public/icons/user-history/hamburger_icon.svg';
 import * as React from 'react';
 
-import DeleteTodoModal from '../modal-templete/DeleteTodoModal';
+import DeleteTodoModal from '../modal-template/DeleteTodoModal';
 
 function EditDeleteDropdown({
   title = '',

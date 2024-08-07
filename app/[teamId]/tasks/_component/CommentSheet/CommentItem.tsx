@@ -1,4 +1,4 @@
-import EditDeleteDropdown from '@/components/dropdown-templete/EditDeleteDropdown';
+import EditDeleteDropdown from '@/components/dropdown-template/EditDeleteDropdown';
 import { formatTimeOrDate } from '@/utils/dateFormat';
 import { Comment } from '@ccc-types';
 import Image from 'next/image';
