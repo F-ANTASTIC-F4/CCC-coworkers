@@ -6,7 +6,7 @@ declare module '@ccc-types' {
   export interface Task {
     deletedAt: DateString;
     recurringId: Id;
-    frequency: FrequencyType | string;
+    frequency: FrequencyType;
     userId: Id;
     date: DateString;
     doneAt?: DateString | null; // nullable: true
@@ -22,16 +22,41 @@ declare module '@ccc-types' {
 
   export interface GroupTask {
     groupId: Id;
-    taskListId: Id;
-    displayIndex?: number;
-    monthDay: number;
-    weekDays: number[];
-    frequencyType: FrequencyType;
-    description?: string;
+    displayIndex: number;
     updatedAt: DateString;
     createdAt: DateString;
     name: Nickname;
     id: Id;
+    tasks: Task[];
+  }
+
+  export interface Comment {
+    userId: number;
+    taskId: number;
+    updatedAt: DateString;
+    createdAt: DateString;
+    content: string;
+    id: number;
+  }
+
+  export interface Recurring {
+    groupId: number;
+    taskListId: number;
+    monthDay: number;
+    weekDays: number[];
+    frequencyType: FrequencyType;
+    displayIndex: number;
+    updatedAt: DateString;
+    createdAt: DateString;
+    description: string;
+    name: string;
+    id: number;
+  }
+
+  export interface DetailTask extends Task {
+    comments: Comment[];
+    recurring: Recurring;
+    user: Pick<User, 'image' | 'nickname' | 'id'>;
   }
 
   // tasks: string[]
