@@ -1,15 +1,25 @@
-import mockHistory from '@/public/mockData/myHistory.json';
+import fetchAPI from '@/lib/api/fetchAPI';
 
 import HistoryList from './_components/HistoryList';
 
-function HistoryPage() {
+async function HistoryPage() {
+  let data;
+  try {
+    const res = await fetchAPI.UserHistory();
+    if (res && res.length > 0) {
+      data = res;
+    }
+  } catch (e) {
+    return <div>유효하지 않은 데이터입니다.</div>;
+  }
+
   return (
     <section
-      className={`center mx-auto w-full ${mockHistory.length === 0 && 'h-screen'} max-w-[1232px] flex-col gap-6 px-4`}
+      className={`center mx-auto w-full ${data && data.length !== 0 ? '' : 'min-screen'} max-w-[1232px] flex-col gap-6 px-4`}
     >
       <h1 className="mr-auto mt-5 text-[20px] font-bold">마이 히스토리</h1>
-      {mockHistory.length !== 0 ? (
-        mockHistory.map((task) => <HistoryList tasks={task.tasksDone} />)
+      {data && data.length !== 0 ? (
+        data.map((task) => <HistoryList tasksDone={task.tasksDone} />)
       ) : (
         <div className="flex h-full items-center">
           <p className="text-[14.8px] font-medium text-text-default">
