@@ -14,7 +14,7 @@ const HistoryList = ({ tasksDone }: { tasksDone: Task[] }) => {
     <div className="flex w-full flex-col gap-4">
       <h2>{date}</h2>
       {tasksDone.map((task) => (
-        <HistoryItem task={task} />
+        <HistoryItem key={task.id} task={task} />
       ))}
     </div>
   );
