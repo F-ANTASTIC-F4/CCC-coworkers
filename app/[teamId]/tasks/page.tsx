@@ -12,7 +12,7 @@ function ListPage() {
         {/** NOTE - 지금은 prop이 따로 없고 API 연동하면 내려줄 생각입니다! */}
         <TaskList />
       </div>
-      <div className="fixed bottom-5 mx-auto flex w-full max-w-[1232px] justify-end px-4 xl:px-0">
+      <div className="absolute bottom-5 mx-auto flex w-full max-w-[1232px] justify-end px-4 xl:px-0">
         <MakeTodoModal className="z-10 ml-auto" />
       </div>
     </section>
