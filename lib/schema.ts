@@ -28,22 +28,6 @@ const passwordConfirmSchema = z
   .string()
   .min(1, '비밀번호 확인을 입력해주세요.');
 
-const loginValidationSchema = z.object({
-  email: emailSchema,
-  password: passwordSchema,
-});
-
-const authValidationSchema = z
-  .object({
-    username: nameSchema,
-    email: emailSchema,
-    password: passwordSchema,
-    passwordConfirm: passwordConfirmSchema,
-  })
-  .refine((data) => data.password === data.passwordConfirm, {
-    path: ['passwordConfirm'],
-    message: '비밀번호가 일치하지 않습니다.',
-  });
 const imageSchema = z
   .union([
     // NOTE: union: file혹은 string 중 일치하는 값
@@ -69,15 +53,26 @@ const imageSchema = z
     }
   );
 
-const teamNameSchema = z.string().min(1, '팀 이름을 선택해주세요.');
+export const loginValidationSchema = z.object({
+  email: emailSchema,
+  password: passwordSchema,
+});
 
-const createTeamValidationSchema = z.object({
+export const authValidationSchema = z
+  .object({
+    username: nameSchema,
+    email: emailSchema,
+    password: passwordSchema,
+    passwordConfirm: passwordConfirmSchema,
+  })
+  .refine((data) => data.password === data.passwordConfirm, {
+    path: ['passwordConfirm'],
+    message: '비밀번호가 일치하지 않습니다.',
+  });
+
+export const teamNameSchema = z.string().min(1, '팀 이름을 선택해주세요.');
+
+export const createTeamValidationSchema = z.object({
   image: imageSchema,
   name: teamNameSchema,
 });
-
-export {
-  createTeamValidationSchema,
-  loginValidationSchema,
-  authValidationSchema,
-};

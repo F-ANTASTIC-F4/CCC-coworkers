@@ -11,65 +11,64 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import useRequestFunction from '@/hooks/useRequestFunction';
 import uploadImage from '@/lib/api/common';
-import fetchAPI from '@/lib/api/fetchAPI';
 import { createGroup } from '@/lib/api/group';
 import { createTeamValidationSchema } from '@/lib/schema';
-import TeamProfile from '@/public/icons/team_profile.svg';
-import { GroupList } from '@ccc-types';
+import TeamProfile from '@/public/icons/group_profile.svg';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 export default function CreateTeamForm() {
-  const [teams, setTeams] = useState<GroupList>([]);
-
+  const api = useRequestFunction(createGroup);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const form = useForm<z.infer<typeof createTeamValidationSchema>>({
     resolver: zodResolver(createTeamValidationSchema),
   });
 
-  useEffect(() => {
-    // 그룹 목록 가져옴
-    const fetchTeams = async () => {
-      try {
-        const response = await fetchAPI.GroupList();
-        setTeams(response);
-      } catch (error) {
-        console.error('팀 목록을 가져오는 중 오류 발생:', error);
+  const onSubmit = async (data: z.infer<typeof createTeamValidationSchema>) => {
+    let imageUrl: string | undefined;
+
+    if (data.image) {
+      const imageResult = await uploadImage(data.image);
+      if ('data' in imageResult) {
+        imageUrl = imageResult.data;
       }
+    }
+    const teamData = {
+      name: data.name,
+      image: imageUrl,
     };
 
-    fetchTeams();
-  }, []);
-
-  // 팀 이름 중복 검사
-  const isTeamNameUnique = (name: string): boolean =>
-    !teams.some((team) => team.name === name);
-
-  const onSubmit = async (data: z.infer<typeof createTeamValidationSchema>) => {
-    try {
-      if (!isTeamNameUnique(data.name)) {
-        form.setError('name', {
-          type: 'manual',
-          message: '이미 존재하는 팀 이름입니다.',
-        });
-        return;
-      }
-
-      const image = data.image ? await uploadImage(data.image) : undefined;
-
-      const teamData = {
-        name: data.name,
-        image,
-      };
-      await createGroup(teamData);
-
-      alert('팀 생성 성공');
-    } catch (error) {
-      console.error('팀 생성 중 오류 발생:', error);
-    }
+    await api.request(teamData);
   };
+
+  const currentImage = form.watch('image');
+
+  // 이미지 프리뷰 설정
+  useEffect(() => {
+    if (!currentImage || typeof currentImage === 'string') return;
+    setImagePreview(URL.createObjectURL(currentImage));
+  }, [currentImage]);
+
+  // API 요청 결과에 따른 alert
+  useEffect(() => {
+    if (api.isError) {
+      alert(api.error?.message || api.error?.info);
+    }
+    if (api.isSuccess) {
+      alert('팀 생성이 완료되었습니다.');
+    }
+  }, [
+    api.isError,
+    api.isSuccess,
+    api.data,
+    api.error?.info,
+    api.error?.message,
+  ]);
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-8">
@@ -79,9 +78,9 @@ export default function CreateTeamForm() {
           render={({ field: { value, onChange, ...fieldProps } }) => (
             <FormItem>
               <FormLabel className="inline-block w-[max-content]">
-                <ImageInputUI>
-                  <ImageInputUI.Content>
-                    <TeamProfile />
+                <ImageInputUI className="cursor-pointer">
+                  <ImageInputUI.Content imagePreview={imagePreview}>
+                    <TeamProfile width="60" height="60" />
                   </ImageInputUI.Content>
                 </ImageInputUI>
               </FormLabel>
@@ -107,13 +106,15 @@ export default function CreateTeamForm() {
             <FormItem>
               <FormLabel>팀 이름</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="팀 이름을 입력해주세요." {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">생성하기</Button>
+        <Button type="submit" disabled={api.isPending}>
+          {api.isPending ? '저장중...' : '생성하기'}
+        </Button>
       </form>
     </Form>
   );
