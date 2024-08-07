@@ -71,7 +71,7 @@ export default function CommentSheet({
   return (
     <Sheet>
       <SheetTrigger asChild>{children}</SheetTrigger>
-      <SheetContent className="w-full md:max-w-[435px] xl:max-w-[778px]">
+      <SheetContent className="mt-[60px] w-full md:max-w-[435px] xl:max-w-[778px]">
         {isTaskDone && (
           <div className="flex items-center gap-[6px] text-brand-tertiary">
             <CheckIcon />
