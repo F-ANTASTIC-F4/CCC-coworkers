@@ -81,6 +81,7 @@ export default class Client {
         const errorBody = JSON.parse(
           await response.text().then((text) => text || '{}')
         );
+        console.log(response);
 
         // 커스텀 FetchError 실행
         // 백엔드에서 보내주는 message가 있으면 error.message에 해당 값을 넣고 아니라면 statusText를 추가

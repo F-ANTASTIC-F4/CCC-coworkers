@@ -19,16 +19,12 @@ export default async function setAuthHeader(request: NextRequest) {
 
   const nextResponse = NextResponse.next();
 
-  const tempOrigin = `{request.headers.get('x-forwarded-proto')}://${request.headers.get(
-    'x-forwarded-host'
-  )}`;
+  const tempOrigin = request.nextUrl.origin;
   nextResponse.headers.append('Access-Control-Allow-Origin', tempOrigin);
 
   const accessToken = request.cookies.get('accessToken')?.value || null;
   if (accessToken)
     nextResponse.headers.set('Authorization', `Bearer ${accessToken}`);
-
-  console.log(nextResponse);
 
   return nextResponse;
 }
