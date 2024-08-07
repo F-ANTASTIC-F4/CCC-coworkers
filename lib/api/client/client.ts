@@ -2,17 +2,15 @@
 
 import { Client, HttpClientConfig } from '@/lib/api/HttpClient';
 import FetchError from '@/lib/api/HttpClient/FetchError';
-import { cookies, headers } from 'next/headers';
+import { cookies } from 'next/headers';
 
-/* eslint-disable */
-
-// const BASE_URL =
-//   process.env.NODE_ENV === 'production'
-//     ? process.env.NEXT_PUBLIC_APP_BASE_URL || ''
-//     : 'http://localhost:3000';
+const BASE_URL =
+  process.env.NODE_ENV === 'production'
+    ? process.env.NEXT_PUBLIC_APP_BASE_URL || ''
+    : 'http://localhost:3000';
 
 const clientInstance = new Client({
-  // baseURL: BASE_URL + process.env.NEXT_PUBLIC_PROXY_URL,
+  baseURL: BASE_URL + process.env.NEXT_PUBLIC_PROXY_URL,
   headers: { 'Content-Type': 'application/json' },
   timeout: 5000,
   withCredentials: true,
@@ -22,13 +20,6 @@ clientInstance.interceptors.request.use((config) => {
   const requestConfig = config;
   const cookieStore = cookies();
   const decodedCookie = decodeURIComponent(cookieStore.toString());
-
-  const headersList = headers();
-  requestConfig.baseURL =
-    headersList.get('x-forwarded-proto') +
-    '://' +
-    headersList.get('x-forwarded-host') +
-    process.env.NEXT_PUBLIC_PROXY_URL;
 
   requestConfig.headers.Cookie = decodedCookie || '';
 
