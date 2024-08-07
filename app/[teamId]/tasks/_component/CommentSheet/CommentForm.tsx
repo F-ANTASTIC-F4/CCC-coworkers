@@ -37,7 +37,7 @@ function CommentForm() {
       <button
         type="submit"
         aria-label="댓글 전송하기 버튼"
-        className="*z-10 absolute right-0"
+        className="absolute right-0 z-10"
         disabled={isButtonDisabled}
       >
         <SubmitIcon
