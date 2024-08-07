@@ -1,6 +1,8 @@
 import {
   Dialog,
+  DialogClose,
   DialogContent,
+  DialogDescription,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
@@ -14,39 +16,42 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 
 const formSchema = z.object({
-  todoList: z
+  email: z
     .string()
-    .min(2, { message: '최소 2자 이상 입력해주세요.' })
-    .max(20, { message: '최대로 입력할 수 있는 글자수는 20개입니다.' }),
+    .nonempty({ message: '이메일을 입력해주세요' })
+    .email({ message: '유효한 이메일 주소를 입력해주세요' }),
 });
 
-function TodoListModal({ className = '' }) {
+function ResetPasswordModal({ className = '' }) {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      todoList: '',
+      email: '',
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     form.reset();
     setIsOpen(false);
-  };
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger className={className} asChild>
         <button
           type="button"
-          className="text-[14px] font-normal text-brand-primary"
+          className="w-full cursor-pointer text-[14px] font-medium text-brand-primary underline"
         >
-          + 새로운 목록 추가하기
+          비밀번호를 잊으셨나요?
         </button>
       </DialogTrigger>
-      <DialogContent hasCloseIcon>
-        <DialogTitle>할 일 목록</DialogTitle>
+      <DialogContent>
+        <DialogTitle>비밀번호 재설정</DialogTitle>
+        <DialogDescription>
+          비밀번호 재설정 링크를 보내드립니다.
+        </DialogDescription>
         <div className="gap- flex w-full max-w-[280px] flex-col gap-6">
           <Form {...form}>
             <form
@@ -55,15 +60,20 @@ function TodoListModal({ className = '' }) {
             >
               <FormField
                 control={form.control}
-                name="todoList"
+                name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <Input placeholder="목록 명을 입력해주세요" {...field} />
+                    <Input placeholder="이메일을 입력해주세요" {...field} />
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit">만들기</Button>
+              <div className="flex gap-2">
+                <DialogClose asChild>
+                  <Button variant="outlined">닫기</Button>
+                </DialogClose>
+                <Button type="submit">링크 보내기</Button>
+              </div>
             </form>
           </Form>
         </div>
@@ -72,4 +82,4 @@ function TodoListModal({ className = '' }) {
   );
 }
 
-export default TodoListModal;
+export default ResetPasswordModal;

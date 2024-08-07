@@ -1,6 +1,5 @@
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogTitle,
@@ -16,42 +15,40 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 
 const formSchema = z.object({
-  email: z
+  todoList: z
     .string()
-    .nonempty({ message: '이메일을 입력해주세요' })
-    .email({ message: '유효한 이메일 주소를 입력해주세요' }),
+    .min(2, { message: '최소 2자 이상 입력해주세요.' })
+    .max(20, { message: '최대로 입력할 수 있는 글자수는 20개입니다.' }),
 });
 
-function ResetPasswordModal({ className = '' }) {
+function TodoListModal({ className = '' }) {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: '',
+      todoList: '',
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values);
     form.reset();
     setIsOpen(false);
-  }
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger className={className} asChild>
         <button
           type="button"
-          className="text-[14px] font-medium text-brand-primary underline"
+          className="text-[14px] font-normal text-brand-primary"
         >
-          비밀번호를 잊으셨나요?
+          + 새로운 목록 추가하기
         </button>
       </DialogTrigger>
-      <DialogContent>
-        <DialogTitle>비밀번호 재설정</DialogTitle>
-        <DialogDescription>
-          비밀번호 재설정 링크를 보내드립니다.
-        </DialogDescription>
+      <DialogContent hasCloseIcon>
+        <DialogTitle>할 일 목록</DialogTitle>
+        <DialogDescription />
         <div className="gap- flex w-full max-w-[280px] flex-col gap-6">
           <Form {...form}>
             <form
@@ -60,20 +57,15 @@ function ResetPasswordModal({ className = '' }) {
             >
               <FormField
                 control={form.control}
-                name="email"
+                name="todoList"
                 render={({ field }) => (
                   <FormItem>
-                    <Input placeholder="이메일을 입력해주세요" {...field} />
+                    <Input placeholder="목록 명을 입력해주세요" {...field} />
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <div className="flex gap-2">
-                <DialogClose asChild>
-                  <Button variant="outlined">닫기</Button>
-                </DialogClose>
-                <Button type="submit">링크 보내기</Button>
-              </div>
+              <Button type="submit">만들기</Button>
             </form>
           </Form>
         </div>
@@ -82,4 +74,4 @@ function ResetPasswordModal({ className = '' }) {
   );
 }
 
-export default ResetPasswordModal;
+export default TodoListModal;
