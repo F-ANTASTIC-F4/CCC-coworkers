@@ -29,7 +29,7 @@ async function getUser() {
   return { data };
 }
 
-async function getUserHistory(): Promise<History[]> {
+async function getUserHistory() {
   const { data, error } = await client<History[]>(ENDPOINTS.USER.GET_HISTORY, {
     method: 'get',
   });
