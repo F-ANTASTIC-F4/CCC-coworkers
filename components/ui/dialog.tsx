@@ -1,5 +1,5 @@
-import cn from '@/lib/utils';
-import CloasIcon from '@/public/icons/modal/close_icon.svg';
+import { cn } from '@/lib/utils';
+import CloseIcon from '@/public/icons/modal/close_icon.svg';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import * as React from 'react';
@@ -60,7 +60,7 @@ const DialogContent = React.forwardRef<
     >
       {hasCloseIcon && (
         <DialogPrimitive.Close className="ml-auto opacity-70 ring-offset-background transition-opacity hover:opacity-100 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-          <CloasIcon />
+          <CloseIcon />
           <span className="sr-only">Close</span>
         </DialogPrimitive.Close>
       )}
