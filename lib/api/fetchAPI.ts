@@ -198,7 +198,6 @@ const fetchAPI = {
   User: getUser,
   UserHistory: getUserHistory,
   Group: getGroup,
-  GroupList: getGroupList,
   GroupSpecificTasks: getGroupSpecificTasks,
   Task: getTask,
   TaskList: getTaskList,
