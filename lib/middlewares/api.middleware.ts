@@ -2,6 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 
 /* eslint-disable consistent-return */
 
+// const allowedOrigins = [
+//   'http://localhost:3000',
+//   'https://ccc-coworkers.vercel.app',
+//   'https:/ccc-coworkers-preview*',
+// ];
+
 // proxy 서버를 거치는 요청의 경우,
 // 요청헤더의 Cookie를 통해 header에 인증 토큰을 넣어주는 함수
 export default async function setAuthHeader(request: NextRequest) {
@@ -13,9 +19,16 @@ export default async function setAuthHeader(request: NextRequest) {
 
   const nextResponse = NextResponse.next();
 
+  const tempOrigin = `{request.headers.get('x-forwarded-proto')}://${request.headers.get(
+    'x-forwarded-host'
+  )}`;
+  nextResponse.headers.append('Access-Control-Allow-Origin', tempOrigin);
+
   const accessToken = request.cookies.get('accessToken')?.value || null;
   if (accessToken)
     nextResponse.headers.set('Authorization', `Bearer ${accessToken}`);
+
+  console.log(nextResponse);
 
   return nextResponse;
 }

@@ -2,7 +2,9 @@
 
 import { Client, HttpClientConfig } from '@/lib/api/HttpClient';
 import FetchError from '@/lib/api/HttpClient/FetchError';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
+
+/* eslint-disable prefer-template */
 
 const BASE_URL =
   process.env.NODE_ENV === 'production'
@@ -20,6 +22,13 @@ clientInstance.interceptors.request.use((config) => {
   const requestConfig = config;
   const cookieStore = cookies();
   const decodedCookie = decodeURIComponent(cookieStore.toString());
+
+  const headersList = headers();
+  requestConfig.baseURL =
+    headersList.get('x-forwarded-proto') +
+    '://' +
+    headersList.get('x-forwarded-host') +
+    process.env.NEXT_PUBLIC_PROXY_URL;
 
   requestConfig.headers.Cookie = decodedCookie || '';
 
