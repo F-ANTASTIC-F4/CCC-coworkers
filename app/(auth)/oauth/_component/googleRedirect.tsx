@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 export default function GoogleRedirect() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
-
+  // NOTE - 카카오 oauth 부분에서는 login 페이지에 있었는데 구글은 url에 필요없어서 일단 여기에 넣었습니당 나중에 합쳐지면 util로 따로 빼던가 할게융
   // 랜덤 문자열
   const generateRandomState = (length: number = 32): string =>
     crypto.randomBytes(length).toString('hex');
@@ -38,7 +38,7 @@ export default function GoogleRedirect() {
       const data = await res.json();
       return data.id_token;
     } catch (e) {
-      console.error('Error in getKakaoToken:', e);
+      console.error('Error in getgoogleToken:', e);
       throw e;
     }
   };
@@ -46,7 +46,7 @@ export default function GoogleRedirect() {
     const handleGoogleRedirect = async () => {
       if (typeof window === 'undefined') return;
 
-      // kakao 인가 code 추출
+      // google 인가 code 추출
       const url = new URL(window.location.href);
       const code = url.searchParams.get('code');
       const state = generateRandomState();
