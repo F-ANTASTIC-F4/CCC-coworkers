@@ -33,8 +33,6 @@ export default function KakaoRedirect() {
         if (res) {
           setIsLoading(false);
           router.push('/');
-        } else {
-          throw new Error('Login failed: User information not received');
         }
       }
     };

@@ -1,9 +1,16 @@
+import crypto from 'crypto';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import LoginForm from './_components/loginForm';
 
 export default function Login() {
+  // 랜덤 문자열
+  const generateRandomState = (length: number = 32): string =>
+    crypto.randomBytes(length).toString('hex');
+  const state = generateRandomState();
+
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&scope=profile_nickname,profile_image&state=${state}`;
   return (
     <div className="m-auto mt-[90px] w-full max-w-[460px]">
       <h2 className="mb-[80px] text-center text-[40px] font-medium">로그인</h2>
@@ -24,12 +31,14 @@ export default function Login() {
         <p className="text-[16px] font-medium">간편 로그인하기</p>
         <div className="flex gap-3">
           <Image src="/images/google.png" alt="구글" width={42} height={42} />
-          <Image
-            src="/images/kakaotalk.png"
-            alt="카카오"
-            width={42}
-            height={42}
-          />
+          <Link href={KAKAO_AUTH_URL}>
+            <Image
+              src="/images/kakaotalk.png"
+              alt="카카오"
+              width={42}
+              height={42}
+            />
+          </Link>
         </div>
       </div>
     </div>
