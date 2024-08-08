@@ -1,9 +1,10 @@
 import fetchAPI from '@/lib/api/fetchAPI';
-import DefaultUserIcon from '@/public/icons/header_user.svg';
 import Logo from '@/public/icons/logo_coworkers.svg';
 import Link from 'next/link';
 
 import HamburgerSheet from './HamburgerSheet';
+import HeaderDropdown from './HeaderDropdown';
+import HeaderProfileDropdown from './HeaderProfileDropdown';
 
 function HeaderContainer({ children }: { children: React.ReactNode }) {
   return (
@@ -17,12 +18,12 @@ function HeaderContainer({ children }: { children: React.ReactNode }) {
 
 async function Header() {
   const { data } = await fetchAPI.User();
-
+  
   if (data) {
     return (
       <HeaderContainer>
         <div className="flex items-center gap-4 md:hidden">
-          <HamburgerSheet />
+          <HamburgerSheet user={data} />
           <Link href="/">
             <Logo className="h-[20px] w-[102px] xl:h-[32px] xl:w-[158px]" />
           </Link>
@@ -31,13 +32,10 @@ async function Header() {
           <Link href="/">
             <Logo className="h-[20px] w-[102px] xl:h-[32px] xl:w-[158px]" />
           </Link>
-          <p>팀</p>
+          <HeaderDropdown user={data} />
           <Link href="/boards">자유게시판</Link>
         </div>
-        <div className="flex items-center gap-2">
-          <DefaultUserIcon className="size-4" />
-          <p className="hidden text-sm font-medium xl:block">{data.nickname}</p>
-        </div>
+        <HeaderProfileDropdown user={data} />
       </HeaderContainer>
     );
   }
@@ -45,7 +43,6 @@ async function Header() {
   return (
     <HeaderContainer>
       <Link href="/">
-        {/* REVIEW - svgr vs Nextjs Image 태그 */}
         <Logo className="h-[20px] w-[102px] xl:h-[32px] xl:w-[158px]" />
       </Link>
       <Link href="/login" className="text-base font-semibold">
