@@ -10,26 +10,15 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { passwordConfirmSchema, passwordSchema } from '@/lib/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 const formSchema = z
   .object({
-    password: z
-      .string()
-      .min(1, '비밀번호를 입력해주세요.')
-      .regex(
-        /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/,
-        '영문+숫자+특수문자(! @ # $ % & * ?) 조합 8~15자리를 입력해주세요.'
-      ),
-    passwordConfirmation: z
-      .string()
-      .min(1, '비밀번호를 입력해주세요.')
-      .regex(
-        /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/,
-        '영문+숫자+특수문자(! @ # $ % & * ?) 조합 8~15자리를 입력해주세요.'
-      ),
+    password: passwordSchema,
+    passwordConfirmation: passwordConfirmSchema,
   })
   .refine((data) => data.password === data.passwordConfirmation, {
     path: ['passwordConfirmation'],
@@ -37,7 +26,7 @@ const formSchema = z
   });
 
 interface UpdatePasswordFormProps {
-  onSubmit: (data: any) => Promise<void>;
+  onSubmit: (data: any) => Promise<any>;
 }
 
 const UpdatePasswordForm = ({ onSubmit }: UpdatePasswordFormProps) => {
@@ -50,10 +39,14 @@ const UpdatePasswordForm = ({ onSubmit }: UpdatePasswordFormProps) => {
   });
 
   async function handleSubmit(values: z.infer<typeof formSchema>) {
-    await onSubmit({
+    const res = await onSubmit({
       password: values.password,
       passwordConfirmation: values.passwordConfirmation,
     });
+    if (res?.error) {
+      console.error(res.error.message);
+      alert(res.error.message);
+    }
   }
 
   return (

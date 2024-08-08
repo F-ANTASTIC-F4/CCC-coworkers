@@ -1,5 +1,8 @@
-import { setAuthHeader, withAuth } from '@/lib/middlewares';
-import processTokenFromQuery from '@/lib/middlewares/reset-password.middleware';
+import {
+  processTokenFromQuery,
+  setAuthHeader,
+  withAuth,
+} from '@/lib/middlewares';
 import { NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
