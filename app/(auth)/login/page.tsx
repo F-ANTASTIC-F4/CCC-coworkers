@@ -1,13 +1,13 @@
-import crypto from 'crypto';
 import Image from 'next/image';
 import Link from 'next/link';
+import { v4 as uuidv4 } from 'uuid';
 
 import LoginForm from './_components/loginForm';
 
 export default function Login() {
   // 랜덤 문자열
-  const generateRandomState = (length: number = 32): string =>
-    crypto.randomBytes(length).toString('hex');
+  const generateRandomState = (): string => uuidv4();
+
   const state = generateRandomState();
 
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&scope=profile_nickname,profile_image&state=${state}`;
