@@ -35,7 +35,7 @@ function WithDrawalTemplate({ className = '', ...props }) {
             <Button variant="outlined-secondary">닫기</Button>
           </DialogClose>
           <DialogClose asChild>
-            <Button variant="danger" onClick={() => props.onClick()} {...props}>
+            <Button variant="danger" {...props}>
               회원 탈퇴
             </Button>
           </DialogClose>
