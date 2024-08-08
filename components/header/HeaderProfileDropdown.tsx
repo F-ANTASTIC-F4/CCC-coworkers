@@ -6,13 +6,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { logout } from '@/lib/api/auth';
 import DefaultUserIcon from '@/public/icons/header_user.svg';
 import { User } from '@ccc-types';
 import Link from 'next/link';
 
 function HeaderProfileDropdown({ user }: { user: User }) {
   const handleLogout = () => {
-    console.log('로그아웃');
+    logout();
   };
 
   return (
