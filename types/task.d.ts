@@ -14,6 +14,7 @@ declare module '@ccc-types' {
     updatedAt: DateString;
     name: string;
     id: Id;
+    commentCount: number;
   }
 
   // NOTE - history API 리스폰스 부분의 타입을 정의했는데 더 나은 방법이 있었을까요..?
