@@ -1,36 +1,48 @@
 'use server';
 
 import { ENDPOINTS } from '@/lib/api/API_CONSTANTS';
-import client from '@/lib/api/client/server';
+import client from '@/lib/api/client/client';
 import { Email, Nickname, Password, UrlType } from '@ccc-types';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
+/* eslint-disable consistent-return */
+
 export async function updateUser(user: {
   nickname?: Nickname;
   image?: UrlType;
-}): Promise<{ message: string }> {
+}) {
   const { error } = await client<{ message: string }>(ENDPOINTS.USER.ACTIONS, {
     method: 'patch',
     data: user,
   });
   if (error) {
-    throw new Error('유저 정보를 업데이트 하는 중 에러가 발생했습니다.', {
-      cause: error,
-    });
+    return {
+      error: {
+        info: '유저 정보를 업데이트 하는 중 에러가 발생했습니다.',
+        message: error.message,
+        ...error.cause,
+      },
+    };
   }
 
   revalidatePath('/', 'layout');
-  redirect('/');
+  redirect('/my-account');
 }
 
-export async function deleteUser(): Promise<boolean> {
+export async function deleteUser() {
   const { error } = await client<void>(ENDPOINTS.USER.ACTIONS, {
     method: 'delete',
   });
   if (error) {
-    throw new Error('유저 삭제에 실패했습니다.', { cause: error });
+    return {
+      error: {
+        info: '유저 정보를 삭제 하는 중 에러가 발생했습니다.',
+        message: error.message,
+        ...error.cause,
+      },
+    };
   }
   return true;
 }
@@ -52,7 +64,7 @@ type PatchPasswordRequestBody = PasswordAuthentication;
 
 export async function sendResetPasswordEmail(
   data: SendResetPasswordEmailRequestBody
-): Promise<{ message: string }> {
+) {
   const { data: response, error } = await client<{ message: string }>(
     ENDPOINTS.USER.POST_SEND_RESET_PASSWORD_EMAIL,
     {
@@ -61,9 +73,13 @@ export async function sendResetPasswordEmail(
     }
   );
   if (error) {
-    throw new Error('비밀번호 재설정 메일 전송에 실패했습니다', {
-      cause: error,
-    });
+    return {
+      error: {
+        info: '비밀번호 재설정 메일 전송에 실패했습니다.',
+        message: error.message,
+        ...error.cause,
+      },
+    };
   }
   return response;
 }
@@ -71,11 +87,7 @@ export async function sendResetPasswordEmail(
 // 비밀번호 재설정 요청: 사용자가 비밀번호 재설정을 요청하면, 서버는 유효한 token을 생성하고 이를 포함한 링크를 이메일로 전송합니다.
 // 링크 클릭: 사용자가 이메일 링크를 클릭하면 서버는 token을 검증하고, 사용자에게 비밀번호 재설정 페이지를 제공하거나 로그인 페이지로 리디렉션합니다.
 // 세션 생성: 서버는 검증된 token을 바탕으로 사용자의 세션을 생성하고, 비밀번호 재설정 폼을 사용자에게 보여줍니다.
-export async function resetPassword(
-  data: PasswordAuthentication
-): Promise<void> {
-  'use server';
-
+export async function resetPassword(data: PasswordAuthentication) {
   const sessionToken = cookies().get('sessionToken')?.value;
   const { error } = await client<{ message: string }>(
     ENDPOINTS.USER.PATCH_RESET_PASSWORD,
@@ -88,15 +100,19 @@ export async function resetPassword(
     }
   );
   if (error) {
-    throw new Error('비밀번호 재설정에 실패했습니다', { cause: error });
+    return {
+      error: {
+        info: '비밀번호 재설정에 실패했습니다.',
+        message: error.message,
+        ...error.cause,
+      },
+    };
   }
   cookies().set('sessionToken', '', { maxAge: -1, path: '/' });
   redirect('/');
 }
 
-export async function updatePassword(
-  data: PatchPasswordRequestBody
-): Promise<{ message: string }> {
+export async function updatePassword(data: PatchPasswordRequestBody) {
   const { data: response, error } = await client<{ message: string }>(
     ENDPOINTS.USER.PATCH_PASSWORD,
     {
@@ -105,7 +121,13 @@ export async function updatePassword(
     }
   );
   if (error) {
-    throw new Error('비밀번호 업데이트에 실패했습니다.', { cause: error });
+    return {
+      error: {
+        info: '비밀번호 업데이트에 실패했습니다.',
+        message: error.message,
+        ...error.cause,
+      },
+    };
   }
   return response;
 }
