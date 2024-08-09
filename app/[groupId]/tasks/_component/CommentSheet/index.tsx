@@ -63,10 +63,9 @@ export default function CommentSheet({
       done: !isDone,
     };
     setFormData(newFormData);
-
+    handleClick(!isDone);
     try {
       await updateTask(id, newFormData);
-      handleClick(!isDone);
     } catch (error) {
       console.error(error);
     }

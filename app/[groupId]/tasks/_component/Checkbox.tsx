@@ -39,9 +39,9 @@ export default function CheckboxReactHookFormSingle({
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
+    handleClick(!isDone);
     try {
       await updateTask(id, data);
-      handleClick(!isDone);
     } catch (error) {
       console.error(error);
     }
