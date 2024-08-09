@@ -1,5 +1,3 @@
-'use client';
-
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -13,7 +11,7 @@ import WarningIcon from '@/public/icons/modal/warning_icon.svg';
 import WithDrawIcon from '@/public/icons/modal/with_draw_icon.svg';
 import React from 'react';
 
-function WithDrawalTemplete({ className = '', ...props }) {
+function WithDrawalTemplate({ className = '', ...props }) {
   return (
     <Dialog>
       <DialogTrigger asChild className={className}>
@@ -47,4 +45,4 @@ function WithDrawalTemplete({ className = '', ...props }) {
   );
 }
 
-export default WithDrawalTemplete;
+export default WithDrawalTemplate;

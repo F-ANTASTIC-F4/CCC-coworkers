@@ -1,6 +1,6 @@
 'use client';
 
-import cn from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import NextIcon from '@/public/icons/calender/next_date_icon.svg';
 import PrevIcon from '@/public/icons/calender/prev_date_icon.svg';
 import * as React from 'react';

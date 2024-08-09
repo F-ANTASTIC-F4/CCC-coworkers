@@ -93,9 +93,14 @@ export default class Client {
             hasBodyMessage: !!errorBody?.message,
             statusText: response.statusText,
             status: response.status,
-            requestConfig: finalConfig,
+            // requestConfig: finalConfig,
           },
         });
+      }
+
+      // 응답이 No Content인 경우 빈 객체를 반환
+      if (response.status === 204) {
+        return {};
       }
 
       // 일반적인 응답은 json() 처리를 해서 전달
@@ -125,7 +130,7 @@ export default class Client {
       if (error instanceof FetchError) {
         throw error;
       }
-
+      console.error(error);
       throw new FetchError('unknownError', { cause: error });
     }
   }
