@@ -92,7 +92,7 @@ function TaskList({ data, groupId }: { data: GroupTask[]; groupId: Id }) {
 
           {taskList?.length !== 0 ? (
             <div className="mt-3 flex flex-col gap-5">
-              {taskList?.map((task) => <TaskItem key={task.id} {...task} />)}
+              {taskList?.map((task) => <TaskItem key={task.id} task={task} />)}
             </div>
           ) : (
             <div className="mb-[120px] flex h-full items-center justify-center">

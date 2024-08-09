@@ -1,13 +1,17 @@
+import frequencyTypeObj from '@/constants/frequencyType';
 import CalenderNoBtnIcon from '@/public/icons/list/calender_no_btn.svg';
 import ClockIcon from '@/public/icons/list/clock_icon.svg';
 import DailyIcon from '@/public/icons/list/daily_task_icon.svg';
 import { formatToDate, formatToTime } from '@/utils/dateFormat';
+import { DetailTask } from '@ccc-types';
 import Image from 'next/image';
 import React from 'react';
 
 const textClass = `text-xs font-normal text-text-default`;
 
-function CommentMeta() {
+function CommentMeta({ detailTask }: { detailTask: DetailTask }) {
+  const taskType = detailTask && frequencyTypeObj[detailTask.frequency];
+
   return (
     <div className="text-text-primar4 flex flex-col gap-4">
       <div className="flex items-center justify-between">
@@ -20,10 +24,12 @@ function CommentMeta() {
               style={{ objectFit: 'cover' }}
             />
           </div>
-          <span className="text-sm font-medium">안혜나</span>
+          <span className="text-sm font-medium">
+            {detailTask?.user?.nickname}
+          </span>
         </div>
         <span className="text-sm font-normal text-text-secondary">
-          {formatToDate(new Date(), 'dotFormat')}
+          {formatToDate(detailTask.date, 'dotFormat')}
         </span>
       </div>
       <div className="flex gap-3">
@@ -39,7 +45,7 @@ function CommentMeta() {
         </div>
         <div className="flex items-center gap-1">
           <DailyIcon />
-          <p className={textClass}>대충 할일</p>
+          <p className={textClass}>{taskType}</p>
         </div>
       </div>
     </div>

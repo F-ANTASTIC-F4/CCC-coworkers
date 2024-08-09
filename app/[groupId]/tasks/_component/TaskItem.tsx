@@ -1,4 +1,5 @@
 import EditDeleteDropdown from '@/components/dropdown-template/EditDeleteDropdown';
+import frequencyTypeObj from '@/constants/frequencyType';
 import CalenderNoBtnIcon from '@/public/icons/list/calender_no_btn.svg';
 import ClockIcon from '@/public/icons/list/clock_icon.svg';
 import CommentIcon from '@/public/icons/list/comment_icon.svg';
@@ -10,49 +11,44 @@ import React from 'react';
 import CheckboxReactHookFormSingle from './Checkbox';
 import CommentSheet from './CommentSheet';
 
-const frequencyTypeObj = {
-  DAILY: '매일 반복',
-  WEEKLY: '주 반복',
-  MONTHLY: '월 반복',
-  ONCE: '한번',
-};
-
 const textClass = `text-xs font-normal text-text-default`;
 
-function TaskItem({ name, date, frequency, doneAt, commentCount, id }: Task) {
-  const [isDone, setIsDone] = React.useState<boolean>(!!doneAt);
-  const taskType = frequencyTypeObj[frequency];
+function TaskItem({ task }: { task: Task }) {
+  const [isDone, setIsDone] = React.useState<boolean>(!!task.doneAt);
+  const taskType = frequencyTypeObj[task.frequency];
 
   const handleDoneState = (value: boolean) => {
     setIsDone(value);
   };
 
   return (
-    <CommentSheet isDone={isDone} id={id} handleClick={handleDoneState}>
+    <CommentSheet isDone={isDone} task={task} handleClick={handleDoneState}>
       <div className="flex w-full cursor-pointer flex-col gap-3 rounded-[10px] bg-background-secondary px-[14px] py-[12px]">
         <div className="flex w-full justify-between">
           <CheckboxReactHookFormSingle
-            id={id}
-            task={name}
+            id={task.id}
+            task={task.name}
             isDone={isDone}
             handleClick={handleDoneState}
           />
           <div className="flex items-center gap-2">
             <div className="flex gap-[2px]">
               <CommentIcon />
-              <p className={textClass}>{commentCount}</p>
+              <p className={textClass}>{task.commentCount}</p>
             </div>
-            <EditDeleteDropdown title={name} />
+            <EditDeleteDropdown title={task.name} />
           </div>
         </div>
         <div className="flex gap-3">
           <div className="flex items-center gap-1">
             <CalenderNoBtnIcon />
-            <p className={textClass}>{formatToDate(date, 'koreanFullDate')}</p>
+            <p className={textClass}>
+              {formatToDate(task.date, 'koreanFullDate')}
+            </p>
           </div>
           <div className="flex items-center gap-1">
             <ClockIcon />
-            <p className={textClass}>{formatToTime(date)}</p>
+            <p className={textClass}>{formatToTime(task.date)}</p>
           </div>
           <div className="flex items-center gap-1">
             <DailyIcon />

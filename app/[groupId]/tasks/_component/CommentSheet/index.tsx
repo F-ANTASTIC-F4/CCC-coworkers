@@ -12,7 +12,7 @@ import {
 import fetchAPI from '@/lib/api/fetchAPI';
 import { updateTask } from '@/lib/api/task';
 import CheckIcon from '@/public/icons/button/check_icon.svg';
-import { Comment, DetailTask, Id } from '@ccc-types';
+import { Comment, DetailTask, Id, Task } from '@ccc-types';
 import React, { useEffect } from 'react';
 
 import CommentForm from './CommentForm';
@@ -28,12 +28,12 @@ interface FormData {
 export default function CommentSheet({
   children,
   isDone,
-  id,
+  task,
   handleClick,
 }: {
   children: React.ReactNode;
   isDone: boolean;
-  id: Id;
+  task: Task;
   handleClick: (value: boolean) => void;
 }) {
   const [detailTask, setDetailTask] = React.useState<DetailTask | undefined>(
@@ -65,17 +65,17 @@ export default function CommentSheet({
     setFormData(newFormData);
     handleClick(!isDone);
     try {
-      await updateTask(id, newFormData);
+      await updateTask(task.id, newFormData);
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    if (isOpen && id) {
-      fetchData(id);
+    if (isOpen && task.id) {
+      fetchData(task.id);
     }
-  }, [isOpen, id]);
+  }, [isOpen, task.id]);
 
   return (
     <Sheet onOpenChange={setIsOpen}>
@@ -93,7 +93,7 @@ export default function CommentSheet({
           </p>
           <EditDeleteDropdown className="h-[24px] w-[24px]" />
         </SheetTitle>
-        <CommentMeta />
+        {detailTask && <CommentMeta detailTask={detailTask} />}
         <SheetDescription className="mt-2 min-h-[150px]">
           {detailTask && detailTask.recurring.description}
         </SheetDescription>
