@@ -12,7 +12,6 @@ import {
 import { updateTask } from '@/lib/api/task';
 import { Id } from '@ccc-types';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
 import React, { MouseEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -22,12 +21,12 @@ const FormSchema = z.object({
 });
 
 export default function CheckboxReactHookFormSingle({
-  // handleClick,
+  handleClick,
   id,
   task,
   isDone,
 }: {
-  // handleClick: (value: boolean) => void;
+  handleClick: (value: boolean) => void;
   id: Id;
   task: string;
   isDone: boolean;
@@ -38,15 +37,13 @@ export default function CheckboxReactHookFormSingle({
       done: isDone,
     },
   });
-  const router = useRouter();
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       await updateTask(id, data);
+      handleClick(!isDone);
     } catch (error) {
       console.error(error);
-    } finally {
-      router.refresh();
     }
   }
 
@@ -69,13 +66,13 @@ export default function CheckboxReactHookFormSingle({
               <FormControl>
                 <Checkbox
                   type="submit"
-                  checked={field.value}
+                  checked={isDone}
                   onCheckedChange={field.onChange}
                 />
               </FormControl>
               <div className="space-y-1 leading-none">
                 <FormLabel
-                  className={`relative bottom-[2px] ${field.value && 'line-through'}`}
+                  className={`relative bottom-[2px] cursor-pointer ${isDone && 'line-through'}`}
                 >
                   {task}
                 </FormLabel>

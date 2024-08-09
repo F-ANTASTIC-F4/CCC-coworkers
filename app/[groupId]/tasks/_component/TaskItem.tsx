@@ -20,19 +20,23 @@ const frequencyTypeObj = {
 const textClass = `text-xs font-normal text-text-default`;
 
 function TaskItem({ name, date, frequency, doneAt, commentCount, id }: Task) {
-  // NOTE - 따로 task를 완료했는지에 대한 값이 오지 않아 doneAt이 있는지를 기준으로 임시로 작성했습니다!
-  const isDone = !!doneAt;
+  const [isDone, setIsDone] = React.useState<boolean>(!!doneAt);
   const taskType = frequencyTypeObj[frequency];
 
-  // const handleDoneState = (value: boolean) => {
-  //   setIsDone(value);
-  // };
+  const handleDoneState = (value: boolean) => {
+    setIsDone(value);
+  };
 
   return (
-    <CommentSheet isDone={isDone} id={id}>
+    <CommentSheet isDone={isDone} id={id} handleClick={handleDoneState}>
       <div className="flex w-full cursor-pointer flex-col gap-3 rounded-[10px] bg-background-secondary px-[14px] py-[12px]">
         <div className="flex w-full justify-between">
-          <CheckboxReactHookFormSingle id={id} task={name} isDone={isDone} />
+          <CheckboxReactHookFormSingle
+            id={id}
+            task={name}
+            isDone={isDone}
+            handleClick={handleDoneState}
+          />
           <div className="flex items-center gap-2">
             <div className="flex gap-[2px]">
               <CommentIcon />

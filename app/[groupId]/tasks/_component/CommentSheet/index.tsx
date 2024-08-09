@@ -13,7 +13,6 @@ import fetchAPI from '@/lib/api/fetchAPI';
 import { updateTask } from '@/lib/api/task';
 import CheckIcon from '@/public/icons/button/check_icon.svg';
 import { Comment, DetailTask, Id } from '@ccc-types';
-import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 
 import CommentForm from './CommentForm';
@@ -30,12 +29,12 @@ export default function CommentSheet({
   children,
   isDone,
   id,
-  // handleClick,
+  handleClick,
 }: {
   children: React.ReactNode;
   isDone: boolean;
   id: Id;
-  // handleClick: (value: boolean) => void;
+  handleClick: (value: boolean) => void;
 }) {
   const [detailTask, setDetailTask] = React.useState<DetailTask | undefined>(
     undefined
@@ -47,7 +46,6 @@ export default function CommentSheet({
   const [formData, setFormData] = React.useState<FormData>({
     done: isDone,
   });
-  const router = useRouter();
 
   const fetchData = async (idValue: Id) => {
     const res = await fetchAPI.Task(idValue);
@@ -68,10 +66,9 @@ export default function CommentSheet({
 
     try {
       await updateTask(id, newFormData);
+      handleClick(!isDone);
     } catch (error) {
       console.error(error);
-    } finally {
-      router.refresh();
     }
   };
 

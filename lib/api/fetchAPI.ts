@@ -92,7 +92,7 @@ async function getTasks(groupId: Id, taskListId: Id, date: DateString) {
     ENDPOINTS.TASK.ACTIONS(groupId, taskListId, date),
     {
       method: 'get',
-      // NOTE 쿼리로 date를 받음, 사용하실때 수정해서 사용해주세요!c
+      // NOTE 쿼리로 date를 받음, 사용하실때 수정해서 사용해주세요!
     }
   );
   if (error) {
