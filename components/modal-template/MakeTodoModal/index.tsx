@@ -1,6 +1,5 @@
 'use client';
 
-import { Calendar } from '@/components/ui/calendar';
 import {
   Dialog,
   DialogContent,
@@ -15,8 +14,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import timeArr from '@/constants/timeArr';
-import { formatToDate, formatToTime } from '@/utils/dateFormat';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -26,7 +23,9 @@ import { Button } from '../../ui/button';
 import { Input } from '../../ui/input';
 import DayGroupToggle from './DayGroupToggle';
 import FrequencySelect from './FrequencySelect';
+import StartDatePicker from './StartDatePicker';
 
+// NOTE - 폼 스키마 정의, frequencyType이 "ONCE", "DAILY" 일 경우 weekDays, monthDay를 스키마 키로 포함시키지 않음, "WEEKLY"일 경우 weekDays 배열을 포함, "MONTHLY"일 경우 monthDay를 포함시킴
 const formSchema = z.discriminatedUnion('frequencyType', [
   z.object({
     name: z
@@ -37,9 +36,11 @@ const formSchema = z.discriminatedUnion('frequencyType', [
       .string()
       .min(2, { message: '최소 2자 이상 입력해주세요.' })
       .max(30, { message: '최대로 입력할 수 있는 글자수는 30개입니다.' }),
-    startDate: z.string().default(new Date().setHours(0, 0, 0, 0).toString()),
-    frequencyType: z.literal('WEEKLY'),
-    weekDay: z.array(z.number().min(0).max(6)),
+    startDate: z
+      .string()
+      .default(new Date(new Date().setHours(0, 0, 0, 0)).toLocaleString()),
+    frequencyType: z.literal('WEEKLY').default('WEEKLY'),
+    weekDays: z.array(z.number().min(0).max(6)),
   }),
   z.object({
     name: z
@@ -50,8 +51,10 @@ const formSchema = z.discriminatedUnion('frequencyType', [
       .string()
       .min(2, { message: '최소 2자 이상 입력해주세요.' })
       .max(30, { message: '최대로 입력할 수 있는 글자수는 30개입니다.' }),
-    startDate: z.string().default(new Date().setHours(0, 0, 0, 0).toString()),
-    frequencyType: z.literal('MONTHLY'),
+    startDate: z
+      .string()
+      .default(new Date(new Date().setHours(0, 0, 0, 0)).toLocaleString()),
+    frequencyType: z.literal('MONTHLY').default('MONTHLY'),
     monthDay: z.number().min(1).max(31),
   }),
   z.object({
@@ -63,8 +66,10 @@ const formSchema = z.discriminatedUnion('frequencyType', [
       .string()
       .min(2, { message: '최소 2자 이상 입력해주세요.' })
       .max(30, { message: '최대로 입력할 수 있는 글자수는 30개입니다.' }),
-    startDate: z.string().default(new Date().setHours(0, 0, 0, 0).toString()),
-    frequencyType: z.enum(['ONCE', 'DAILY']),
+    startDate: z
+      .string()
+      .default(new Date(new Date().setHours(0, 0, 0, 0)).toLocaleString()),
+    frequencyType: z.enum(['ONCE', 'DAILY']).default('ONCE'),
   }),
 ]);
 
@@ -74,18 +79,6 @@ const commonClassName =
 function MakeTodoModal({ className = '' }) {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [isDayPickerOpen, setIsDayPickerOpen] = React.useState<boolean>(false);
-  const [isDatePickerOpen, setIsDatePickerOpen] =
-    React.useState<boolean>(false);
-  const [isTimePickerOpen, setIsTimePickerOpen] =
-    React.useState<boolean>(false);
-  const [date, setDate] = React.useState<Date>();
-  const [dateValue, setDateValue] = React.useState<string | undefined>(
-    formatToDate(new Date(), 'koreanFullDate').toString()
-  );
-  const [timeValue, setTimeValue] = React.useState<string | undefined>(
-    '오전 00:00'
-  );
-  const [period, setPeriod] = React.useState<'AM' | 'PM'>('AM');
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -93,8 +86,24 @@ function MakeTodoModal({ className = '' }) {
       name: '',
       description: '',
       frequencyType: 'ONCE',
+      startDate: new Date(new Date().setHours(0, 0, 0, 0)).toLocaleString(),
     },
   });
+
+  // NOTE - form의 키를 추적
+  const { watch, setValue } = form;
+
+  const frequencyType = watch('frequencyType');
+  const startDate = watch('startDate');
+
+  // NOTE - frequencyType이 MONTHLY일 경우 monthDay의 키를 설정한 날짜로 지정
+  React.useEffect(() => {
+    if (frequencyType === 'MONTHLY' && startDate) {
+      const date = new Date(startDate);
+      const monthDay = date.getUTCDate();
+      setValue('monthDay', monthDay);
+    }
+  }, [frequencyType, startDate, setValue]);
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values);
@@ -102,47 +111,12 @@ function MakeTodoModal({ className = '' }) {
     setIsOpen(false);
   };
 
+  // NOTE - 모달의 요일 설정 부분 렌더링 여부 결정 함수
   const handleDayPickerOpen = (value: boolean) => {
     setIsDayPickerOpen(value);
   };
 
-  const handleDatePickerOpen = () => {
-    setIsDatePickerOpen((prev) => !prev);
-    if (isTimePickerOpen) {
-      setIsTimePickerOpen((prev) => !prev);
-    }
-  };
-  const handleTimePickerOpen = () => {
-    setIsTimePickerOpen((prev) => !prev);
-    if (isDatePickerOpen) {
-      setIsDatePickerOpen((prev) => !prev);
-    }
-  };
-
-  const handleDate = (day: Date | undefined) => {
-    if (day) {
-      setDateValue(formatToDate(day, 'koreanFullDate'));
-      setDate(day);
-      setIsDatePickerOpen(false);
-      setIsTimePickerOpen(true);
-    }
-  };
-
-  const updateTimeValue = (periodValue: 'AM' | 'PM', time: string) => {
-    const formattedTime =
-      periodValue === 'AM' ? `오전 ${time}` : `오후 ${time}`;
-    setTimeValue(formattedTime);
-  };
-
-  const handlePeriodChange = (newPeriod: 'AM' | 'PM') => {
-    setPeriod(newPeriod);
-    updateTimeValue(period, newPeriod);
-  };
-
-  const handleTimeChange = (time: string) => {
-    updateTimeValue(period, time);
-  };
-
+  // NOTE - 모든 FormField 및 Controller에 키에 맞는 name 할당 및 field를 prop으로 내려줌으로서 value를 설정할 수 있도록 함.
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild className={className}>
@@ -180,72 +154,15 @@ function MakeTodoModal({ className = '' }) {
               />
               <Controller
                 control={form.control}
-                name="frequencyType"
+                name="startDate" // 필드 이름에 맞춰야 합니다.
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>시작 날짜 및 시간</FormLabel>
-                    <div className="flex gap-2">
-                      <Input
-                        readOnly
-                        className={`w-[204px] cursor-pointer rounded-xl focus:outline-none focus-visible:ring-0 ${isDatePickerOpen && 'border-2 border-brand-primary'}`}
-                        placeholder={dateValue}
-                        onClick={handleDatePickerOpen}
-                      />
-                      <Input
-                        readOnly
-                        className={`cursor-pointer rounded-xl focus:outline-none focus-visible:ring-0 ${isTimePickerOpen && 'border-2 border-brand-primary'}`}
-                        placeholder={timeValue}
-                        onClick={handleTimePickerOpen}
-                      />
-                    </div>
-                    {isDatePickerOpen && (
-                      <div className="flex w-[336px] items-center justify-center">
-                        <Calendar
-                          mode="single"
-                          className="rounded-xl border-2 border-brand-primary"
-                          selected={date}
-                          onSelect={handleDate}
-                          initialFocus
-                          {...field}
-                        />
-                      </div>
-                    )}
-                    {isTimePickerOpen && (
-                      <div
-                        className={`flex gap-3 rounded-xl p-3 ${isTimePickerOpen && 'border-2 border-brand-primary'}`}
-                      >
-                        <div className="flex w-[78px] flex-col gap-2">
-                          <button
-                            type="button"
-                            className="h-[40px] w-[78px] rounded-xl bg-[#18212F] text-text-default"
-                            onClick={() => handlePeriodChange('AM')}
-                          >
-                            오전
-                          </button>
-                          <button
-                            type="button"
-                            className="h-[40px] w-[78px] rounded-xl bg-[#18212F] text-text-default"
-                            onClick={() => handlePeriodChange('PM')}
-                          >
-                            오후
-                          </button>
-                        </div>
-                        <div className="custom-scroll flex h-[152px] w-full flex-col gap-3 overflow-scroll overflow-x-hidden rounded-xl bg-[#18212F] py-3">
-                          {timeArr.map((time) => (
-                            <button
-                              type="button"
-                              className="w-full pl-5 text-start text-text-default"
-                              onClick={() => handleTimeChange(time)}
-                            >
-                              {time}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+                    <StartDatePicker field={field} />
                   </FormItem>
                 )}
               />
+
               <Controller
                 control={form.control}
                 name="frequencyType"
@@ -262,7 +179,7 @@ function MakeTodoModal({ className = '' }) {
               {isDayPickerOpen && (
                 <Controller
                   control={form.control}
-                  name="frequencyType"
+                  name="weekDays"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>반복 요일</FormLabel>
