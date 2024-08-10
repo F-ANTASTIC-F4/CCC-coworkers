@@ -3,12 +3,24 @@ import React from 'react';
 import { ControllerRenderProps } from 'react-hook-form';
 
 interface DaySelectProps {
-  field: ControllerRenderProps<any, 'weekDay'>;
+  field: ControllerRenderProps<any, 'weekDays'>;
 }
 
 function DayGroupToggle({ field }: DaySelectProps) {
+  const selectedValues = field.value || [];
+
+  // NOTE - 각각의 배열의 value를 가지고와 weekDays의 배열 키로 지정
+  const handleWeekDayValue = (value: string[]) => {
+    const numeberValue = value.map((v) => parseInt(v, 10));
+    field.onChange(numeberValue);
+  };
+
   return (
-    <ToggleGroup type="multiple">
+    <ToggleGroup
+      type="multiple"
+      value={selectedValues.map(String)}
+      onValueChange={handleWeekDayValue}
+    >
       <ToggleGroupItem value="0">일</ToggleGroupItem>
       <ToggleGroupItem value="1">월</ToggleGroupItem>
       <ToggleGroupItem value="2">화</ToggleGroupItem>
