@@ -14,6 +14,7 @@ interface FrequencySelectProps {
 }
 
 function FrequencySelect({ field, handleState }: FrequencySelectProps) {
+  // NOTE - frequencyType이 "WEEKLY"일 경우 ToggleGroup이 보이도록 함.
   React.useEffect(() => {
     if (field.value === 'WEEKLY') {
       handleState(true);
