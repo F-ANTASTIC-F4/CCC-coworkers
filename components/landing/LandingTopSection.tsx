@@ -3,9 +3,9 @@ import Image from 'next/image';
 
 export default function LandingTopSection() {
   return (
-    <section className="flex h-[calc(100vh-60px)] flex-col items-center">
+    <section className="relative flex h-[calc(100vh-60px)] flex-col items-center">
       {/* NOTE - 상단 랜딩 이미지 */}
-      <div className="absolute -z-50 size-full">
+      <div className="z-landing-image absolute size-full">
         <Image
           src="/images/landing_top.png"
           alt="top landing image"
