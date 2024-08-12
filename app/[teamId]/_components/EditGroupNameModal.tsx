@@ -71,7 +71,7 @@ function EditGroupNameModal({
       >
         <DialogTitle>팀 이름</DialogTitle>
         <DialogDescription />
-        <div className="gap- flex w-full max-w-[280px] flex-col gap-6">
+        <div className="flex w-full max-w-[280px] flex-col gap-6">
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}

@@ -35,7 +35,10 @@ function GroupEditDropdown({
         }}
       >
         <DropdownMenuItem className="flex cursor-pointer flex-col justify-center">
-          <EditGroupNameModal groupId={groupId} />
+          <EditGroupNameModal
+            groupId={groupId}
+            className="w-full cursor-pointer"
+          />
         </DropdownMenuItem>
         <DropdownMenuItem className="flex flex-col justify-center" asChild>
           <DeleteGroupModal
