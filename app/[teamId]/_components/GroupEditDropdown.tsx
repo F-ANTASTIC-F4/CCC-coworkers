@@ -1,4 +1,3 @@
-import DeleteTodoModal from '@/components/modal-template/DeleteTodoModal';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,6 +7,7 @@ import {
 import BasicEditIcon from '@/public/icons/basic_edit_icon.svg';
 import * as React from 'react';
 
+import DeleteGroupModal from './DeleteGroupModal';
 import EditGroupNameModal from './EditGroupNameModal';
 
 function GroupEditDropdown({
@@ -38,7 +38,11 @@ function GroupEditDropdown({
           <EditGroupNameModal groupId={groupId} />
         </DropdownMenuItem>
         <DropdownMenuItem className="flex flex-col justify-center" asChild>
-          <DeleteTodoModal title={title} className="w-full cursor-pointer" />
+          <DeleteGroupModal
+            groupId={groupId}
+            title={title}
+            className="w-full cursor-pointer"
+          />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
