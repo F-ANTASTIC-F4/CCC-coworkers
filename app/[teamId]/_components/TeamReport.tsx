@@ -36,9 +36,10 @@ function TeamReport({ taskLists }: { taskLists: GroupTask[] }) {
       total: completedTaskCount,
       fill: 'url(#completedGradient)',
     },
+    // REVIEW - todo가 없으면 차트가 나오지않는 문제가 있습니다. todo가 0일 때 일단 1이라도 주어 차트를 보이게 하였는데 다른 좋은 방법 있으면 말씀해주시면 감사하겠습니다.
     {
       name: 'todo',
-      total: totalTaskCount - completedTaskCount,
+      total: Math.max(totalTaskCount - completedTaskCount, 1),
       fill: '#334155',
     },
   ];
@@ -80,7 +81,7 @@ function TeamReport({ taskLists }: { taskLists: GroupTask[] }) {
               />
             </PieChart>
           </ChartContainer>
-          <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center md:left-[200px] md:w-full">
+          <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center md:left-[170px] md:w-full md:translate-x-0 md:items-start">
             <p className="text-xs font-medium md:hidden">오늘</p>
             <p className="hidden text-xs font-medium md:block">
               오늘의

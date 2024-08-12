@@ -7,13 +7,14 @@ import TeamToDoList from './_components/TeamToDoList';
 
 async function TeamPage({ params }: { params: { teamId: number } }) {
   const { data } = await fetchAPI.Group(params.teamId);
+  const { taskLists = [], members = [] } = data || {};
 
   return (
     <div>
       <TeamTitle />
-      <TeamToDoList taskLists={data?.taskLists ?? []} />
-      <TeamReport taskLists={data?.taskLists ?? []} />
-      <TeamMember members={data?.members ?? []} />
+      <TeamToDoList taskLists={taskLists} />
+      <TeamReport taskLists={taskLists} />
+      <TeamMember members={members} />
     </div>
   );
 }
