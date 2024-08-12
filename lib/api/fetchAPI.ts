@@ -1,4 +1,4 @@
-import { ENDPOINTS } from '@/lib/api/API_CONSTANTS';
+import ENDPOINTS from '@/lib/api/ENDPOINTS';
 import client from '@/lib/api/client/client';
 import {
   Article,
@@ -8,16 +8,20 @@ import {
   DetailTask,
   Group,
   GroupTask,
+  History,
   Id,
   OffsetBasedPagination,
   Task,
-  User,
+  UserWithMemberships,
 } from '@ccc-types';
 
 async function getUser() {
-  const { data, error } = await client<User>(ENDPOINTS.USER.ACTIONS, {
-    method: 'get',
-  });
+  const { data, error } = await client<UserWithMemberships>(
+    ENDPOINTS.USER.ACTIONS,
+    {
+      method: 'get',
+    }
+  );
   if (error) {
     return {
       error: {
@@ -31,12 +35,9 @@ async function getUser() {
 }
 
 async function getUserHistory() {
-  const { data, error } = await client<{ taskDone: Task[] }>(
-    ENDPOINTS.USER.GET_HISTORY,
-    {
-      method: 'get',
-    }
-  );
+  const { data, error } = await client<History>(ENDPOINTS.USER.GET_HISTORY, {
+    method: 'get',
+  });
   if (error) {
     return {
       error: {

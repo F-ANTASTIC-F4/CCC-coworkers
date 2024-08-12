@@ -17,14 +17,9 @@ declare module '@ccc-types' {
     commentCount: number;
   }
 
-  // NOTE - history API 리스폰스 부분의 타입을 정의했는데 더 나은 방법이 있었을까요..?
-  export type TasksDone = Task[];
-
-  export interface DataStructure {
-    tasksDone: TasksDone;
+  export interface History {
+    tasksDone: Task[];
   }
-
-  export type TaskHistory = DataStructure[];
 
   export interface GroupTask {
     groupId: Id;
@@ -37,6 +32,7 @@ declare module '@ccc-types' {
   }
 
   export interface Comment {
+    user: Pick<User, 'image' | 'nickname' | 'id'>;
     userId: number;
     taskId: number;
     updatedAt: DateString;
@@ -46,6 +42,7 @@ declare module '@ccc-types' {
   }
 
   export interface Recurring {
+    writerId: number;
     groupId: number;
     taskListId: number;
     monthDay: number;
@@ -59,10 +56,15 @@ declare module '@ccc-types' {
     id: number;
   }
 
+  interface DoneBy {
+    user: Pick<User, 'image' | 'nickname' | 'id'>;
+  }
+
   export interface DetailTask extends Task {
     comments: Comment[];
     recurring: Recurring;
     user: Pick<User, 'image' | 'nickname' | 'id'>;
+    doneBy: DoneBy;
   }
 
   // tasks: string[]
