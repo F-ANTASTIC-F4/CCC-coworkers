@@ -1,13 +1,12 @@
 'use client';
 
-import { formatToDate } from '@/utils/dateFormat';
+import { dateFormatter } from '@/lib/utils';
 import { Task } from '@ccc-types';
-import React from 'react';
 
 import HistoryItem from './HistoryItem';
 
 const HistoryList = ({ tasks }: { tasks: Task[] }) => {
-  const date = formatToDate(tasks[0].deletedAt, 'dotFormat');
+  const date = dateFormatter.toConvertDate(tasks[0].deletedAt, 'dotFormat');
 
   return (
     <div className="flex w-full flex-col gap-4">

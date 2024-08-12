@@ -1,6 +1,6 @@
 'use client';
 
-import cn from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import CloseIcon from '@/public/icons/modal/close_icon.svg';
 import * as SheetPrimitive from '@radix-ui/react-dialog';
 import { type VariantProps, cva } from 'class-variance-authority';

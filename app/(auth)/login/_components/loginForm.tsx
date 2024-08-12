@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { login } from '@/lib/api/auth';
-import { loginValidationSchema } from '@/lib/schema';
+import { loginValidationSchema } from '@/lib/schema/auth';
 import { SignInRequestBody } from '@ccc-types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
