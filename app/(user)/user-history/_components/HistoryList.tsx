@@ -5,13 +5,15 @@ import { Task } from '@ccc-types';
 
 import HistoryItem from './HistoryItem';
 
-const HistoryList = ({ tasks }: { tasks: Task[] }) => {
-  const date = dateFormatter.toConvertDate(tasks[0].deletedAt, 'dotFormat');
+const HistoryList = ({ tasksDone }: { tasksDone: Task[] }) => {
+  const date =
+    tasksDone[0].doneAt &&
+    dateFormatter.toConvertDate(tasksDone[0].doneAt, 'dotFormat');
 
   return (
     <div className="flex w-full flex-col gap-4">
       <h2>{date}</h2>
-      {tasks.map((task) => (
+      {tasksDone.map((task) => (
         <HistoryItem key={task.id} task={task} />
       ))}
     </div>
