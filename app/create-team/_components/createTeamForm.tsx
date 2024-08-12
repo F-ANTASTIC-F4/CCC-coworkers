@@ -1,6 +1,6 @@
 'use client';
 
-import ImageInputUI from '@/components/ui/ImageInputLable';
+import ImageInputUI from '@/components/ui/ImageInputLabel';
 import { Button } from '@/components/ui/button';
 import {
   Form,
