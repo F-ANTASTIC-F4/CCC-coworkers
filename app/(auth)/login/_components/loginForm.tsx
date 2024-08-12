@@ -20,10 +20,10 @@ import { z } from 'zod';
 
 export default function LoginForm() {
   const onSubmit: SubmitHandler<SignInRequestBody> = async (data) => {
-    const { error } = await login(data);
-    if (error) {
-      console.error(error.message || error.info, error);
-      alert(error.message || error.info);
+    const res = await login(data);
+    if (res?.error) {
+      console.error(res.error?.message || res.error.info);
+      alert(res.error?.message || res.error.info);
     }
   };
 
