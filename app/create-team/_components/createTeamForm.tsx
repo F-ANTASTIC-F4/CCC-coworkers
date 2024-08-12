@@ -14,7 +14,7 @@ import { Input } from '@/components/ui/input';
 import useRequestFunction from '@/hooks/useRequestFunction';
 import uploadImage from '@/lib/api/common';
 import { createGroup } from '@/lib/api/group';
-import { createTeamValidationSchema } from '@/lib/schema';
+import { createTeamValidationSchema } from '@/lib/schema/auth';
 import TeamProfile from '@/public/icons/group_profile.svg';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
