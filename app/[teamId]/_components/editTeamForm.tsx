@@ -18,6 +18,7 @@ import { createTeamValidationSchema } from '@/lib/schema/auth';
 import TeamProfile from '@/public/icons/group_profile.svg';
 import { Group, Id } from '@ccc-types';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -27,6 +28,7 @@ type EditTeamProps = {
 };
 export default function EditTeamForm({ groupData }: EditTeamProps) {
   const [imagePreview, setImagePreview] = useState(groupData.image);
+  const router = useRouter();
 
   // NOTE - useRequestFunction은 하나의 인자값만 받는다고 기대?추론?해서 인자값이 두개임을 명시
   const api = useRequestFunction(
@@ -59,7 +61,14 @@ export default function EditTeamForm({ groupData }: EditTeamProps) {
       image: imageUrl,
     };
 
-    await api.request({ groupId: groupData.id, data: editTeamData });
+    const res = await api.request({
+      groupId: groupData.id,
+      data: editTeamData,
+    });
+
+    if (res) {
+      router.push(`/${groupData.id}`);
+    }
   };
 
   const currentImage = form.watch('image');
