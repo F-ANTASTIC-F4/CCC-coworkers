@@ -5,6 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import frequencyTypeArray from '@/constants/FrequencyTypeArray';
 import React from 'react';
 import { ControllerRenderProps } from 'react-hook-form';
 
@@ -29,10 +30,11 @@ function FrequencySelect({ field, handleState }: FrequencySelectProps) {
         <SelectValue placeholder="한 번" />
       </SelectTrigger>
       <SelectContent className="z-[100]">
-        <SelectItem value="ONCE">한 번</SelectItem>
-        <SelectItem value="DAILY">매일</SelectItem>
-        <SelectItem value="WEEKLY">주 반복</SelectItem>
-        <SelectItem value="MONTHLY">월 반복</SelectItem>
+        {frequencyTypeArray.map((type) => (
+          <SelectItem key={type.value} value={type.value}>
+            {type.label}
+          </SelectItem>
+        ))}
       </SelectContent>
     </Select>
   );

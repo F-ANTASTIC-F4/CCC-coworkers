@@ -1,9 +1,10 @@
-import { Calendar } from '@/components/ui/calendar';
 import { Input } from '@/components/ui/input';
-import timeArr from '@/constants/timeArr';
 import { formatToDate } from '@/utils/dateFormat';
 import React from 'react';
 import { ControllerRenderProps } from 'react-hook-form';
+
+import DatePick from './DatePick';
+import TimePick from './TimePick';
 
 interface StartDatePickerProps {
   field: ControllerRenderProps<any, 'startDate'>; // 'startDate'로 수정
@@ -59,8 +60,8 @@ function StartDatePicker({ field }: StartDatePickerProps) {
     updateDateTime(date, timeValue, periodValue);
   };
 
-  const handlePeriodChange = (newPeriod: 'AM' | 'PM') => {
-    updateTimeValue(newPeriod, time);
+  const handlePeriodChange = (periodValue: 'AM' | 'PM') => {
+    updateTimeValue(periodValue, time);
   };
 
   const handleTimeChange = (timeValue: string) => {
@@ -89,48 +90,14 @@ function StartDatePicker({ field }: StartDatePickerProps) {
           onClick={handleTimePickerOpen}
         />
       </div>
-      {isDatePickerOpen && (
-        <div className="flex w-[336px] items-center justify-center">
-          <Calendar
-            mode="single"
-            className="rounded-xl border-2 border-brand-primary"
-            selected={date}
-            onSelect={handleDate}
-            initialFocus
-          />
-        </div>
-      )}
+      {isDatePickerOpen && <DatePick date={date} handleDate={handleDate} />}
       {isTimePickerOpen && (
-        <div className="flex gap-3 rounded-xl border-2 border-brand-primary p-3">
-          <div className="flex w-[78px] flex-col gap-2">
-            <button
-              type="button"
-              className={`h-[40px] w-[78px] rounded-xl bg-[#18212F] text-text-default ${period === 'AM' && 'bg-brand-primary text-customBackground-primary'}`}
-              onClick={() => handlePeriodChange('AM')}
-            >
-              오전
-            </button>
-            <button
-              type="button"
-              className={`h-[40px] w-[78px] rounded-xl bg-[#18212F] text-text-default ${period === 'PM' && 'bg-brand-primary text-customBackground-primary'}`}
-              onClick={() => handlePeriodChange('PM')}
-            >
-              오후
-            </button>
-          </div>
-          <div className="custom-scroll flex h-[152px] w-full flex-col gap-3 overflow-scroll overflow-x-hidden rounded-xl bg-[#18212F] py-3">
-            {timeArr.map((timeOption) => (
-              <button
-                key={timeOption}
-                type="button"
-                className={`w-full pl-5 text-start text-text-default ${timeOption === time && 'text-text-primary'}`}
-                onClick={() => handleTimeChange(timeOption)}
-              >
-                {timeOption}
-              </button>
-            ))}
-          </div>
-        </div>
+        <TimePick
+          period={period}
+          time={time}
+          handlePeriodChange={handlePeriodChange}
+          handleTimeChange={handleTimeChange}
+        />
       )}
     </>
   );

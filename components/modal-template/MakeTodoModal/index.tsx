@@ -14,6 +14,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { todoModalFormSchema } from '@/lib/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -25,54 +26,6 @@ import DayGroupToggle from './DayGroupToggle';
 import FrequencySelect from './FrequencySelect';
 import StartDatePicker from './StartDatePicker';
 
-// NOTE - 폼 스키마 정의, frequencyType이 "ONCE", "DAILY" 일 경우 weekDays, monthDay를 스키마 키로 포함시키지 않음, "WEEKLY"일 경우 weekDays 배열을 포함, "MONTHLY"일 경우 monthDay를 포함시킴
-const formSchema = z.discriminatedUnion('frequencyType', [
-  z.object({
-    name: z
-      .string()
-      .min(2, { message: '최소 2자 이상 입력해주세요.' })
-      .max(10, { message: '최대로 입력할 수 있는 글자수는 10개입니다.' }),
-    description: z
-      .string()
-      .min(2, { message: '최소 2자 이상 입력해주세요.' })
-      .max(30, { message: '최대로 입력할 수 있는 글자수는 30개입니다.' }),
-    startDate: z
-      .string()
-      .default(new Date(new Date().setHours(0, 0, 0, 0)).toLocaleString()),
-    frequencyType: z.literal('WEEKLY').default('WEEKLY'),
-    weekDays: z.array(z.number().min(0).max(6)),
-  }),
-  z.object({
-    name: z
-      .string()
-      .min(2, { message: '최소 2자 이상 입력해주세요.' })
-      .max(10, { message: '최대로 입력할 수 있는 글자수는 10개입니다.' }),
-    description: z
-      .string()
-      .min(2, { message: '최소 2자 이상 입력해주세요.' })
-      .max(30, { message: '최대로 입력할 수 있는 글자수는 30개입니다.' }),
-    startDate: z
-      .string()
-      .default(new Date(new Date().setHours(0, 0, 0, 0)).toLocaleString()),
-    frequencyType: z.literal('MONTHLY').default('MONTHLY'),
-    monthDay: z.number().min(1).max(31),
-  }),
-  z.object({
-    name: z
-      .string()
-      .min(2, { message: '최소 2자 이상 입력해주세요.' })
-      .max(10, { message: '최대로 입력할 수 있는 글자수는 10개입니다.' }),
-    description: z
-      .string()
-      .min(2, { message: '최소 2자 이상 입력해주세요.' })
-      .max(30, { message: '최대로 입력할 수 있는 글자수는 30개입니다.' }),
-    startDate: z
-      .string()
-      .default(new Date(new Date().setHours(0, 0, 0, 0)).toLocaleString()),
-    frequencyType: z.enum(['ONCE', 'DAILY']).default('ONCE'),
-  }),
-]);
-
 const commonClassName =
   'flex h-[75px] w-full resize-none rounded-xl border border-input/10 bg-background-secondary px-4 py-[10px] text-sm text-primary ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground placeholder:text-text-default focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 sm:text-base';
 
@@ -80,13 +33,13 @@ function MakeTodoModal({ className = '' }) {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [isDayPickerOpen, setIsDayPickerOpen] = React.useState<boolean>(false);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof todoModalFormSchema>>({
+    resolver: zodResolver(todoModalFormSchema),
     defaultValues: {
       name: '',
       description: '',
       frequencyType: 'ONCE',
-      startDate: new Date(new Date().setHours(0, 0, 0, 0)).toLocaleString(),
+      startDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(),
     },
   });
 
@@ -105,7 +58,7 @@ function MakeTodoModal({ className = '' }) {
     }
   }, [frequencyType, startDate, setValue]);
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = (values: z.infer<typeof todoModalFormSchema>) => {
     console.log(values);
     form.reset();
     setIsOpen(false);

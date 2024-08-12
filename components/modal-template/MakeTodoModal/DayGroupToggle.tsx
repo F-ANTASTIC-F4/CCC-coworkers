@@ -1,4 +1,5 @@
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { WEEKDAYS_ARRAY } from '@/constants/DateArray';
 import React from 'react';
 import { ControllerRenderProps } from 'react-hook-form';
 
@@ -21,13 +22,11 @@ function DayGroupToggle({ field }: DaySelectProps) {
       value={selectedValues.map(String)}
       onValueChange={handleWeekDayValue}
     >
-      <ToggleGroupItem value="0">일</ToggleGroupItem>
-      <ToggleGroupItem value="1">월</ToggleGroupItem>
-      <ToggleGroupItem value="2">화</ToggleGroupItem>
-      <ToggleGroupItem value="3">수</ToggleGroupItem>
-      <ToggleGroupItem value="4">목</ToggleGroupItem>
-      <ToggleGroupItem value="5">금</ToggleGroupItem>
-      <ToggleGroupItem value="6">토</ToggleGroupItem>
+      {WEEKDAYS_ARRAY.map((day, idx) => (
+        <ToggleGroupItem key={day} value={idx.toString()}>
+          {day}
+        </ToggleGroupItem>
+      ))}
     </ToggleGroup>
   );
 }
