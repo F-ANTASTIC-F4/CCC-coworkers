@@ -7,6 +7,7 @@ import {
 } from '@/components/ui/chart';
 import DoneIcon from '@/public/icons/report_done.svg';
 import TodoIcon from '@/public/icons/report_todo.svg';
+import { GroupTask } from '@ccc-types';
 import { Pie, PieChart } from 'recharts';
 
 const chartConfig = {
@@ -18,11 +19,28 @@ const chartConfig = {
   },
 };
 
-function TeamReport() {
+function TeamReport({ taskLists }: { taskLists: GroupTask[] }) {
+  const totalTaskCount = taskLists.reduce(
+    (acc, curr) => acc + curr.tasks.length,
+    0
+  );
+  const completedTaskCount = taskLists.reduce(
+    (acc, curr) => acc + curr.tasks.filter((task) => task.doneAt).length,
+    0
+  );
+
   const chartData = [
     // NOTE - defs에서 가져와 사용할 수 있다.
-    { name: 'completed', total: 5, fill: 'url(#completedGradient)' },
-    { name: 'todo', total: 20 - 5, fill: '#334155' },
+    {
+      name: 'completed',
+      total: completedTaskCount,
+      fill: 'url(#completedGradient)',
+    },
+    {
+      name: 'todo',
+      total: totalTaskCount - completedTaskCount,
+      fill: '#334155',
+    },
   ];
 
   return (
@@ -70,7 +88,10 @@ function TeamReport() {
               진행 상황
             </p>
             <p className="bg-gradient-to-r from-[#10B981] to-[#A3E635] bg-clip-text text-xl font-bold text-transparent">
-              nn%
+              {totalTaskCount > 0
+                ? Math.round((completedTaskCount / totalTaskCount) * 100)
+                : 0}
+              %
             </p>
           </div>
         </div>
@@ -80,14 +101,18 @@ function TeamReport() {
               <p className="text-xs font-medium text-text-secondary">
                 오늘의 할 일
               </p>
-              <p className="text-2xl font-bold text-brand-tertiary">n개</p>
+              <p className="text-2xl font-bold text-brand-tertiary">
+                {totalTaskCount}개
+              </p>
             </div>
             <TodoIcon />
           </div>
           <div className="flex h-full items-center justify-between gap-x-3 rounded-xl bg-customBackground-teritiary p-4">
             <div className="flex flex-col gap-y-1">
               <p className="text-xs font-medium text-text-secondary">한 일</p>
-              <p className="text-2xl font-bold text-brand-tertiary">n개</p>
+              <p className="text-2xl font-bold text-brand-tertiary">
+                {completedTaskCount}개
+              </p>
             </div>
             <DoneIcon />
           </div>

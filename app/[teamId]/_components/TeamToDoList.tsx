@@ -29,7 +29,9 @@ function TeamToDoList({ taskLists }: { taskLists: GroupTask[] }) {
           ))
         ) : (
           <div className="flex w-full items-center justify-center py-16">
-            <p>아직 할 일 목록이 없습니다.</p>
+            <p className="text-sm font-medium text-text-default">
+              아직 할 일 목록이 없습니다.
+            </p>
           </div>
         )}
       </div>

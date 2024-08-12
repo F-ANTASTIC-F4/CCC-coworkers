@@ -11,7 +11,7 @@ async function TeamPage({ params }: { params: { teamId: number } }) {
     <div>
       <TeamTitle />
       <TeamToDoList taskLists={data?.taskLists ?? []} />
-      <TeamReport />
+      <TeamReport taskLists={data?.taskLists ?? []} />
       <TeamMember />
       {/* TODO - param값 test */}
       <p>{params.teamId} 페이지입니다.</p>
