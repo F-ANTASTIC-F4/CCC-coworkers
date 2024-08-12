@@ -1,4 +1,4 @@
-const timeArr = [
+export const TIME_ARRAY = [
   '12:00',
   '12:30',
   '1:00',
@@ -25,4 +25,4 @@ const timeArr = [
   '11:30',
 ];
 
-export default timeArr;
+export const WEEKDAYS_ARRAY = ['일', '월', '화', '수', '목', '금', '토'];
