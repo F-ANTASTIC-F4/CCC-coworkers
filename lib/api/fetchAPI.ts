@@ -24,7 +24,7 @@ async function getUser() {
     return {
       error: {
         info: '유저의 정보를 가져오는 중 에러가 발생했습니다.',
-        name: error.message,
+        message: error.message,
         ...error.cause,
       },
     };
@@ -40,7 +40,8 @@ async function getUserHistory() {
     return {
       error: {
         info: '유저의 히스토리를 가져오는 중 에러가 발생했습니다.',
-        ...error,
+        message: error.message,
+        ...error.cause,
       },
     };
   }
@@ -59,7 +60,8 @@ async function getTaskList(groupId: Id, taskListId: Id) {
     return {
       error: {
         info: `TaskList${taskListId}를 가져오는 중 에러가 발생했습니다`,
-        ...error,
+        message: error.message,
+        ...error.cause,
       },
     };
   }
@@ -79,7 +81,8 @@ async function getGroupSpecificTasks(groupId: Id) {
     return {
       error: {
         info: '그룹 tasks를 가져오는 중 에러가 발생했습니다.',
-        ...error,
+        message: error.message,
+        ...error.cause,
       },
     };
   }
@@ -98,7 +101,8 @@ async function getTask(groupId: Id, taskListId: Id) {
     return {
       error: {
         info: `TaskList${taskListId}의 tasks를 가져오는 중 에러가 발생했습니다.`,
-        ...error,
+        message: error.message,
+        ...error.cause,
       },
     };
   }
@@ -116,7 +120,8 @@ async function getGroup(groupId: Id) {
     return {
       error: {
         info: '그룹 정보를 가져오는 중 에러가 발생했습니다.',
-        ...error,
+        message: error.message,
+        ...error.cause,
       },
     };
   }
@@ -134,7 +139,8 @@ async function getComments(taskId: Id) {
     return {
       error: {
         info: '댓글을 가져오는 중 에러가 발생했습니다.',
-        ...error,
+        message: error.message,
+        ...error.cause,
       },
     };
   }
@@ -170,7 +176,8 @@ async function getArticle(articleID: Id) {
     return {
       error: {
         info: '게시글 정보를 가져오는 중 에러가 발생했습니다.',
-        ...error,
+        message: error.message,
+        ...error.cause,
       },
     };
   }
@@ -188,7 +195,8 @@ async function getArticleComments(articleID: Id) {
     return {
       error: {
         info: '게시글 댓글 목록을 가져오는 중 에러가 발생했습니다.',
-        ...error,
+        message: error.message,
+        ...error.cause,
       },
     };
   }
