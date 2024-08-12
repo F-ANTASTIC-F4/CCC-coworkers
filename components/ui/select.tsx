@@ -1,6 +1,6 @@
 'use client';
 
-import cn from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import CheckIcon from '@/public/icons/button/check_icon.svg';
 import SelectArrowIcon from '@/public/icons/select/select_arrow_icon.svg';
 import * as SelectPrimitive from '@radix-ui/react-select';

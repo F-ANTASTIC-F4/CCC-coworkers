@@ -130,3 +130,20 @@ export const dateFormatter = {
     return `${year}. ${month.toString().padStart(2, '0')}. ${day.toString().padStart(2, '0')}`;
   },
 };
+
+/**
+ * 클립보드에 텍스트를 복사합니다. 복사가 성공하면 성공 메시지를, 실패하면 실패 메시지를 표시합니다.
+ *
+ * @param {string} text - 클립보드에 복사할 텍스트
+ * @param {string} label - 메세지에 표시될 text label
+ */
+export const copyText = (text: string, label: string) => {
+  navigator.clipboard
+    .writeText(text)
+    .then(() => {
+      alert(`${label}이 복사되었습니다!`);
+    })
+    .catch(() => {
+      alert(`${label} 복사에 실패했습니다!`);
+    });
+};
