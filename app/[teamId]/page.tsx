@@ -1,4 +1,5 @@
 import fetchAPI from '@/lib/api/fetchAPI';
+import { Group } from '@ccc-types';
 
 import TeamMember from './_components/TeamMember';
 import TeamReport from './_components/TeamReport';
@@ -11,7 +12,7 @@ async function TeamPage({ params }: { params: { teamId: number } }) {
 
   return (
     <div>
-      <TeamTitle />
+      <TeamTitle groupData={data as Group} />
       <TeamToDoList taskLists={taskLists} />
       <TeamReport taskLists={taskLists} />
       <TeamMember members={members} />
