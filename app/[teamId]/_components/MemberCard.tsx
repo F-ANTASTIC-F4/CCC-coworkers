@@ -20,12 +20,12 @@ function MemberCard({
         <DefaultProfile className="size-6 md:size-8" />
         <div className="flex flex-col">
           <p className="text-sm font-medium">{member.userName}</p>
-          <p className="hidden text-xs text-text-secondary md:block">
+          <p className="hidden truncate text-xs text-text-secondary md:block">
             {member.userEmail}
           </p>
         </div>
       </div>
-      <p className="text-xs text-text-secondary md:hidden">
+      <p className="truncate text-xs text-text-secondary md:hidden">
         {member.userEmail}
       </p>
     </div>

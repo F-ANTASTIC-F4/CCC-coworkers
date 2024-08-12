@@ -81,14 +81,14 @@ function TeamReport({ taskLists }: { taskLists: GroupTask[] }) {
               />
             </PieChart>
           </ChartContainer>
-          <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center md:left-[170px] md:w-full md:translate-x-0 md:items-start">
+          <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center md:left-[170px] md:w-full md:translate-x-0 md:items-start md:gap-y-1">
             <p className="text-xs font-medium md:hidden">오늘</p>
             <p className="hidden text-xs font-medium md:block">
               오늘의
               <br />
               진행 상황
             </p>
-            <p className="bg-gradient-to-r from-[#10B981] to-[#A3E635] bg-clip-text text-xl font-bold text-transparent">
+            <p className="bg-gradient-to-r from-[#10B981] to-[#A3E635] bg-clip-text text-xl font-bold text-transparent md:text-[40px] md:leading-none">
               {totalTaskCount > 0
                 ? Math.round((completedTaskCount / totalTaskCount) * 100)
                 : 0}
