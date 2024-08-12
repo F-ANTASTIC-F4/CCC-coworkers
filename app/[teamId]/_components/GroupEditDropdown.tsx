@@ -34,7 +34,10 @@ function GroupEditDropdown({
           e.stopPropagation();
         }}
       >
-        <DropdownMenuItem className="flex cursor-pointer flex-col justify-center">
+        <DropdownMenuItem
+          className="flex cursor-pointer flex-col justify-center"
+          asChild
+        >
           <EditGroupNameModal
             groupId={groupId}
             className="w-full cursor-pointer"
