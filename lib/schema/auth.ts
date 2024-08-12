@@ -40,16 +40,18 @@ export const imageSchema = z
       .min(1, '이미지 URL을 입력해주세요.'),
   ])
   .refine(
-    // NOTE: 파일 유형 검사
+    // NOTE: 파일 유형 및 크기 검사
     (value) => {
       if (value instanceof File) {
-        // 파일 유형 검사
-        return ['image/jpeg', 'image/png', 'image/gif'].includes(value.type);
+        const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        const maxSize = 10 * 1024 * 1024; // 10MB
+        return validTypes.includes(value.type) && value.size <= maxSize;
       }
       return true; // URL인 경우 추가 검증 없이 통과
     },
     {
-      message: '지원되는 이미지 형식은 JPEG, PNG, GIF입니다.',
+      message:
+        '지원되는 이미지 형식(JPEG, PNG, GIF)이어야 하며, 크기는 10MB를 초과할 수 없습니다.',
     }
   );
 
