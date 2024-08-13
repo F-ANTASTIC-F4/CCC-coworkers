@@ -42,7 +42,7 @@ function TodoListModal({
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     // REVIEW: 한글이 안되는 문제가 있습니다. 추가로 post 에러는 어떻게 처리할까요??
-    createTaskList(groupId, { name: values.task });
+    createTaskList(groupId, { name: values.name });
     router.refresh();
 
     form.reset();
