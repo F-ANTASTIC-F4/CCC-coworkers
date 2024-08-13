@@ -3,6 +3,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+import MakeTodoModal from '@/components/modal-template/MakeTodoModal';
 import TodoListModal from '@/components/modal-template/TodoListModal';
 import fetchAPI from '@/lib/api/fetchAPI';
 import { dateFormatter } from '@/lib/utils';
@@ -112,6 +113,13 @@ function TaskList({ data, groupId }: { data: GroupTask[]; groupId: Id }) {
           </p>
         </div>
       )}
+      <div className="absolute bottom-5 mx-auto flex w-full max-w-[1232px] justify-end xl:px-0">
+        <MakeTodoModal
+          className="z-10 ml-auto"
+          groupId={groupId}
+          taskListId={taskListId}
+        />
+      </div>
     </div>
   );
 }
