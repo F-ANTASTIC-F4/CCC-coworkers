@@ -1,4 +1,5 @@
 import ThemeProvider from '@/components/theme-provider';
+import { Toaster } from '@/components/ui/sonner';
 import ErrorFallbackUI from '@/lib/error-boundary/ErrorFallBackUI';
 import ServerErrorBoundary from '@/lib/error-boundary/ServerErrorBoundary';
 import Logo from '@/public/icons/logo_coworkers.svg';
@@ -52,6 +53,7 @@ export default function RootLayout({
               </div>
             </nav>
             {children}
+            <Toaster />
           </ThemeProvider>
         </ServerErrorBoundary>
       </body>

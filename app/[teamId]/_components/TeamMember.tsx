@@ -1,9 +1,15 @@
+import InviteMemberModal from '@/components/modal-template/InviteMemberModal';
 import { Member } from '@ccc-types';
-import Link from 'next/link';
 
 import MemberCard from './MemberCard';
 
-function TeamMember({ members }: { members: Member[] }) {
+function TeamMember({
+  members,
+  groupId,
+}: {
+  members: Member[];
+  groupId: number;
+}) {
   return (
     <div>
       <div className="flex items-center justify-between">
@@ -11,9 +17,7 @@ function TeamMember({ members }: { members: Member[] }) {
           <p className="font-medium">멤버</p>
           <p className="text-text-default">({members.length}개)</p>
         </div>
-        <Link href="/" className="text-sm text-brand-primary">
-          + 새로운 멤버 추가하기
-        </Link>
+        <InviteMemberModal groupId={groupId} />
       </div>
       <div className="my-6 grid grid-cols-2 grid-rows-2 gap-6 md:grid-cols-3">
         {members.map((member) => (
