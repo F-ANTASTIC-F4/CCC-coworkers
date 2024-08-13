@@ -5,8 +5,8 @@ import TeamReport from './_components/TeamReport';
 import TeamTitle from './_components/TeamTitle';
 import TeamToDoList from './_components/TeamToDoList';
 
-async function TeamPage({ params }: { params: { teamId: number } }) {
-  const { data, error } = await fetchAPI.Group(params.teamId);
+async function TeamPage({ params }: { params: { groupId: number } }) {
+  const { data, error } = await fetchAPI.Group(params.groupId);
 
   // TODO: 에러 처리 추가
   if (error) {
@@ -19,9 +19,9 @@ async function TeamPage({ params }: { params: { teamId: number } }) {
     <div>
       <TeamTitle groupData={data} />
       {/* REVIEW - groupId params vs useParams (프롭 드릴링 때문) */}
-      <TeamToDoList taskLists={taskLists} groupId={params.teamId} />
+      <TeamToDoList taskLists={taskLists} groupId={params.groupId} />
       <TeamReport taskLists={taskLists} />
-      <TeamMember members={members} groupId={params.teamId} />
+      <TeamMember members={members} groupId={params.groupId} />
     </div>
   );
 }
