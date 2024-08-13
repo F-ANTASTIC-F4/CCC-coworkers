@@ -5,8 +5,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
+import { stringToHex } from '@/lib/utils';
 import ToDoDoneIcon from '@/public/icons/todo_done.svg';
-import stringToHex from '@/utils/StringToColor';
 import { useMemo } from 'react';
 import { Pie, PieChart } from 'recharts';
 

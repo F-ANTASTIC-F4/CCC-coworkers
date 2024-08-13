@@ -17,7 +17,7 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 
 const formSchema = z.object({
-  task: z
+  name: z
     .string()
     .min(2, { message: '최소 2자 이상 입력해주세요.' })
     .max(20, { message: '최대로 입력할 수 있는 글자수는 20개입니다.' }),
@@ -36,7 +36,7 @@ function TodoListModal({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      task: '',
+      name: '',
     },
   });
 
@@ -70,7 +70,7 @@ function TodoListModal({
             >
               <FormField
                 control={form.control}
-                name="task"
+                name="name"
                 render={({ field }) => (
                   <FormItem>
                     <Input placeholder="목록 명을 입력해주세요" {...field} />

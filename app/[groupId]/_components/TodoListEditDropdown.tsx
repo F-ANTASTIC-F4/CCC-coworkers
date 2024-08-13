@@ -4,7 +4,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import KebabIcon from '@/public/icons/kebab.svg';
+import KebabIcon from '@/public/icons/kebab_icon.svg';
 import * as React from 'react';
 
 import DeleteTodoListModal from './DeleteTodoListModal';
@@ -27,7 +27,7 @@ function TodoListEditDropdown({
           aria-label="수정 및 삭제 기능 제공 드롭다운"
           className="outline-none"
         >
-          <KebabIcon />
+          <KebabIcon className="size-4" />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
