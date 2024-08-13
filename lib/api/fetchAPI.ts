@@ -4,6 +4,8 @@ import {
   Article,
   ArticleDetail,
   CursorBasedPagination,
+  DateString,
+  DetailTask,
   Group,
   GroupTask,
   History,
@@ -33,7 +35,7 @@ async function getUser() {
 }
 
 async function getUserHistory() {
-  const { data, error } = await client<History[]>(ENDPOINTS.USER.GET_HISTORY, {
+  const { data, error } = await client<History>(ENDPOINTS.USER.GET_HISTORY, {
     method: 'get',
   });
   if (error) {
@@ -49,7 +51,7 @@ async function getUserHistory() {
 }
 
 async function getTaskList(groupId: Id, taskListId: Id) {
-  const { data, error } = await client<GroupTask[]>(
+  const { data, error } = await client<GroupTask>(
     ENDPOINTS.TASKLIST.GROUP_ACTIONS(groupId, taskListId),
     {
       method: 'get',
@@ -89,9 +91,9 @@ async function getGroupSpecificTasks(groupId: Id) {
   return { data };
 }
 
-async function getTask(groupId: Id, taskListId: Id) {
+async function getTasks(groupId: Id, taskListId: Id, date: DateString) {
   const { data, error } = await client<Task[]>(
-    ENDPOINTS.TASK.ACTIONS(groupId, taskListId),
+    ENDPOINTS.TASK.ACTIONS(groupId, taskListId, date),
     {
       method: 'get',
       // NOTE 쿼리로 date를 받음, 사용하실때 수정해서 사용해주세요!
@@ -103,6 +105,25 @@ async function getTask(groupId: Id, taskListId: Id) {
         info: `TaskList${taskListId}의 tasks를 가져오는 중 에러가 발생했습니다.`,
         message: error.message,
         ...error.cause,
+      },
+    };
+  }
+  return { data };
+}
+
+async function getTask(taskId: Id) {
+  const { data, error } = await client<DetailTask>(
+    ENDPOINTS.TASK.ACTIONS_ITEM(taskId),
+    {
+      method: 'get',
+      // NOTE 쿼리로 date를 받음, 사용하실때 수정해서 사용해주세요!
+    }
+  );
+  if (error) {
+    return {
+      error: {
+        info: `Task${taskId}의 task를 가져오는 중 에러가 발생했습니다.`,
+        ...error,
       },
     };
   }
@@ -208,6 +229,7 @@ const fetchAPI = {
   UserHistory: getUserHistory,
   Group: getGroup,
   GroupSpecificTasks: getGroupSpecificTasks,
+  Tasks: getTasks,
   Task: getTask,
   TaskList: getTaskList,
   Comments: getComments,

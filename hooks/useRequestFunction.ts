@@ -47,7 +47,7 @@ interface ApiResponse<T> {
  * - `request`: API 요청을 수행하는 함수. `props`를 매개변수로 받고, `Promise<{ data: T | null; error: any | null }>`를 반환합니다.
  */
 const useRequestFunction = <T = any>(
-  apiFunction: (props?: any) => Promise<ApiResponse<T>>,
+  apiFunction: (...props: any) => Promise<ApiResponse<T>>,
   showErrorFallBack: boolean = false
 ) => {
   const [state, setState] = useState<RequestState<T>>({
