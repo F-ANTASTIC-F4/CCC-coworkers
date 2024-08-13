@@ -23,6 +23,8 @@ const ENDPOINTS = {
       `/groups/${groupId}/task-lists/${taskListId}/tasks?date=${date}`,
     DELETE_ALL_TASKS: (groupId: Id, taskListId: Id, taskId: Id) =>
       `/groups/${groupId}/task-lists/${taskListId}/tasks/${taskId}/all`,
+    RECURRING: (groupId: Id, taskListId: Id) =>
+      `/groups/${groupId}/task-lists/${taskListId}/recurring`,
   },
   OAUTH: {
     POST_OAUTH_APPS: `/oauthApps`,
