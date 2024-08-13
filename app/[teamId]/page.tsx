@@ -18,7 +18,7 @@ async function TeamPage({ params }: { params: { teamId: number } }) {
   return (
     <div>
       <TeamTitle groupData={data} />
-      <TeamToDoList taskLists={taskLists} />
+      <TeamToDoList taskLists={taskLists} groupId={params.teamId} />
       <TeamReport taskLists={taskLists} />
       <TeamMember members={members} />
     </div>

@@ -1,9 +1,17 @@
+'use client';
+
+import TodoListModal from '@/components/modal-template/TodoListModal';
 import { GroupTask } from '@ccc-types';
-import Link from 'next/link';
 
 import TeamToDoListCard from './TeamToDoListCard';
 
-function TeamToDoList({ taskLists }: { taskLists: GroupTask[] }) {
+function TeamToDoList({
+  taskLists,
+  groupId,
+}: {
+  taskLists: GroupTask[];
+  groupId: number;
+}) {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
@@ -11,9 +19,7 @@ function TeamToDoList({ taskLists }: { taskLists: GroupTask[] }) {
           <p className="font-medium">할 일 목록</p>
           <p className="text-text-default">({taskLists?.length ?? 0}개)</p>
         </div>
-        <Link href="/" className="text-sm text-brand-primary">
-          + 새로운 목록 추가하기
-        </Link>
+        <TodoListModal groupId={groupId} />
       </div>
       <div className="flex flex-col gap-4">
         {taskLists.length !== 0 ? (

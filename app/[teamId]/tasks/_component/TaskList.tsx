@@ -104,7 +104,7 @@ function TaskList() {
           </button>
         </div>
         <DatePicker onClick={handleDateChange} />
-        <TodoListModal className="ml-auto" />
+        <TodoListModal groupId={MockDataList.groupId} className="ml-auto" />
       </div>
       {MockDataList.name ? (
         <>
