@@ -1,9 +1,10 @@
 'use client';
 
-/* eslint-disable */
 import ErrorFallbackUI from '@/components/common/ErrorFallBackUI';
 import FetchError from '@/lib/api/HttpClient/FetchError';
 import React, { ErrorInfo, createContext, useContext, useState } from 'react';
+
+/* eslint-disable */
 
 // 에러 바운더리의 상태 타입
 interface ErrorBoundaryState {
@@ -20,7 +21,7 @@ interface ErrorBoundaryProps {
 
 // 에러 바운더리의 컨텍스트 타입
 interface ErrorBoundaryContextType extends ErrorBoundaryState {
-  showBoundary?: (error: Error) => void;
+  showBoundary: (error: Error) => void;
 }
 
 const initialState: ErrorBoundaryState = {
@@ -45,6 +46,7 @@ export function useErrorBoundary() {
       hasError: true,
       didCatch: true,
     });
+
   context.showBoundary = showBoundary;
   if (state.hasError) {
     throw state.error;
@@ -72,6 +74,14 @@ class ServerErrorBoundary extends React.Component<
     console.log(error, info);
   }
 
+  showBoundary = (error: Error) => {
+    this.setState({
+      error,
+      hasError: true,
+      didCatch: true,
+    });
+  };
+
   render() {
     let childToRender;
 
@@ -93,8 +103,13 @@ class ServerErrorBoundary extends React.Component<
       );
     }
 
+    const contextValue: ErrorBoundaryContextType = {
+      ...this.state,
+      showBoundary: this.showBoundary,
+    };
+
     return (
-      <ErrorBoundaryContext.Provider value={this.state}>
+      <ErrorBoundaryContext.Provider value={contextValue}>
         {childToRender}
       </ErrorBoundaryContext.Provider>
     );

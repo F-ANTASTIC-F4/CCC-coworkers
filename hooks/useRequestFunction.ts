@@ -18,13 +18,23 @@ interface ApiResponse<T> {
   error?: any;
 }
 
+const INITIAL_STATE = {
+  isLoading: false,
+  isPending: false,
+  isSuccess: false,
+  isError: false,
+  errorMessage: null,
+  data: null,
+  error: null,
+};
+
 /**
  * 훅은 API 요청을 수행하고, 요청의 상태와 결과를 관리합니다.
  *
  * @template T - API 응답의 데이터 타입
  *
  * @param {Function} apiFunction - API 요청을 수행하는 함수. 매개변수로 `props`를 받고 `Promise<ApiResponse<T>>`를 반환해야 합니다.
- * @param {boolean} [showErrorFallBack=false] - 에러가 발생했을 때, `ErrorBoundary`를 통해 폴백 UI를 표시할지 여부를 결정합니다.
+ * @param {boolean} [showErrorFallBack=false] - 에러가 발생했을 때, `ErrorBoundary`를 통해 폴백 UI를 표시할지 여부를 결정합니다. (서버에서 제공하는 오류 메세지가 없는 경우에만 자동으로 폴백 UI를 표시합니다)
  *
  * @returns {{
  *   isLoading: boolean;
@@ -50,15 +60,7 @@ const useRequestFunction = <T = any>(
   apiFunction: (...props: any) => Promise<ApiResponse<T>>,
   showErrorFallBack: boolean = false
 ) => {
-  const [state, setState] = useState<RequestState<T>>({
-    isLoading: false,
-    isPending: false,
-    isSuccess: false,
-    isError: false,
-    errorMessage: null,
-    data: null,
-    error: null,
-  });
+  const [state, setState] = useState<RequestState<T>>(INITIAL_STATE);
   const { showBoundary } = useErrorBoundary();
 
   const request = useCallback(
@@ -73,26 +75,20 @@ const useRequestFunction = <T = any>(
 
       if (response?.error) {
         setState({
-          isLoading: false,
-          isPending: false,
-          isSuccess: false,
+          ...INITIAL_STATE,
           isError: true,
-          data: null,
           errorMessage: response.error?.message || 'An error occurred',
           error: response.error,
         });
-        if (showErrorFallBack && showBoundary) showBoundary(response?.error);
+        if (showErrorFallBack && !response.error.hasBodyMessage)
+          showBoundary(response?.error);
         return { data: null, error: response.error };
       }
       if (!response?.error) {
         setState({
-          isLoading: false,
-          isPending: false,
+          ...INITIAL_STATE,
           isSuccess: true,
-          isError: false,
           data: response?.data || null,
-          errorMessage: null,
-          error: null,
         });
         return { data: response?.data || null, error: null };
       }
