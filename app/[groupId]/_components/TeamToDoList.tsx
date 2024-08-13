@@ -31,6 +31,8 @@ function TeamToDoList({
               completedToDo={
                 taskList.tasks.filter((task) => task.doneAt !== null).length
               }
+              groupId={groupId}
+              taskListId={taskList.id}
             />
           ))
         ) : (
