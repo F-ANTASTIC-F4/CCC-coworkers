@@ -10,12 +10,17 @@ export async function createTask(
   data: Partial<
     Pick<
       Recurring,
-      'name' | 'description' | 'displayIndex' | 'frequencyType' | 'monthDay'
+      | 'name'
+      | 'description'
+      | 'displayIndex'
+      | 'frequencyType'
+      | 'monthDay'
+      | 'weekDays'
     >
   >
 ) {
   const { data: response, error } = await client<GroupTask>(
-    ENDPOINTS.TASK.ACTIONS(groupId, taskListId),
+    ENDPOINTS.TASK.RECURRING(groupId, taskListId),
     {
       method: 'post',
       data,
