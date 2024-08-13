@@ -97,7 +97,7 @@ export default function CommentSheet({
         <SheetDescription className="mt-2 min-h-[150px]">
           {detailTask && detailTask.recurring.description}
         </SheetDescription>
-        <CommentForm />
+        <CommentForm id={detailTask?.id} />
         {commentList?.length !== 0 &&
           commentList?.map((comment) => (
             <CommentItem key={comment.id} {...comment} />
