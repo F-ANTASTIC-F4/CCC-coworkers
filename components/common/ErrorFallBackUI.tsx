@@ -1,12 +1,10 @@
 'use client';
 
 import FetchError from '@/lib/api/HttpClient/FetchError';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import Lottie from 'react-lottie-player';
 
 import lottieJson from '../../public/animation/error.json';
-import { Button } from '../ui/button';
+import ErrorFallBackButtons from './ErrorFallBackButtons';
+import { LazyLottie } from './LazyLottie';
 
 /* eslint-disable */
 
@@ -45,31 +43,13 @@ const getErrorMessage = (error: any) => {
 };
 
 const ErrorFallbackUI = ({ error, onClickRetry }: ErrorBoundaryState) => {
-  const [isServerOffline, setIsServerOffline] = useState(false);
-  const router = useRouter();
-
-  if (!error) return <div> 에러가 없어요 </div>;
-
-  useEffect(() => {
-    const handleOffline = () => setIsServerOffline(true);
-    const handleOnline = () => setIsServerOffline(false);
-
-    window.addEventListener('offline', handleOffline);
-    window.addEventListener('online', handleOnline);
-
-    return () => {
-      window.removeEventListener('offline', handleOffline);
-      window.removeEventListener('online', handleOnline);
-    };
-  }, []);
+  if (!error) return;
 
   return (
     <div className="center h-screen w-full">
       <div className="mx-16 my-auto min-h-[500px] max-w-[500px]">
         <h1 className="mb-4 text-5xl font-bold">! ERROR</h1>
-        <h2 className="break-keep">
-          {!isServerOffline ? getErrorMessage(error) : ERROR_MESSAGE.network}
-        </h2>
+        <h2 className="break-keep">{getErrorMessage(error)}</h2>
 
         {/* 개발 모드에서는 에러 정보를 포함해서 렌더링 */}
         {process.env.NODE_ENV !== 'production' ? (
@@ -81,9 +61,9 @@ const ErrorFallbackUI = ({ error, onClickRetry }: ErrorBoundaryState) => {
           </div>
         ) : (
           <div className="center relative h-[300px] w-full">
-            <Lottie
-              loop
+            <LazyLottie
               animationData={lottieJson}
+              loop
               play
               style={{
                 width: 100,
@@ -96,16 +76,7 @@ const ErrorFallbackUI = ({ error, onClickRetry }: ErrorBoundaryState) => {
           </div>
         )}
 
-        {/* 네트워크 관련 오류가 났을 때는 다시 시도하기 버튼을 렌더링 */}
-        {isServerOffline && (
-          <Button onClick={onClickRetry} className="mb-8">
-            다시 시도하기
-          </Button>
-        )}
-
-        <Button onClick={() => router.push('/', { scroll: false })}>
-          홈페이지로 돌아가기
-        </Button>
+        <ErrorFallBackButtons onClickRetry={onClickRetry} />
       </div>
     </div>
   );
