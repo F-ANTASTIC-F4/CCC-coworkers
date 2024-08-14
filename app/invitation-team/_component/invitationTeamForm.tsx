@@ -28,10 +28,7 @@ export default function InvitationTeamForm({
 }: {
   userEmail: string;
 }) {
-  const api = useRequestFunction(
-    (props: { userEmail: string; token: string }) =>
-      inviteMemberViaLink(props.userEmail, props.token)
-  );
+  const api = useRequestFunction(inviteMemberViaLink);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
