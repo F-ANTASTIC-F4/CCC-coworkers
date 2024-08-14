@@ -15,25 +15,26 @@ async function TaskList({
   groupId: Id;
   searchParams?: { 'task-list': Id; date: DateString };
 }) {
-  // 테스크 리스트를 불러오기 위한 패칭
-  let taskListsData;
-  const res = await fetchAPI.Group(groupId);
-  if (res.error) {
-    console.log(res.error);
-  } else {
-    taskListsData = res.data.taskLists;
+  // 두 API 요청을 동시에 실행
+  const [groupRes, tasksRes] = await Promise.all([
+    fetchAPI.Group(groupId),
+    fetchAPI.TaskList(
+      groupId,
+      Number(searchParams?.['task-list']),
+      searchParams!.date
+    ),
+  ]);
+
+  // 그룹 데이터 처리
+  if (groupRes.error) {
+    console.log(groupRes.error);
+    return <div>그룹 데이터를 불러오는 중 오류가 발생했습니다.</div>;
   }
 
-  if (!taskListsData) {
-    return <div>no data</div>;
-  }
-
-  // 테슼스크들을 불러오기 위한 패칭
-  const { data: tasksData } = await fetchAPI.TaskList(
-    groupId,
-    Number(searchParams?.['task-list']),
-    searchParams!.date
-  );
+  // 태스크 리스트 처리
+  const taskListsData = groupRes.data.taskLists;
+  // 태스크 데이터 처리
+  const tasksData = tasksRes.data;
 
   return (
     <div className="flex h-full flex-grow flex-col">
