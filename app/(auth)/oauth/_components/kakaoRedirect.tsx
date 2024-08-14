@@ -5,6 +5,8 @@ import { SignInWithOAuthRequestBody } from '@ccc-types';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import Loading from '../loading';
+
 export default function KakaoRedirect() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
@@ -41,7 +43,7 @@ export default function KakaoRedirect() {
   }, [router]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return null;
