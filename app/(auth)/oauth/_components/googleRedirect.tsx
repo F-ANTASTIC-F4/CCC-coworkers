@@ -6,6 +6,8 @@ import crypto from 'crypto';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import Loading from '../loading';
+
 export default function GoogleRedirect() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
@@ -70,7 +72,7 @@ export default function GoogleRedirect() {
   }, [router]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return null;
