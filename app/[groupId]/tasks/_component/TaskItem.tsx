@@ -1,3 +1,5 @@
+'use client';
+
 import EditDeleteDropdown from '@/components/dropdown-template/EditDeleteDropdown';
 import frequencyTypeObj from '@/constants/frequencyType';
 import useRequestFunction from '@/hooks/useRequestFunction';

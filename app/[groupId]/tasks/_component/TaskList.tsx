@@ -1,9 +1,11 @@
+import MakeTodoModal from '@/components/modal-template/MakeTodoModal';
 import TodoListModal from '@/components/modal-template/TodoListModal';
 import fetchAPI from '@/lib/api/fetchAPI';
 import { DateString, Id } from '@ccc-types';
 import React from 'react';
 
 import TaskDateController from './TaskDateController';
+import TaskItem from './TaskItem';
 import TaskListTags from './TaskListTags';
 
 async function TaskList({
@@ -13,7 +15,6 @@ async function TaskList({
   groupId: Id;
   searchParams?: { 'task-list': Id; date: DateString };
 }) {
-  console.log(searchParams?.date, searchParams?.['task-list']);
   // 테스크 리스트를 불러오기 위한 패칭
   let taskListsData;
   const res = await fetchAPI.Group(groupId);
@@ -27,11 +28,12 @@ async function TaskList({
     return <div>no data</div>;
   }
 
-  // const { data: tasksData } = await fetchAPI.TaskList(
-  //   groupIdValue,
-  //   taskListIdValue,
-  //   dateValue
-  // );
+  // 테슼스크들을 불러오기 위한 패칭
+  const { data: tasksData } = await fetchAPI.TaskList(
+    groupId,
+    Number(searchParams?.['task-list']),
+    searchParams!.date
+  );
 
   return (
     <div className="flex h-full flex-grow flex-col">
@@ -42,9 +44,9 @@ async function TaskList({
       {taskListsData?.length !== 0 ? (
         <>
           <TaskListTags taskListsData={taskListsData} />
-          {/* {dataListRef.current?.tasks?.length !== 0 ? (
+          {tasksData?.tasks?.length !== 0 ? (
             <div className="mt-3 flex min-h-full flex-col gap-5 pb-[45px]">
-              {dataListRef.current.tasks.map((task) => (
+              {tasksData?.tasks?.map((task) => (
                 <TaskItem key={task.id} task={task} />
               ))}
             </div>
@@ -55,7 +57,7 @@ async function TaskList({
                 <br />할 일을 추가해보세요.
               </p>
             </div>
-          )} */}
+          )}
         </>
       ) : (
         <div className="mb-[120px] flex h-full items-center justify-center">
@@ -66,13 +68,13 @@ async function TaskList({
           </p>
         </div>
       )}
-      {/* <div className="sticky bottom-5 mx-auto flex w-full max-w-[1232px] justify-end xl:px-0">
+      <div className="sticky bottom-5 mx-auto flex w-full max-w-[1232px] justify-end xl:px-0">
         <MakeTodoModal
           className="z-10 ml-auto"
           groupId={groupId}
-          taskListId={dataListRef.current?.id}
+          taskListId={Number(searchParams?.['task-list'])}
         />
-      </div> */}
+      </div>
     </div>
   );
 }
