@@ -4,6 +4,9 @@ import lottieLoading from '@/public/lottie/lottie_loading.json';
 import Lottie from 'react-lottie-player';
 
 export default function Loading() {
+  if (typeof window === 'undefined') {
+    return null;
+  }
   return (
     <div className="flex h-[calc(100vh-60px)] flex-col items-center justify-center">
       <Lottie
