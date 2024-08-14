@@ -10,8 +10,8 @@ const ENDPOINTS = {
     PATCH_PASSWORD: `/user/password`,
   },
   TASKLIST: {
-    GROUP_ACTIONS: (groupId: Id, id: Id) =>
-      `/groups/${groupId}/task-lists/${id}`,
+    GROUP_ACTIONS: (groupId: Id, id: Id, date: DateString) =>
+      `/groups/${groupId}/task-lists/${id}?date=${date}`,
     POST: (groupId: Id) => `/groups/${groupId}/task-lists`,
     PATCH_ORDER: (groupId: Id, id: Id) =>
       `/groups/${groupId}/task-lists/${id}/order`,

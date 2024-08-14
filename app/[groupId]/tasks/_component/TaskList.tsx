@@ -9,70 +9,101 @@ import fetchAPI from '@/lib/api/fetchAPI';
 import { dateFormatter } from '@/lib/utils';
 import LeftButtonIcon from '@/public/icons/list/left_button_icon.svg';
 import RightButtonIcon from '@/public/icons/list/right_button_icon.svg';
-import { DateString, GroupTask, Id, Task } from '@ccc-types';
-import React, { useEffect, useState } from 'react';
+import { GroupTask, Id } from '@ccc-types';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import React, { useEffect, useRef } from 'react';
 
 import DatePicker from './DatePicker';
 import TaskItem from './TaskItem';
 
 function TaskList({ data, groupId }: { data: GroupTask[]; groupId: Id }) {
-  const [currentDate, setCurrentDate] = useState<Date>(new Date());
-  const [taskList, setTaskList] = useState<Task[] | undefined>(undefined);
-  const [taskListId, setTaskListId] = useState<Id>(data[0].id);
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
+  const pathname = usePathname();
+  const { replace } = useRouter();
   const oneDay = 24 * 60 * 60 * 1000;
+
+  const dataListRef = useRef<GroupTask | undefined>(undefined);
+  const forceRender = useRef(false);
 
   const fetchData = async (
     groupIdValue: Id,
     taskListIdValue: Id,
-    date: DateString
+    dateValue: string
   ) => {
-    const res = await fetchAPI.Tasks(groupIdValue, taskListIdValue, date);
-    if (res.error) {
-      console.log(res.error);
+    const res = await fetchAPI.TaskList(
+      groupIdValue,
+      taskListIdValue,
+      dateValue
+    );
+    if (res?.data) {
+      dataListRef.current = res.data;
+      forceRender.current = !forceRender.current; // 리렌더 트리거
     } else {
-      setTaskList(res.data);
+      console.error(res?.error);
     }
   };
 
-  const handlePrevDate = () => {
-    setCurrentDate((prev) => new Date(prev.getTime() - oneDay));
-  };
-
-  const handleNextDate = () => {
-    setCurrentDate((prev) => new Date(prev.getTime() + oneDay));
-  };
-
-  const handleDateChange = React.useCallback((value: Date) => {
-    setCurrentDate(value);
-  }, []);
-
   useEffect(() => {
-    fetchData(groupId, taskListId, currentDate.toString());
-  }, [groupId, taskListId, currentDate]);
+    const taskListId = Number(params.get('task-list'));
+    const date = params.get('date');
+    if (taskListId && date) {
+      fetchData(groupId, taskListId, date);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [groupId, searchParams]);
+
+  if (!dataListRef.current) {
+    return <div>no</div>;
+  }
 
   return (
     <div className="flex h-full flex-grow flex-col">
       <div className="flex items-center">
         <span className="w-[100px] text-[16px] font-medium text-text-primary">
-          {dateFormatter.toConvertDate(currentDate, 'monthAndDay')}
+          {params.get('date')
+            ? dateFormatter.toConvertDate(
+                params.get('date') as string,
+                'monthAndDay'
+              )
+            : '날짜를 불러올 수 없습니다. '}
         </span>
         <div className="relative top-[1px] mr-4 flex gap-2">
           <button
             type="button"
             aria-label="날짜 변경 버튼(왼쪽)"
-            onClick={handlePrevDate}
+            onClick={() => {
+              params.set(
+                'date',
+                new Date(new Date().getTime() - oneDay).toString()
+              );
+              replace(`${pathname}?${params.toString()}`);
+            }}
           >
             <LeftButtonIcon />
           </button>
           <button
             type="button"
             aria-label="날짜 변경 버튼(오른쪽)"
-            onClick={handleNextDate}
+            onClick={() => {
+              params.set(
+                'date',
+                new Date(new Date().getTime() + oneDay).toString()
+              );
+              replace(`${pathname}?${params.toString()}`);
+            }}
           >
             <RightButtonIcon />
           </button>
         </div>
-        <DatePicker onClick={handleDateChange} />
+        <DatePicker
+          onClick={(day) => {
+            if (day) {
+              params.set('date', day.toString());
+              replace(`${pathname}?${params.toString()}`);
+            }
+          }}
+        />
         <TodoListModal groupId={groupId} className="ml-auto" />
       </div>
       {data?.length !== 0 ? (
@@ -82,18 +113,24 @@ function TaskList({ data, groupId }: { data: GroupTask[]; groupId: Id }) {
               <li
                 key={item.id}
                 onClick={() => {
-                  setTaskListId(item.id);
+                  params.set('task-list', item.id.toString());
+                  replace(`${pathname}?${params.toString()}`);
                 }}
-                className={`cursor-pointer text-base font-medium text-text-default ${item.id === taskListId && 'border-b-2 border-text-primary pb-[3px] text-text-primary'}`}
+                className={`cursor-pointer text-base font-medium text-text-default ${
+                  item.id === dataListRef.current?.id &&
+                  'border-b-2 border-text-primary pb-[3px] text-text-primary'
+                }`}
               >
                 {item.name}
               </li>
             ))}
           </ul>
 
-          {taskList?.length !== 0 ? (
+          {dataListRef.current?.tasks?.length !== 0 ? (
             <div className="mt-3 flex min-h-full flex-col gap-5 pb-[45px]">
-              {taskList?.map((task) => <TaskItem key={task.id} task={task} />)}
+              {dataListRef.current.tasks.map((task) => (
+                <TaskItem key={task.id} task={task} />
+              ))}
             </div>
           ) : (
             <div className="mb-[120px] flex h-full items-center justify-center">
@@ -117,7 +154,7 @@ function TaskList({ data, groupId }: { data: GroupTask[]; groupId: Id }) {
         <MakeTodoModal
           className="z-10 ml-auto"
           groupId={groupId}
-          taskListId={taskListId}
+          taskListId={dataListRef.current?.id}
         />
       </div>
     </div>

@@ -91,7 +91,10 @@ export default function CommentSheet({
           <p className={isDone ? 'line-through' : ''}>
             {detailTask && detailTask.recurring.name}
           </p>
-          <EditDeleteDropdown className="h-[24px] w-[24px]" />
+          <EditDeleteDropdown
+            className="h-[24px] w-[24px]"
+            onClick={() => console.log('hi!')}
+          />
         </SheetTitle>
         {detailTask && <CommentMeta detailTask={detailTask} />}
         <SheetDescription className="mt-2 min-h-[150px]">
