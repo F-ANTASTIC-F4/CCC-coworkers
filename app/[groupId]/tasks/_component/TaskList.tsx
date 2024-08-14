@@ -92,7 +92,7 @@ function TaskList({ data, groupId }: { data: GroupTask[]; groupId: Id }) {
           </ul>
 
           {taskList?.length !== 0 ? (
-            <div className="mt-3 flex flex-col gap-5">
+            <div className="mt-3 flex min-h-full flex-col gap-5 pb-[45px]">
               {taskList?.map((task) => <TaskItem key={task.id} task={task} />)}
             </div>
           ) : (
@@ -113,7 +113,7 @@ function TaskList({ data, groupId }: { data: GroupTask[]; groupId: Id }) {
           </p>
         </div>
       )}
-      <div className="absolute bottom-5 mx-auto flex w-full max-w-[1232px] justify-end xl:px-0">
+      <div className="sticky bottom-5 mx-auto flex w-full max-w-[1232px] justify-end xl:px-0">
         <MakeTodoModal
           className="z-10 ml-auto"
           groupId={groupId}

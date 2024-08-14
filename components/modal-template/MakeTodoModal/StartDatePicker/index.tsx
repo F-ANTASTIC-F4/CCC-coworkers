@@ -45,8 +45,6 @@ function StartDatePicker({ field }: StartDatePickerProps) {
     }
   };
 
-  console.log(new Date('2024-08-13T00:00:00.000Z'));
-
   const handleDate = (day: Date | undefined) => {
     if (day) {
       setDate(day);
