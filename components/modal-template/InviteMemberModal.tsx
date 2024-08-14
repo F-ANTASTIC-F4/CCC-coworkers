@@ -10,8 +10,8 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { createTokenForMemberInvitation } from '@/lib/api/group';
+import { copyText } from '@/lib/utils';
 import React from 'react';
-import { toast } from 'sonner';
 
 export default function InviteMemberModal({
   groupId,
@@ -22,8 +22,7 @@ export default function InviteMemberModal({
 }) {
   const handleCopyLink = async () => {
     const { data } = await createTokenForMemberInvitation(groupId);
-    navigator.clipboard.writeText(data!);
-    toast.success('링크가 클립보드에 복사되었습니다.');
+    copyText(data!, '링크');
   };
 
   return (
