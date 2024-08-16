@@ -8,7 +8,7 @@ const WithdrawalModal = () => {
   const withdrawalUser = async () => {
     const res = await deleteUser();
     if (res?.error) {
-      toast(res.error.info);
+      toast.error(res.error.info);
     }
   };
 

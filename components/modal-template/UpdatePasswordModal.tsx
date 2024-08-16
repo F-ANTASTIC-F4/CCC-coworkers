@@ -21,6 +21,7 @@ import { passwordConfirmSchema, passwordSchema } from '@/lib/schema/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React, { Ref, forwardRef } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
 const formSchema = z
@@ -53,12 +54,12 @@ function UpdatePasswordModal(
       passwordConfirmation: values.passwordConfirmation,
     });
     if (res?.error) {
-      alert(res.error?.message || res.error?.info);
+      toast.error(res.error?.message || res.error?.info);
       return;
     }
     form.reset();
     setIsOpen(false);
-    alert('비밀번호가 성공적으로 변경되었습니다.');
+    toast.success('비밀번호가 성공적으로 변경되었습니다.');
   };
 
   return (

@@ -11,6 +11,7 @@ import { User } from '@ccc-types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
 const formSchema = z.object({
@@ -41,7 +42,7 @@ const SecuritySettingsForm = ({ email }: SecuritySettingsFormProps) => {
     );
     form.reset();
     if (error) {
-      alert(error?.message || '현재 비밀번호를 정확하게 입력해주세요');
+      toast.error(error?.message || '현재 비밀번호를 정확하게 입력해주세요');
       return;
     }
     if (modalRef.current) {
