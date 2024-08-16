@@ -2,7 +2,7 @@
 
 import FetchError from '@/lib/api/HttpClient/FetchError';
 
-import lottieJson1 from '../../public/animation/dog.json';
+import DogLottie from '../../public/animation/dog.json';
 import ErrorFallBackButtons from './ErrorFallBackButtons';
 import { LazyLottie } from './LazyLottie';
 
@@ -47,8 +47,8 @@ const ErrorFallbackUI = ({ error, onClickRetry }: ErrorBoundaryState) => {
 
   return (
     <div className="center relative min-h-[calc(100vh-80px)] w-screen">
-      <div className="mx-auto flex w-full max-w-[1200px] flex-col justify-evenly gap-8 p-12 md:my-auto md:min-h-[440px] md:flex-row-reverse md:py-24">
-        <div className="md:flex md:min-h-[440px] md:flex-col md:px-12 md:py-24">
+      <div className="mx-auto flex w-full max-w-[1000px] flex-col justify-evenly gap-8 p-12 md:my-auto md:min-h-[440px] md:flex-row-reverse md:py-24">
+        <div className="md:flex md:min-h-[440px] md:grow md:flex-col md:px-12 md:py-24">
           <div>
             <h1 className="mb-4 text-5xl font-bold md:text-7xl">! ERROR</h1>
             <h2 className="break-keep text-text-default">
@@ -73,7 +73,7 @@ const ErrorFallbackUI = ({ error, onClickRetry }: ErrorBoundaryState) => {
 
         <div className="center relative left-0 mx-auto mb-16 w-full max-w-[440px] md:mb-0">
           <LazyLottie
-            animationData={lottieJson1}
+            animationData={DogLottie}
             loop
             play
             style={{

@@ -23,7 +23,7 @@ export function LazyLottie<T extends Record<string, unknown>>({
   }, [animationData]);
 
   // TODO 스피너 등으로 교체
-  if (loading) return <div>loading animation</div>;
+  if (loading) return <div className="center h-[300px] w-[300px]">...</div>;
 
   return <LazyLottieAnimation animationData={data} {...props} />;
 }
