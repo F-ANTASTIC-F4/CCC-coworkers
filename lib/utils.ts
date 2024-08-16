@@ -2,6 +2,7 @@ import colors from '@/constants/Color';
 import { DateFormatType } from '@ccc-types';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * CSS 클래스 이름을 병합하고, 중복된 클래스를 제거합니다.
@@ -147,3 +148,8 @@ export const copyText = (text: string, label: string) => {
       alert(`${label} 복사에 실패했습니다!`);
     });
 };
+
+// 랜덤 문자열 생성
+export function generateRandomState(): string {
+  return uuidv4();
+}
