@@ -3,10 +3,11 @@
 import { loginWithOAuth } from '@/lib/api/auth';
 import { SignInWithOAuthRequestBody } from '@ccc-types';
 import crypto from 'crypto';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import Loading from '../loading';
+const Loading = dynamic(() => import('../loading'), { ssr: false });
 
 export default function GoogleRedirect() {
   const router = useRouter();
@@ -65,6 +66,8 @@ export default function GoogleRedirect() {
           setIsLoading(false);
           router.push('/');
         }
+      } else {
+        setIsLoading(false);
       }
     };
 

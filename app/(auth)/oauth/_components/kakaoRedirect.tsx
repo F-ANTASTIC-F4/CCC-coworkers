@@ -2,11 +2,11 @@
 
 import { loginWithOAuth } from '@/lib/api/auth';
 import { SignInWithOAuthRequestBody } from '@ccc-types';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import Loading from '../loading';
-
+const Loading = dynamic(() => import('../loading'), { ssr: false });
 export default function KakaoRedirect() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
@@ -36,6 +36,8 @@ export default function KakaoRedirect() {
           setIsLoading(false);
           router.push('/');
         }
+      } else {
+        setIsLoading(false);
       }
     };
 
