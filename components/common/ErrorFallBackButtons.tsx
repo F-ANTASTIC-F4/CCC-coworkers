@@ -1,9 +1,8 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import RetryIcon from '@/public/icons/list/daily_task_icon.svg';
 import { useEffect, useState } from 'react';
-
-import RetryIcon from '/public/icons/list/daily_task_icon.svg';
 
 const goToLandingPage = () => {
   if (typeof window === 'undefined') return;
