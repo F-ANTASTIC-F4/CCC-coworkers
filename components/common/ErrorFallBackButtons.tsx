@@ -3,6 +3,8 @@
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
 
+import RetryIcon from '/public/icons/list/daily_task_icon.svg';
+
 const goToLandingPage = () => {
   if (typeof window === 'undefined') return;
   window.location.href = '/';
@@ -32,15 +34,18 @@ const ErrorFallBackButtons = ({
   }, []);
 
   return (
-    <div>
+    <div className="flex gap-4">
+      <Button onClick={goToLandingPage}>홈페이지로 돌아가기</Button>
       {/* 네트워크 관련 오류가 났을 때는 다시 시도하기 버튼을 렌더링 */}
       {isServerOffline && (
-        <Button onClick={onClickRetry} className="mb-8">
-          (네트워크 문제인가요?) 다시 시도하기
+        <Button
+          onClick={onClickRetry}
+          variant="outlined"
+          className="w-[max-content] p-[14px]"
+        >
+          <RetryIcon />
         </Button>
       )}
-
-      <Button onClick={goToLandingPage}>홈페이지로 돌아가기</Button>
     </div>
   );
 };

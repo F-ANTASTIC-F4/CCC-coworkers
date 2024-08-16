@@ -2,7 +2,7 @@
 
 import FetchError from '@/lib/api/HttpClient/FetchError';
 
-import lottieJson from '../../public/animation/error.json';
+import lottieJson1 from '../../public/animation/dog.json';
 import ErrorFallBackButtons from './ErrorFallBackButtons';
 import { LazyLottie } from './LazyLottie';
 
@@ -46,37 +46,44 @@ const ErrorFallbackUI = ({ error, onClickRetry }: ErrorBoundaryState) => {
   if (!error) return;
 
   return (
-    <div className="center h-screen w-full">
-      <div className="mx-16 my-auto min-h-[500px] max-w-[500px]">
-        <h1 className="mb-4 text-5xl font-bold">! ERROR</h1>
-        <h2 className="break-keep">{getErrorMessage(error)}</h2>
-
-        {/* 개발 모드에서는 에러 정보를 포함해서 렌더링 */}
-        {process.env.NODE_ENV !== 'production' ? (
-          <div className="my-8 h-auto min-h-[40px] w-full rounded-xl border-[1px] border-white p-[40px]">
-            <h2 className="mb-4 text-xl font-bold">
-              개발 모드에서만 보여지는 정보에요
+    <div className="center relative min-h-[calc(100vh-80px)] w-screen">
+      <div className="mx-auto flex w-full max-w-[1200px] flex-col justify-evenly gap-8 p-12 md:my-auto md:min-h-[440px] md:flex-row-reverse md:py-24">
+        <div className="md:flex md:min-h-[440px] md:flex-col md:px-12 md:py-24">
+          <div>
+            <h1 className="mb-4 text-5xl font-bold md:text-7xl">! ERROR</h1>
+            <h2 className="break-keep text-text-default">
+              {getErrorMessage(error)}
             </h2>
-            <p>{JSON.stringify(error, null, 2)}</p>
           </div>
-        ) : (
-          <div className="center relative h-[300px] w-full">
-            <LazyLottie
-              animationData={lottieJson}
-              loop
-              play
-              style={{
-                width: 100,
-                height: 100,
-                position: 'absolute',
-                bottom: '-16px',
-                right: '0',
-              }}
-            />
-          </div>
-        )}
 
-        <ErrorFallBackButtons onClickRetry={onClickRetry} />
+          {/* 개발 모드에서는 에러 정보를 포함해서 렌더링 */}
+          {process.env.NODE_ENV !== 'production' && (
+            <div className="my-8 h-auto min-h-[40px] w-full rounded-xl border-[1px] border-text-default p-8">
+              <h2 className="mb-4 text-xl text-text-default">
+                개발 모드에서만 보여지는 정보에요
+              </h2>
+              <p>{JSON.stringify(error, null, 2)}</p>
+            </div>
+          )}
+
+          <div className="absolute bottom-16 w-[calc(100%-6rem)] md:relative md:bottom-0 md:mt-auto md:h-auto md:w-full">
+            <ErrorFallBackButtons onClickRetry={onClickRetry} />
+          </div>
+        </div>
+
+        <div className="center relative left-0 mx-auto mb-16 w-full max-w-[440px] md:mb-0">
+          <LazyLottie
+            animationData={lottieJson1}
+            loop
+            play
+            style={{
+              width: '100%',
+              height: 'auto',
+              maxWidth: '440px',
+              maxHeight: '440px',
+            }}
+          />
+        </div>
       </div>
     </div>
   );
