@@ -46,7 +46,7 @@ const ENDPOINTS = {
   COMMENT: {
     TASK: (taskId: Id) => `/tasks/${taskId}/comments`,
     ARTICLE: (articleId: Id) => `/articles/${articleId}/comments`,
-    ACTIONS: (commentId: Id) => `/comments/${commentId}`,
+    ACTIONS: (taskId: Id) => `/tasks/${taskId}/comments`,
   },
   AUTH: {
     POST_SIGNUP: `/auth/signUp`,

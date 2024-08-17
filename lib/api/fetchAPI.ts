@@ -3,6 +3,7 @@ import client from '@/lib/api/client/client';
 import {
   Article,
   ArticleDetail,
+  Comment,
   CursorBasedPagination,
   DateString,
   DetailTask,
