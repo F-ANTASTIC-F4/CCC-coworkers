@@ -77,7 +77,7 @@ const useRequestFunction = <T = any>(
         setState({
           ...INITIAL_STATE,
           isError: true,
-          errorMessage: response.error?.message || 'An error occurred',
+          errorMessage: response.error?.message || '오류가 발생했습니다',
           error: response.error,
         });
         if (showErrorFallBack && !response.error.hasBodyMessage) {
