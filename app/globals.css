@@ -85,6 +85,19 @@
   .custom-scroll::-webkit-scrollbar-thumb {
     background: #334155;
   }
+
+  .rolling-gear {
+    animation: 10s rolling infinite linear;
+  }
+
+  @keyframes rolling {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(3600deg);
+    }
+  }
 }
 
 @layer utilities {
