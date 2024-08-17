@@ -26,7 +26,7 @@ function TeamToDoList({
         {taskLists.length !== 0 ? (
           taskLists.map((taskList) => (
             <Link
-              href={`/${groupId}/tasks?task-list=${taskList.id}&date=${new Date().toString()}`}
+              href={`/${groupId}/tasks?task-list=${taskList.id}&date=${new Date().toISOString().toString()}`}
             >
               <TeamToDoListCard
                 key={taskList.id}
