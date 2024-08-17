@@ -41,7 +41,7 @@ function StartDatePicker({ field }: StartDatePickerProps) {
       const hourOffset = periodValue === 'AM' && hours === '12' ? 0 : 12;
       day.setHours(parseInt(hours, 10) + hourOffset);
       day.setMinutes(parseInt(minutes, 10));
-      field.onChange(new Date(day));
+      field.onChange(new Date(day).toISOString());
     }
   };
 
