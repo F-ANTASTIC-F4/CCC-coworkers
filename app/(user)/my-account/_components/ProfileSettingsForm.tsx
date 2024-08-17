@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import useImageFile from '@/hooks/useImagePreview';
 import useRequestFunction from '@/hooks/useRequestFunction';
 import { updateUser } from '@/lib/api/user';
-import { nameSchema } from '@/lib/schema/auth';
+import { imageSchema, nameSchema } from '@/lib/schema/auth';
 import Profile from '@/public/icons/profile.svg';
 import { User } from '@ccc-types';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -17,9 +17,7 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 
 const formSchema = z.object({
-  image: z.custom<File | string>(
-    (v) => v instanceof File || typeof v === 'string'
-  ),
+  image: imageSchema,
   nickname: nameSchema,
 });
 
