@@ -5,32 +5,21 @@ import {
   DialogContent,
   DialogDescription,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
 import WarningIcon from '@/public/icons/modal/warning_icon.svg';
 import React, { MouseEvent } from 'react';
 
 function DeleteTodoModal({
   title,
-  className,
   onClick,
+  onClose,
 }: {
   title?: string;
-  className?: string;
   onClick: () => void;
+  onClose: () => void;
 }) {
   return (
-    <Dialog>
-      <DialogTrigger asChild className={className}>
-        <button
-          type="button"
-          onClick={(e: MouseEvent<HTMLButtonElement>) => {
-            e.stopPropagation();
-          }}
-        >
-          삭제하기
-        </button>
-      </DialogTrigger>
+    <Dialog open onOpenChange={onClose}>
       <DialogContent
         onClick={(e: MouseEvent<HTMLElement>) => {
           e.stopPropagation();
@@ -47,7 +36,6 @@ function DeleteTodoModal({
             <Button variant="outlined-secondary">닫기</Button>
           </DialogClose>
           <DialogClose asChild>
-            {/** NOTE - DELETE 로직 추가 전에 임시로 이벤트 버블링 방지를 위해 함수 할당 */}
             <Button variant="danger" onClick={onClick}>
               삭제
             </Button>
