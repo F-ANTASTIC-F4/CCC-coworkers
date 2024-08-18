@@ -54,9 +54,9 @@ const BoardAddForm = () => {
       delete requestData.image;
     }
 
-    await api.request(requestData);
+    const result = await api.request(requestData);
 
-    if (api.isSuccess) {
+    if (!result?.error) {
       router.push('/boards');
     }
   }

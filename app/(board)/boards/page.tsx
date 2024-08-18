@@ -1,9 +1,9 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
-import BestBoards from '../_components/BestBoards';
-import BoardList from '../_components/BoardList';
-import SearchBoard from '../_components/SearchBoard';
+import BestBoards from './components/BestBoards';
+import BoardList from './components/BoardList';
+import SearchBoard from './components/SearchBoard';
 
 function BoardPage() {
   return (
