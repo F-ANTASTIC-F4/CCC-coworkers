@@ -1,3 +1,6 @@
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+
 import BestBoards from '../_components/BestBoards';
 import BoardList from '../_components/BoardList';
 import SearchBoard from '../_components/SearchBoard';
@@ -9,6 +12,14 @@ function BoardPage() {
       <BestBoards />
       <hr className="my-8 md:my-10" />
       <BoardList />
+      <Link href="/addboard">
+        <Button
+          variant="floating"
+          className="fixed bottom-5 right-4 md:right-6 xl:right-[calc((100%-1200px)/2)]"
+        >
+          + 글쓰기
+        </Button>
+      </Link>
     </>
   );
 }
