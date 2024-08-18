@@ -15,7 +15,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import { Button } from '../ui/button';
-import GroupEditDropdown from './groupEditDropdown';
+import GroupEditDropdown from './GroupEditDropdown';
 
 function HeaderDropdown({ user }: { user: UserWithMemberships }) {
   const router = useRouter();
