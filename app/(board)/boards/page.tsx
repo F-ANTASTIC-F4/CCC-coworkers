@@ -1,11 +1,14 @@
 import BestBoards from '../_components/BestBoards';
+import BoardList from '../_components/BoardList';
+import SearchBoard from '../_components/SearchBoard';
 
 function BoardPage() {
   return (
     <>
-      {/* TODO - 프롭을 data로 받을 지, 나눠 받을 지 몰라 일단 두고 작업하겠습니다 */}
+      <SearchBoard />
       <BestBoards />
-      {/* TODO - 게시글 구현 */}
+      <hr className="my-8 md:my-10" />
+      <BoardList />
     </>
   );
 }
