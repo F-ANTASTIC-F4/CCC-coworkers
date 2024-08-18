@@ -1,24 +1,49 @@
+'use client';
+
+import selectedGroupIdAtom from '@/atoms/groupAtoms';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import KebabIcon from '@/public/icons/kebab_icon.svg';
+import { deleteGroup } from '@/lib/api/group';
 import { UserWithMemberships } from '@ccc-types';
+import { useAtom } from 'jotai';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { Button } from '../ui/button';
+import GroupEditDropdown from './groupEditDropdown';
 
 function HeaderDropdown({ user }: { user: UserWithMemberships }) {
+  const router = useRouter();
+  const [selectedGroupId, setSelectedGroupId] = useAtom(selectedGroupIdAtom);
+
+  const currentGroup =
+    user?.memberships.find(
+      (membership) => membership.group.id === Number(selectedGroupId)
+    )?.group || user?.memberships[0].group;
+
+  const handleGroupChange = (newGroupId: number) => {
+    setSelectedGroupId(newGroupId);
+  };
+
+  const handleGroupDelete = async (groupId: number) => {
+    await deleteGroup(groupId);
+    if (groupId === selectedGroupId) {
+      setSelectedGroupId(user?.memberships[0].group.id);
+      router.push('/');
+    }
+    router.refresh();
+  };
+
   return (
     <DropdownMenu>
       {/* TODO - 현재 접속해있는 그룹으로 */}
       {user?.memberships[0].group.name && (
-        <DropdownMenuTrigger>
-          {user?.memberships[0].group.name}
-        </DropdownMenuTrigger>
+        <DropdownMenuTrigger>{currentGroup?.name}</DropdownMenuTrigger>
       )}
       <DropdownMenuContent className="z-dropdown mt-5 flex w-[218px] flex-col gap-2 p-4">
         {user?.memberships.map((membership) => (
@@ -40,6 +65,7 @@ function HeaderDropdown({ user }: { user: UserWithMemberships }) {
                 <Link
                   href={`/${membership.group.id}`}
                   className="w-[120px] cursor-pointer"
+                  onClick={() => handleGroupChange(membership.group.id)}
                 >
                   <p className="w-full truncate font-medium">
                     {membership.group.name}
@@ -47,7 +73,10 @@ function HeaderDropdown({ user }: { user: UserWithMemberships }) {
                 </Link>
               </DropdownMenuItem>
             </div>
-            <KebabIcon width={24} height={24} />
+            <GroupEditDropdown
+              groupId={membership.group.id}
+              onClick={() => handleGroupDelete(membership.group.id)}
+            />
           </DropdownMenuItem>
         ))}
         <Link href="/create-team">
