@@ -15,7 +15,7 @@ async function TaskList({
   const tasksRes = await fetchAPI.TaskList(
     groupId,
     Number(searchParams?.['task-list']),
-    searchParams!.date
+    new Date(searchParams!.date).toISOString()
   );
   const tasksData = tasksRes.data;
 
