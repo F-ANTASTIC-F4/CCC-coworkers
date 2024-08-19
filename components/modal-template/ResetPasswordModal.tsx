@@ -36,6 +36,7 @@ function ResetPasswordModal({ className = '' }) {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const data = {
       email: values.email,
+      // NOTE - 현재는 로컬에서 작업하기 위해 3000으로 설정했는데 개발이 끝나면 실도메인으로 변경이 필요합니다.
       redirectUrl: 'http://localhost:3000',
     };
     const res = await sendResetPasswordEmail(data);
