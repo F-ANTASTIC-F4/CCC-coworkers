@@ -1,4 +1,3 @@
-import ErrorFallbackUI from '@/components/common/ErrorFallBackUI';
 import Header from '@/components/header/Header';
 import ServerErrorBoundary from '@/components/server-error-boundary';
 import ThemeProvider from '@/components/theme-provider';
@@ -32,19 +31,19 @@ export default function RootLayout({
     // https://github.com/vercel/next.js/discussions/22388
     <html lang="en" suppressHydrationWarning>
       <body className={pretendardFont.className}>
-        <ServerErrorBoundary fallback={<>{ErrorFallbackUI}</>}>
-          <ThemeProvider
-            attribute="class"
-            // NOTE - 기본적으로 다크모드로 설정하였습니다.
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Header />
+        <ThemeProvider
+          attribute="class"
+          // NOTE - 기본적으로 다크모드로 설정하였습니다.
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Header />
+          <ServerErrorBoundary>
             {children}
             <Toaster />
-          </ThemeProvider>
-        </ServerErrorBoundary>
+          </ServerErrorBoundary>
+        </ThemeProvider>
       </body>
     </html>
   );
