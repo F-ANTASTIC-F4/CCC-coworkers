@@ -7,28 +7,27 @@ import {
 import KebabIcon from '@/public/icons/kebab_icon.svg';
 import * as React from 'react';
 
-import DeleteTodoModal from '../modal-template/DeleteTodoModal';
+import DeleteTodoListModal from './DeleteTodoListModal';
+import EditTodoListModal from './EditTodoListModal';
 
-function EditDeleteDropdown({
+function TodoListEditDropdown({
   title = '',
-  className = 'w-[16px] h-[16px]',
-  onClick,
+  groupId,
+  taskListId,
 }: {
   title?: string;
-  className?: string;
-  onClick: () => void;
+  groupId: number;
+  taskListId: number;
 }) {
-  const [open, setOpen] = React.useState<boolean>(false);
-
   return (
-    <DropdownMenu open={open} onOpenChange={setOpen}>
+    <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button
           type="button"
           aria-label="수정 및 삭제 기능 제공 드롭다운"
           className="outline-none"
         >
-          <KebabIcon className={`${className} hover:fill-text-tertiary`} />
+          <KebabIcon className="size-4" />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
@@ -37,14 +36,22 @@ function EditDeleteDropdown({
           e.stopPropagation();
         }}
       >
-        <DropdownMenuItem className="flex cursor-pointer flex-col justify-center">
-          수정하기
-        </DropdownMenuItem>
-        <DropdownMenuItem className="flex flex-col justify-center">
-          <DeleteTodoModal
-            title={title}
+        <DropdownMenuItem
+          className="flex cursor-pointer flex-col justify-center"
+          asChild
+        >
+          <EditTodoListModal
+            groupId={groupId}
+            taskListId={taskListId}
             className="w-full cursor-pointer"
-            onClick={onClick}
+          />
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex flex-col justify-center" asChild>
+          <DeleteTodoListModal
+            title={title}
+            groupId={groupId}
+            taskListId={taskListId}
+            className="w-full cursor-pointer"
           />
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -52,4 +59,4 @@ function EditDeleteDropdown({
   );
 }
 
-export default EditDeleteDropdown;
+export default TodoListEditDropdown;

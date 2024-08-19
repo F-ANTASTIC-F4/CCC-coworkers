@@ -1,6 +1,7 @@
 import colors from '@/constants/Color';
 import { DateFormatType } from '@ccc-types';
 import { type ClassValue, clsx } from 'clsx';
+import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -142,10 +143,10 @@ export const copyText = (text: string, label: string) => {
   navigator.clipboard
     .writeText(text)
     .then(() => {
-      alert(`${label}이 복사되었습니다!`);
+      toast.success(`${label}이(가) 복사되었습니다!`);
     })
     .catch(() => {
-      alert(`${label} 복사에 실패했습니다!`);
+      toast.error(`${label} 복사에 실패했습니다!`);
     });
 };
 
