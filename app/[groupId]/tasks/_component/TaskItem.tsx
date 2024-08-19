@@ -28,9 +28,13 @@ function TaskItem({ task }: { task: DetailTask }) {
     setIsDone(value);
   };
 
+  const handleLoading = (value: boolean) => {
+    setIsLoading(value);
+  };
+
   const handleDeleteClick = async () => {
     try {
-      setIsLoading(true);
+      handleLoading(true);
       await deleteTask(task.id);
       router.refresh();
     } catch (e) {
