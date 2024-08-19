@@ -13,8 +13,10 @@ function DeleteTodoModal({
   title,
   onClick,
   onClose,
+  type = 'task',
 }: {
   title?: string;
+  type?: 'task' | 'comment';
   onClick: () => void;
   onClose: () => void;
 }) {
@@ -27,8 +29,14 @@ function DeleteTodoModal({
       >
         <WarningIcon />
         <DialogTitle className="mb-[-10px] flex flex-col gap-3 text-center">
-          {title && <p>&apos;{title}&apos;</p>}
-          <p>할 일을 정말 삭제하시겠어요?</p>
+          {type === 'task' ? (
+            <>
+              {title && <p>&apos;{title}&apos;</p>}
+              <p>할 일을 정말 삭제하시겠어요?</p>
+            </>
+          ) : (
+            <p>댓글을 정말 삭제하시겠어요?</p>
+          )}
         </DialogTitle>
         <DialogDescription>삭제 후에는 되돌릴 수 없습니다.</DialogDescription>
         <div className="gap- flex w-full max-w-[280px] gap-2">

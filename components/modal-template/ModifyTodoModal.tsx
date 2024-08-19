@@ -54,7 +54,6 @@ function ModifyTodoModal({
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log('hi');
     if (taskId) {
       await updateTask(taskId, values);
       router.refresh();
