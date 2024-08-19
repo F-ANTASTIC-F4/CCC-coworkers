@@ -148,3 +148,8 @@ export const copyText = (text: string, label: string) => {
       toast.error(`${label} 복사에 실패했습니다!`);
     });
 };
+
+export const lineBreaker = (content: string) => {
+  const lineBreakedContent = content.split('\n');
+  return lineBreakedContent;
+};
