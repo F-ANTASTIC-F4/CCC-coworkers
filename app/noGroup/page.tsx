@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -10,7 +12,7 @@ export default function NoGroup() {
   };
 
   const handleInviteTeam = () => {
-    router.push('/create-team');
+    router.push('/invitation-team');
   };
   return (
     <div className="m-auto mt-[180px] w-full max-w-[810px] items-center">
