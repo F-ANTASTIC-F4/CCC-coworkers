@@ -27,12 +27,15 @@ export async function postComment(taskId: Id, comment: string) {
 }
 
 export async function updateComment(commentId: Id, comment: string) {
-  const { error } = await client<void>(ENDPOINTS.COMMENT.ACTIONS(commentId), {
-    method: 'patch',
-    data: {
-      content: comment,
-    },
-  });
+  const { error } = await client<void>(
+    ENDPOINTS.COMMENT.DETAIL_ACTION(commentId),
+    {
+      method: 'patch',
+      data: {
+        content: comment,
+      },
+    }
+  );
   if (error) {
     return {
       error: {
@@ -46,9 +49,12 @@ export async function updateComment(commentId: Id, comment: string) {
 }
 
 export async function deleteComment(commentId: Id) {
-  const { error } = await client<void>(ENDPOINTS.COMMENT.ACTIONS(commentId), {
-    method: 'delete',
-  });
+  const { error } = await client<void>(
+    ENDPOINTS.COMMENT.DETAIL_ACTION(commentId),
+    {
+      method: 'delete',
+    }
+  );
   if (error) {
     return {
       error: {
