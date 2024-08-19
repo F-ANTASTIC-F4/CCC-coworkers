@@ -22,7 +22,7 @@ async function TaskList({
   return (
     <div className="flex h-full flex-grow flex-col">
       {tasksData?.tasks?.length !== 0 ? (
-        <div className="mt-3 flex h-full flex-col gap-5 pb-[45px]">
+        <div className="mt-3 flex flex-col gap-5 pb-[45px]">
           {tasksData?.tasks?.map((task) => (
             <TaskItem key={task.id} task={task} />
           ))}
