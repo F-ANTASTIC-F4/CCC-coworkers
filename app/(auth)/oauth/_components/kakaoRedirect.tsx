@@ -7,13 +7,12 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
-const Loading = dynamic(() => import('@/components/common/loading'), {
-  ssr: false,
-});
-
 export default function KakaoRedirect() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
+  const Loading = dynamic(() => import('@/components/common/loading'), {
+    ssr: false,
+  });
 
   useEffect(() => {
     const handleKakaoRedirect = async () => {
@@ -35,8 +34,10 @@ export default function KakaoRedirect() {
           redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI || '',
         };
 
-        await loginWithOAuth('KAKAO', data);
-        router.push('/');
+        const res = await loginWithOAuth('KAKAO', data);
+        if (res) {
+          router.push('/');
+        }
       } catch (error) {
         toast.error('Error during Kakao OAuth');
         setIsLoading(false);
