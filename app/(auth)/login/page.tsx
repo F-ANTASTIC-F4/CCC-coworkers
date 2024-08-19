@@ -34,7 +34,6 @@ export default function Login() {
           <Link href={GOOGLE_AUTH_URL}>
             <Image src="/images/google.png" alt="구글" width={42} height={42} />
           </Link>
-          <Image src="/images/google.png" alt="구글" width={42} height={42} />
           <Link href={KAKAO_AUTH_URL}>
             <Image
               src="/images/kakaotalk.png"
