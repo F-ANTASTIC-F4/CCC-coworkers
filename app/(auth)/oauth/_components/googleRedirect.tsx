@@ -2,18 +2,17 @@
 
 import { loginWithOAuth } from '@/lib/api/auth';
 import { generateRandomState } from '@/lib/utils';
-import { SignInWithOAuthRequestBody } from '@ccc-types';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-
-const Loading = dynamic(() => import('@/components/common/loading'), {
-  ssr: false,
-});
+import { toast } from 'sonner';
 
 export default function GoogleRedirect() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
+  const Loading = dynamic(() => import('@/components/common/loading'), {
+    ssr: false,
+  });
 
   // google token 가져오기
   const getGoogleToken = async (code: string): Promise<string> => {
@@ -39,33 +38,37 @@ export default function GoogleRedirect() {
       const data = await res.json();
       return data.id_token;
     } catch (e) {
-      console.error('Error in getgoogleToken:', e);
+      toast.error('Error in getgoogleToken');
       throw e;
     }
   };
+
   useEffect(() => {
+    // 서버에 유저 정보 보내기
     const handleGoogleRedirect = async () => {
-      if (typeof window === 'undefined') return;
+      try {
+        const url = new URL(window.location.href);
+        const code = url.searchParams.get('code');
 
-      // google 인가 code 추출
-      const url = new URL(window.location.href);
-      const code = url.searchParams.get('code');
-      const state = generateRandomState();
+        if (!code) {
+          toast.error('No code found in URL');
+          setIsLoading(false);
+          return;
+        }
 
-      // 발급받은 인가 코드로 토큰 발급
-      if (code) {
+        const state = generateRandomState();
         const token = await getGoogleToken(code);
-        const data: SignInWithOAuthRequestBody = {
+        const data = {
           state,
           token,
           redirectUri: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI || '',
         };
         const res = await loginWithOAuth('GOOGLE', data);
         if (res) {
-          setIsLoading(false);
           router.push('/');
         }
-      } else {
+      } catch (error) {
+        toast.error('Error during Google OAuth');
         setIsLoading(false);
       }
     };
