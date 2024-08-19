@@ -3,10 +3,17 @@ import SubmitIcon from '@/public/icons/list/comment_submit_icon.svg';
 import { Id } from '@ccc-types';
 import React, { ChangeEvent, KeyboardEvent } from 'react';
 
-function CommentForm({ id }: { id?: Id }) {
+function CommentForm({
+  id,
+  // handleData,
+}: {
+  id?: Id;
+  // handleData: (value: Comment) => void;
+}) {
   const [isButtonDisabled, setIsButtonDisabled] = React.useState<boolean>(true);
   const [commentData, setCommentData] = React.useState<string>('');
   const buttonRef = React.useRef<HTMLButtonElement>(null);
+  const textareaRef = React.useRef<HTMLTextAreaElement>(null);
 
   // NOTE - 만들어주신 form을 사용하기엔 따로 에러메세지가 출력되지도 않고 그냥 글자가 있고 없고에 따라 버튼만 막아주면 될 듯하여 따로 사용하진 않았습니다!
 
@@ -22,18 +29,28 @@ function CommentForm({ id }: { id?: Id }) {
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter') {
-      e.preventDefault();
-      const buttonNode = buttonRef.current;
-      if (buttonNode) {
-        buttonNode.click();
+      if (!e.shiftKey) {
+        e.preventDefault(); // 줄바꿈 방지
+        const buttonNode = buttonRef.current;
+        if (buttonNode) {
+          buttonNode.click();
+        }
       }
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (textareaRef.current) {
+      textareaRef.current.value = '';
+    }
     if (id) {
-      await postComment(id, commentData);
+      const res = await postComment(id, commentData);
+      if (res.error) {
+        console.error(res.error);
+      } else {
+        // handleData(res.data);
+      }
     }
   };
 
@@ -48,6 +65,7 @@ function CommentForm({ id }: { id?: Id }) {
         placeholder="댓글을 달아주세요"
         onChange={handleChange}
         onKeyDown={handleKeyDown}
+        ref={textareaRef}
       />
       <button
         type="submit"

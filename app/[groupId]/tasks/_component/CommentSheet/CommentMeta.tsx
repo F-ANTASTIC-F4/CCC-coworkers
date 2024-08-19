@@ -8,8 +8,8 @@ import Image from 'next/image';
 
 const textClass = `text-xs font-normal text-text-default`;
 
-function CommentMeta({ detailTask }: { detailTask: DetailTask }) {
-  const taskType = detailTask && frequencyTypeObj[detailTask.frequency];
+function CommentMeta({ task }: { task: DetailTask }) {
+  const taskType = frequencyTypeObj[task.frequency];
 
   return (
     <div className="text-text-primar4 flex flex-col gap-4">
@@ -18,8 +18,8 @@ function CommentMeta({ detailTask }: { detailTask: DetailTask }) {
           <div className="relative size-[32px]">
             <Image
               src={
-                detailTask?.user?.image
-                  ? detailTask?.user?.image
+                task.writer?.image
+                  ? task.writer?.image
                   : '/images/basic_profile.png'
               }
               alt="기본 프로필 이미지"
@@ -28,11 +28,9 @@ function CommentMeta({ detailTask }: { detailTask: DetailTask }) {
               style={{ objectFit: 'cover' }}
             />
           </div>
-          <span className="text-sm font-medium">
-            {detailTask?.user?.nickname}
-          </span>
+          <span className="text-sm font-medium">{task.writer?.nickname}</span>
         </div>
-        <span className="text-sm font-normal text-text-secondary">
+        <span className="mr-2 text-sm font-normal text-text-secondary">
           {dateFormatter.toConvertDate(new Date(), 'dotFormat')}
         </span>
       </div>
