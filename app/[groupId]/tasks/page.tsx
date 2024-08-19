@@ -1,6 +1,11 @@
+import Loading from '@/components/common/loading';
+import TodoListModal from '@/components/modal-template/TodoListModal';
 import { DateString, Id } from '@ccc-types';
+import { Suspense } from 'react';
 
+import TaskDateController from './_component/TaskDateController';
 import TaskList from './_component/TaskList';
+import TaskListTags from './_component/TaskListTags';
 
 async function ListPage({
   params,
@@ -17,7 +22,17 @@ async function ListPage({
         <h1 className="mr-auto mt-6 text-[18px] font-bold text-text-primary">
           할 일
         </h1>
-        <TaskList groupId={groupId} searchParams={searchParams} />
+        <div className="mb-[-5px] flex items-center">
+          <TaskDateController />
+          <TodoListModal groupId={groupId} className="ml-auto" />
+        </div>
+        {groupId && <TaskListTags groupId={groupId} />}
+        <Suspense
+          key={`${groupId}-${searchParams?.['task-list']}-${searchParams?.date}`}
+          fallback={<Loading />}
+        >
+          <TaskList groupId={groupId} searchParams={searchParams} />
+        </Suspense>
       </div>
     </section>
   );

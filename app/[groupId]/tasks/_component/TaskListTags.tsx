@@ -3,13 +3,23 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { GroupTask } from '@ccc-types';
+import fetchAPI from '@/lib/api/fetchAPI';
+import { GroupTask, Id } from '@ccc-types';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-function TaskListTags({ taskListsData }: { taskListsData: GroupTask[] }) {
+function TaskListTags({ groupId }: { groupId: Id }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+  const [tag, setTag] = useState<GroupTask[] | null>([]);
+
+  const fetchListData = async (value: Id) => {
+    const res = await fetchAPI.Group(value);
+    if (res.data) {
+      setTag(res.data.taskLists);
+    }
+  };
 
   const handleClick = (taskId: string) => {
     const params = new URLSearchParams(searchParams);
@@ -17,9 +27,13 @@ function TaskListTags({ taskListsData }: { taskListsData: GroupTask[] }) {
     replace(`${pathname}?${params.toString()}`);
   };
 
+  useEffect(() => {
+    fetchListData(groupId);
+  }, [groupId]);
+
   return (
-    <ul className="my-2 flex gap-3">
-      {taskListsData?.map((item) => (
+    <ul className="my-2 mb-[-20px] flex gap-3">
+      {tag?.map((item) => (
         <li
           key={item.id}
           onClick={() => {
