@@ -6,7 +6,9 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-const Loading = dynamic(() => import('../loading'), { ssr: false });
+const Loading = dynamic(() => import('@/components/common/loading'), {
+  ssr: false,
+});
 export default function KakaoRedirect() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);

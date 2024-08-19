@@ -7,7 +7,9 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-const Loading = dynamic(() => import('../loading'), { ssr: false });
+const Loading = dynamic(() => import('@/components/common/loading'), {
+  ssr: false,
+});
 
 export default function GoogleRedirect() {
   const router = useRouter();

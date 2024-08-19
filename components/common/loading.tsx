@@ -15,7 +15,7 @@ export default function Loading() {
         play
         style={{ width: 500, height: 380 }}
       />
-      <p className="mb-[30px] text-center text-[20px] font-extralight tracking-[.25em] text-brand-primary">
+      <p className="mb-[30px] text-center text-[20px] font-bold tracking-[.25em] text-brand-primary">
         Loading...
       </p>
     </div>
