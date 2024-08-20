@@ -2,7 +2,7 @@
 
 import TaskEditDeleteDropdown from '@/components/dropdown-template/TaskEditDeleteDropdown';
 import frequencyTypeObj from '@/constants/frequencyType';
-import { deleteTask } from '@/lib/api/task';
+import { deleteRecurringTask, deleteTask } from '@/lib/api/task';
 import { dateFormatter } from '@/lib/utils';
 import GearIcon from '@/public/icons/gear.svg';
 import CalenderNoBtnIcon from '@/public/icons/list/calender_no_btn.svg';
@@ -12,6 +12,7 @@ import DailyIcon from '@/public/icons/list/daily_task_icon.svg';
 import { DetailTask } from '@ccc-types';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { toast } from 'sonner';
 
 import CheckboxReactHookFormSingle from './Checkbox';
 import CommentSheet from './CommentSheet';
@@ -33,19 +34,24 @@ function TaskItem({ task }: { task: DetailTask }) {
   };
 
   const handleDeleteClick = async () => {
-    try {
-      handleLoading(true);
-      await deleteTask(task.id);
+    handleLoading(true);
+    const deleteFunction =
+      taskType === '한번' ? deleteRecurringTask : deleteTask;
+    const { error } = await deleteFunction(task.id);
+
+    if (error) {
+      toast.error(`${error.info}`);
+      setIsLoading(false);
+    } else {
       router.refresh();
-    } catch (e) {
-      alert('할 일 삭제에 실패하였습니다.');
+      setTimeout(() => toast.success('할 일 삭제에 성공했습니다!'), 1000);
     }
   };
 
   return (
     <CommentSheet isDone={isDone} task={task} handleClick={handleDoneState}>
       <div
-        className={`relative flex w-full cursor-pointer flex-col gap-3 rounded-[10px] px-[14px] py-[12px] ${isLoading ? 'bg-background-secondary/75' : 'bg-background-secondary'}`}
+        className={`relative flex w-full cursor-pointer flex-col gap-3 rounded-[10px] px-[14px] py-[12px] ${isLoading && 'opacity-50'} bg-background-secondary`}
       >
         {isLoading && (
           <GearIcon className="rolling-gear absolute left-[50%] top-[35%]" />
