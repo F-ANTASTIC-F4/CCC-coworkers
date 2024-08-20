@@ -1,19 +1,8 @@
-'use client';
-
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function NoGroup() {
-  const router = useRouter();
-
-  const handleCreateTeam = () => {
-    router.push('/create-team');
-  };
-
-  const handleInviteTeam = () => {
-    router.push('/invitation-team');
-  };
   return (
     <div className="m-auto mt-[180px] w-full max-w-[810px] items-center">
       <Image
@@ -29,17 +18,20 @@ export default function NoGroup() {
         팀을 생성하거나 팀에 참여해보세요.
       </p>
       <div className="flex flex-col items-center">
-        <Button type="button" className="w-[186px]" onClick={handleCreateTeam}>
-          팀 생성하기
-        </Button>
-        <Button
-          type="button"
-          variant="outlined"
-          className="mt-[6px] w-[186px] bg-transparent lg:mt-[16px]"
-          onClick={handleInviteTeam}
-        >
-          팀 참여하기
-        </Button>
+        <Link href="/create-team">
+          <Button type="button" className="w-[186px]">
+            팀 생성하기
+          </Button>
+        </Link>
+        <Link href="/invitation-team">
+          <Button
+            type="button"
+            variant="outlined"
+            className="mt-[6px] w-[186px] bg-transparent lg:mt-[16px]"
+          >
+            팀 참여하기
+          </Button>
+        </Link>
       </div>
     </div>
   );
