@@ -32,14 +32,14 @@ function TaskListTags({ groupId }: { groupId: Id }) {
   }, [groupId]);
 
   return (
-    <ul className="my-2 mb-[-20px] flex gap-3">
+    <ul className="task-list-scroll my-2 mb-[-20px] flex gap-3 overflow-x-auto">
       {tag?.map((item) => (
         <li
           key={item.id}
           onClick={() => {
             handleClick(item.id.toString());
           }}
-          className={`cursor-pointer text-base font-medium text-text-default ${
+          className={`cursor-pointer whitespace-nowrap text-base font-medium text-text-default ${
             item.id === Number(searchParams.get('task-list')) &&
             'border-b-2 border-text-primary pb-[3px] text-text-primary'
           }`}
