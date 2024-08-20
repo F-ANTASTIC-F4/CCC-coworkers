@@ -46,36 +46,31 @@ function HeaderDropdown({ user }: { user: UserWithMemberships }) {
         <DropdownMenuTrigger>{currentGroup?.name}</DropdownMenuTrigger>
       )}
       <DropdownMenuContent className="z-dropdown mt-5 flex w-[218px] flex-col gap-2 p-4">
-        {user?.memberships.map((membership) => (
-          <DropdownMenuItem
-            key={membership.group.id}
-            className="flex justify-between"
-          >
+        {user?.memberships.map(({ group }) => (
+          <DropdownMenuItem key={group.id} className="flex justify-between">
             <div className="flex w-full items-center gap-2">
-              {membership.group.image && (
+              {group.image && (
                 <Image
-                  src={membership.group.image}
-                  alt={membership.group.name}
+                  src={group.image}
+                  alt={group.name}
                   width={32}
                   height={32}
-                  className="rounded-md"
+                  className="size-8 rounded-md"
                 />
               )}
               <DropdownMenuItem asChild>
                 <Link
-                  href={`/${membership.group.id}`}
-                  className="w-[120px] cursor-pointer"
-                  onClick={() => handleGroupChange(membership.group.id)}
+                  href={`/${group.id}`}
+                  className="w-[110px] cursor-pointer"
+                  onClick={() => handleGroupChange(group.id)}
                 >
-                  <p className="w-full truncate font-medium">
-                    {membership.group.name}
-                  </p>
+                  <p className="w-full truncate font-medium">{group.name}</p>
                 </Link>
               </DropdownMenuItem>
             </div>
             <GroupEditDropdown
-              groupId={membership.group.id}
-              onClick={() => handleGroupDelete(membership.group.id)}
+              groupId={group.id}
+              onClick={() => handleGroupDelete(group.id)}
             />
           </DropdownMenuItem>
         ))}
