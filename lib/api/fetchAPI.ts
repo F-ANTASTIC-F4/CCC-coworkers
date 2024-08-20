@@ -4,6 +4,8 @@ import {
   Article,
   ArticleDetail,
   CursorBasedPagination,
+  DateString,
+  DetailTask,
   Group,
   GroupTask,
   History,
@@ -24,7 +26,7 @@ async function getUser() {
     return {
       error: {
         info: '유저의 정보를 가져오는 중 에러가 발생했습니다.',
-        name: error.message,
+        message: error.message,
         ...error.cause,
       },
     };
@@ -40,16 +42,17 @@ async function getUserHistory() {
     return {
       error: {
         info: '유저의 히스토리를 가져오는 중 에러가 발생했습니다.',
-        ...error,
+        message: error.message,
+        ...error.cause,
       },
     };
   }
   return { data };
 }
 
-async function getTaskList(groupId: Id, taskListId: Id) {
-  const { data, error } = await client<GroupTask[]>(
-    ENDPOINTS.TASKLIST.GROUP_ACTIONS(groupId, taskListId),
+async function getTaskList(groupId: Id, taskListId: Id, date: DateString) {
+  const { data, error } = await client<GroupTask>(
+    ENDPOINTS.TASKLIST.GROUP_ACTIONS(groupId, taskListId, date),
     {
       method: 'get',
       // NOTE 쿼리로 date를 받음, 사용하실때 수정해서 사용해주세요!
@@ -59,7 +62,8 @@ async function getTaskList(groupId: Id, taskListId: Id) {
     return {
       error: {
         info: `TaskList${taskListId}를 가져오는 중 에러가 발생했습니다`,
-        ...error,
+        message: error.message,
+        ...error.cause,
       },
     };
   }
@@ -79,16 +83,17 @@ async function getGroupSpecificTasks(groupId: Id) {
     return {
       error: {
         info: '그룹 tasks를 가져오는 중 에러가 발생했습니다.',
-        ...error,
+        message: error.message,
+        ...error.cause,
       },
     };
   }
   return { data };
 }
 
-async function getTask(groupId: Id, taskListId: Id) {
+async function getTasks(groupId: Id, taskListId: Id, date: DateString) {
   const { data, error } = await client<Task[]>(
-    ENDPOINTS.TASK.ACTIONS(groupId, taskListId),
+    ENDPOINTS.TASK.ACTIONS(groupId, taskListId, date),
     {
       method: 'get',
       // NOTE 쿼리로 date를 받음, 사용하실때 수정해서 사용해주세요!
@@ -98,7 +103,28 @@ async function getTask(groupId: Id, taskListId: Id) {
     return {
       error: {
         info: `TaskList${taskListId}의 tasks를 가져오는 중 에러가 발생했습니다.`,
-        ...error,
+        message: error.message,
+        ...error.cause,
+      },
+    };
+  }
+  return { data };
+}
+
+async function getTask(taskId: Id) {
+  const { data, error } = await client<DetailTask>(
+    ENDPOINTS.TASK.ACTIONS_ITEM(taskId),
+    {
+      method: 'get',
+      // NOTE 쿼리로 date를 받음, 사용하실때 수정해서 사용해주세요!
+    }
+  );
+  if (error) {
+    return {
+      error: {
+        info: `Task${taskId}의 task를 가져오는 중 에러가 발생했습니다.`,
+        message: error.message,
+        ...error.cause,
       },
     };
   }
@@ -116,7 +142,8 @@ async function getGroup(groupId: Id) {
     return {
       error: {
         info: '그룹 정보를 가져오는 중 에러가 발생했습니다.',
-        ...error,
+        message: error.message,
+        ...error.cause,
       },
     };
   }
@@ -134,7 +161,8 @@ async function getComments(taskId: Id) {
     return {
       error: {
         info: '댓글을 가져오는 중 에러가 발생했습니다.',
-        ...error,
+        message: error.message,
+        ...error.cause,
       },
     };
   }
@@ -152,7 +180,8 @@ async function getArticles() {
     return {
       error: {
         info: '게시글 목록을 가져오는 중 에러가 발생했습니다.',
-        ...error,
+        message: error.message,
+        ...error.cause,
       },
     };
   }
@@ -170,7 +199,8 @@ async function getArticle(articleID: Id) {
     return {
       error: {
         info: '게시글 정보를 가져오는 중 에러가 발생했습니다.',
-        ...error,
+        message: error.message,
+        ...error.cause,
       },
     };
   }
@@ -188,7 +218,8 @@ async function getArticleComments(articleID: Id) {
     return {
       error: {
         info: '게시글 댓글 목록을 가져오는 중 에러가 발생했습니다.',
-        ...error,
+        message: error.message,
+        ...error.cause,
       },
     };
   }
@@ -200,6 +231,7 @@ const fetchAPI = {
   UserHistory: getUserHistory,
   Group: getGroup,
   GroupSpecificTasks: getGroupSpecificTasks,
+  Tasks: getTasks,
   Task: getTask,
   TaskList: getTaskList,
   Comments: getComments,
