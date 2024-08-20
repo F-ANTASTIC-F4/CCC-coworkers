@@ -18,6 +18,7 @@ import { createTeamValidationSchema } from '@/lib/schema/auth';
 import TeamProfile from '@/public/icons/group_profile.svg';
 import { Group } from '@ccc-types';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -35,16 +36,17 @@ export default function EditTeamForm({ groupData }: EditTeamProps) {
     },
   });
   const currentImage = form.watch('image');
+  const router = useRouter();
   const { uploadedImage, imagePreview } = useImageFile(currentImage);
 
-  // NOTE - useRequestFunction은 하나의 인자값만 받는다고 기대?추론?해서 인자값이 두개임을 명시
   const api = useRequestFunction(updateGroup);
 
   const onSubmit = async (data: z.infer<typeof createTeamValidationSchema>) => {
     const editTeamData: { name?: string; image?: string } = {};
+
     // 데이터 세팅
     if (groupData.name !== data.name) editTeamData.name = data.name;
-    if (data?.image !== groupData.image) {
+    if (data?.image !== groupData.image && typeof uploadedImage === 'string') {
       editTeamData.image = uploadedImage;
     }
 
@@ -64,6 +66,7 @@ export default function EditTeamForm({ groupData }: EditTeamProps) {
     }
     if (api.isSuccess) {
       toast.success('팀 수정이 완료되었습니다.');
+      router.push(`/${groupData.id}`);
     }
   }, [
     api.isError,
@@ -71,6 +74,8 @@ export default function EditTeamForm({ groupData }: EditTeamProps) {
     api.data,
     api.error?.info,
     api.error?.message,
+    router,
+    groupData.id,
   ]);
 
   return (
