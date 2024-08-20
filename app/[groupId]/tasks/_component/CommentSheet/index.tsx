@@ -138,11 +138,11 @@ export default function CommentSheet({
         ) : (
           <div className="mb-[60px] flex h-full flex-col items-center justify-center gap-3">
             <NoCommentIcon
-              width={96}
-              height={96}
+              width={80}
+              height={80}
               className="fill-brand-primary"
             />
-            <p>아직 작성된 댓글이 없습니다.</p>
+            <p className="text-text-default">아직 작성된 댓글이 없습니다.</p>
           </div>
         )}
       </SheetContent>
