@@ -11,31 +11,22 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import useImageFile from '@/hooks/useImagePreview';
 import useRequestFunction from '@/hooks/useRequestFunction';
-import uploadImage from '@/lib/api/common';
 import { updateGroup } from '@/lib/api/group';
 import { createTeamValidationSchema } from '@/lib/schema/auth';
 import TeamProfile from '@/public/icons/group_profile.svg';
-import { Group, Id } from '@ccc-types';
+import { Group } from '@ccc-types';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
 type EditTeamProps = {
   groupData: Group;
 };
 export default function EditTeamForm({ groupData }: EditTeamProps) {
-  const [imagePreview, setImagePreview] = useState(groupData.image);
-  const router = useRouter();
-
-  // NOTE - useRequestFunction은 하나의 인자값만 받는다고 기대?추론?해서 인자값이 두개임을 명시
-  const api = useRequestFunction(
-    (props: { groupId: Id; data: Partial<Pick<Group, 'image' | 'name'>> }) =>
-      updateGroup(props.groupId, props.data)
-  );
-
   const form = useForm<z.infer<typeof createTeamValidationSchema>>({
     resolver: zodResolver(createTeamValidationSchema),
     defaultValues: {
@@ -43,49 +34,36 @@ export default function EditTeamForm({ groupData }: EditTeamProps) {
       image: groupData.image || undefined,
     },
   });
+  const currentImage = form.watch('image');
+  const { uploadedImage, imagePreview } = useImageFile(currentImage);
+
+  // NOTE - useRequestFunction은 하나의 인자값만 받는다고 기대?추론?해서 인자값이 두개임을 명시
+  const api = useRequestFunction(updateGroup);
 
   const onSubmit = async (data: z.infer<typeof createTeamValidationSchema>) => {
-    let imageUrl: string | undefined;
-
-    if (data.image && data.image instanceof File) {
-      const imageResult = await uploadImage(data.image);
-      if ('data' in imageResult) {
-        imageUrl = imageResult.data;
-      }
-    } else {
-      imageUrl = groupData.image;
+    const editTeamData: { name?: string; image?: string } = {};
+    // 데이터 세팅
+    if (groupData.name !== data.name) editTeamData.name = data.name;
+    if (data?.image !== groupData.image) {
+      editTeamData.image = uploadedImage;
     }
 
-    const editTeamData = {
-      name: data.name,
-      image: imageUrl,
-    };
-
-    const res = await api.request({
-      groupId: groupData.id,
-      data: editTeamData,
-    });
-
-    if (res) {
-      router.push(`/${groupData.id}`);
+    // 변경사항이 없을 경우 toast
+    if (!editTeamData.image && !editTeamData.name) {
+      toast.error('변경된 내용이 없습니다');
+      return;
     }
+
+    await api.request(groupData.id, editTeamData);
   };
-
-  const currentImage = form.watch('image');
-
-  // 이미지 프리뷰 설정
-  useEffect(() => {
-    if (!currentImage || typeof currentImage === 'string') return;
-    setImagePreview(URL.createObjectURL(currentImage));
-  }, [currentImage]);
 
   // API 요청 결과에 따른 alert
   useEffect(() => {
     if (api.isError) {
-      alert(api.error?.message || api.error?.info);
+      toast.error(api.error?.message || api.error?.info);
     }
     if (api.isSuccess) {
-      alert('팀 수정이 완료되었습니다.');
+      toast.success('팀 수정이 완료되었습니다.');
     }
   }, [
     api.isError,

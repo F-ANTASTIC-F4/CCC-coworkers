@@ -1,12 +1,16 @@
-import ErrorFallbackUI from '@/components/common/ErrorFallBackUI';
+import ErrorFallbackUI from '@/components/common/error/ErrorFallback';
 import fetchAPI from '@/lib/api/fetchAPI';
 import { Id } from '@ccc-types';
 
 import EditTeamForm from '../_components/editTeamForm';
 
-export default async function EditTeam({ params }: { params: { teamId: Id } }) {
-  const { data: groupData, error } = await fetchAPI.Group(params.teamId);
-  console.log(groupData);
+export default async function EditTeam({
+  params,
+}: {
+  params: { groupId: Id };
+}) {
+  const { data: groupData, error } = await fetchAPI.Group(params.groupId);
+
   if (error) {
     return <ErrorFallbackUI error={error} />;
   }
