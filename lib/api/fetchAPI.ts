@@ -50,9 +50,9 @@ async function getUserHistory() {
   return { data };
 }
 
-async function getTaskList(groupId: Id, taskListId: Id) {
+async function getTaskList(groupId: Id, taskListId: Id, date: DateString) {
   const { data, error } = await client<GroupTask>(
-    ENDPOINTS.TASKLIST.GROUP_ACTIONS(groupId, taskListId),
+    ENDPOINTS.TASKLIST.GROUP_ACTIONS(groupId, taskListId, date),
     {
       method: 'get',
       // NOTE 쿼리로 date를 받음, 사용하실때 수정해서 사용해주세요!
@@ -123,7 +123,8 @@ async function getTask(taskId: Id) {
     return {
       error: {
         info: `Task${taskId}의 task를 가져오는 중 에러가 발생했습니다.`,
-        ...error,
+        message: error.message,
+        ...error.cause,
       },
     };
   }
@@ -179,7 +180,8 @@ async function getArticles() {
     return {
       error: {
         info: '게시글 목록을 가져오는 중 에러가 발생했습니다.',
-        ...error,
+        message: error.message,
+        ...error.cause,
       },
     };
   }
