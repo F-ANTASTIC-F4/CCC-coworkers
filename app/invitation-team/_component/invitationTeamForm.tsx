@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input';
 import useRequestFunction from '@/hooks/useRequestFunction';
 import { inviteMemberViaLink } from '@/lib/api/group';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -35,6 +36,7 @@ export default function InvitationTeamForm({
     mode: 'onChange',
   });
 
+  const router = useRouter();
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     await api.request({ userEmail, token: data.token });
   };
@@ -46,6 +48,7 @@ export default function InvitationTeamForm({
     }
     if (api.isSuccess) {
       toast.success('팀 참여가 완료되었습니다.');
+      router.push('/');
     }
   }, [
     api.isError,
@@ -53,6 +56,7 @@ export default function InvitationTeamForm({
     api.data,
     api.error?.info,
     api.error?.message,
+    router,
   ]);
 
   return (
