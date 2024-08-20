@@ -15,6 +15,7 @@ import { inviteMemberViaLink } from '@/lib/api/group';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
 const formSchema = z.object({
@@ -41,10 +42,10 @@ export default function InvitationTeamForm({
   // API 요청 결과에 따른 alert
   useEffect(() => {
     if (api.isError) {
-      alert(api.error?.message || api.error?.info);
+      toast.error(api.error?.message || api.error?.info);
     }
     if (api.isSuccess) {
-      alert('팀 참여가 완료되었습니다.');
+      toast.success('팀 참여가 완료되었습니다.');
     }
   }, [
     api.isError,
