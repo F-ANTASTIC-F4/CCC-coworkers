@@ -71,14 +71,10 @@ function MakeTodoModal({
   }, [frequencyType, startDate, setValue]);
 
   const onSubmit = async (values: z.infer<typeof todoModalFormSchema>) => {
-    try {
-      await createTask(groupId, taskListId, values);
-      form.reset();
-      setIsOpen(false);
-      router.refresh();
-    } catch (e) {
-      alert(e);
-    }
+    await createTask(groupId, taskListId, values);
+    form.reset();
+    setIsOpen(false);
+    router.refresh();
   };
 
   // NOTE - 모달의 요일 설정 부분 렌더링 여부 결정 함수
