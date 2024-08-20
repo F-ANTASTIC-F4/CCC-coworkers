@@ -15,12 +15,12 @@ async function TaskList({
   const tasksRes = await fetchAPI.TaskList(
     groupId,
     Number(searchParams?.['task-list']),
-    new Date(searchParams!.date).toISOString()
+    searchParams!.date
   );
   const tasksData = tasksRes.data;
 
   return (
-    <div className="flex h-full flex-grow flex-col">
+    <div className="relative flex h-full flex-grow flex-col">
       {tasksData?.tasks?.length !== 0 ? (
         <div className="mt-3 flex flex-col gap-5 pb-[45px]">
           {tasksData?.tasks?.map((task) => (
@@ -36,7 +36,7 @@ async function TaskList({
         </div>
       )}
 
-      <div className="sticky bottom-5 mx-auto flex w-full max-w-[1232px] justify-end xl:px-0">
+      <div className="absolute bottom-5 mx-auto flex w-full max-w-[1232px] justify-end xl:px-0">
         <MakeTodoModal
           className="z-10 ml-auto"
           groupId={groupId}

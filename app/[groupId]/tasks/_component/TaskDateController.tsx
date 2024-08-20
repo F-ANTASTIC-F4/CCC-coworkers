@@ -21,9 +21,9 @@ function TaskDateController() {
 
   const handleDateChange = (newDate: Date) => {
     const newParams = new URLSearchParams(params);
-    newParams.set('date', newDate.toString());
+    newParams.set('date', newDate.toISOString());
     setCurrentDate(newDate.toISOString());
-    replace(`${pathname}?${newParams.toString()}`);
+    replace(`${pathname}?${newParams}`);
   };
 
   return (
