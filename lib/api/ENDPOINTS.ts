@@ -21,8 +21,13 @@ const ENDPOINTS = {
       `/groups/{groupId}/task-lists/{taskListId}/tasks/${taskId}`,
     ACTIONS: (groupId: Id, taskListId: Id, date?: DateString) =>
       `/groups/${groupId}/task-lists/${taskListId}/tasks?date=${date}`,
-    DELETE_ALL_TASKS: (groupId: Id, taskListId: Id, taskId: Id) =>
-      `/groups/${groupId}/task-lists/${taskListId}/tasks/${taskId}/all`,
+    DELETE_RECURRING_TASKS: (
+      recurringId: Id,
+      groupId?: Id,
+      taskListId?: Id,
+      taskId?: Id
+    ) =>
+      `/groups/${groupId}/task-lists/${taskListId}/tasks/${taskId}/recurring/${recurringId}`,
     RECURRING: (groupId: Id, taskListId: Id) =>
       `/groups/${groupId}/task-lists/${taskListId}/recurring`,
   },
