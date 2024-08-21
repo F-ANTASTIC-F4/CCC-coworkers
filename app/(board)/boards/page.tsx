@@ -3,15 +3,17 @@ import Link from 'next/link';
 
 import BestBoards from './components/BestBoards';
 import BoardList from './components/BoardList';
+import BoardPagination from './components/BoardPagination';
 import SearchBoard from './components/SearchBoard';
 
-function BoardPage() {
+async function BoardPage({ searchParams }: { searchParams: { page: string } }) {
   return (
     <>
       <SearchBoard />
       <BestBoards />
       <hr className="my-8 md:my-10" />
-      <BoardList />
+      <BoardList searchParams={searchParams} />
+      <BoardPagination />
       <Link href="/addboard">
         <Button
           variant="floating"

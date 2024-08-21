@@ -57,7 +57,7 @@ const BoardAddForm = () => {
     const result = await api.request(requestData);
 
     if (!result?.error) {
-      router.push('/boards');
+      router.push('/boards?page=1');
     }
   }
 

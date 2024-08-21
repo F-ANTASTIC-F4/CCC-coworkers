@@ -4,9 +4,10 @@ import { notFound } from 'next/navigation';
 import BoardCard from './BoardCard';
 import BoardSortDropdown from './BoardSortDropdown';
 
-async function BoardList() {
-  const { data, error } = await fetchAPI.Articles();
-
+async function BoardList({ searchParams }: { searchParams: { page: string } }) {
+  const { data, error } = await fetchAPI.Articles(
+    `page=${searchParams.page}&pageSize=10`
+  );
   if (error) {
     notFound();
   }

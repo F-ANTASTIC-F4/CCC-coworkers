@@ -56,7 +56,7 @@ const ENDPOINTS = {
       `/auth/signIn/${provider}`,
   },
   ARTICLE: {
-    ACTIONS: `/articles`,
+    ACTIONS: (params?: string) => `/articles?${params}`,
     ACTIONS_ITEM: (articleId: Id) => `/articles/${articleId}`,
     LIKE: (articleId: Id) => `/articles/${articleId}/like`,
   },

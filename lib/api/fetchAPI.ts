@@ -169,9 +169,9 @@ async function getComments(taskId: Id) {
   return { data };
 }
 
-async function getArticles() {
+async function getArticles(params?: string) {
   const { data, error } = await client<OffsetBasedPagination<Article>>(
-    ENDPOINTS.ARTICLE.ACTIONS,
+    ENDPOINTS.ARTICLE.ACTIONS(params),
     {
       method: 'get',
     }

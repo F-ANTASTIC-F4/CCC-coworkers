@@ -10,7 +10,7 @@ type UpdateArticleBody = Partial<CreateArticleBody>;
 
 export async function createArticle(data: CreateArticleBody) {
   const { data: response, error } = await client<Article>(
-    ENDPOINTS.ARTICLE.ACTIONS,
+    ENDPOINTS.ARTICLE.ACTIONS(),
     {
       method: 'post',
       data,
