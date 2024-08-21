@@ -1,10 +1,15 @@
 import fetchAPI from '@/lib/api/fetchAPI';
+import { notFound } from 'next/navigation';
 
 import BoardCard from './BoardCard';
 import BoardSortDropdown from './BoardSortDropdown';
 
 async function BoardList() {
-  const { data } = await fetchAPI.Articles();
+  const { data, error } = await fetchAPI.Articles();
+
+  if (error) {
+    notFound();
+  }
 
   return (
     <div>

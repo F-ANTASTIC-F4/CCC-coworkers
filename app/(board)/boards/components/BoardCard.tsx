@@ -1,3 +1,5 @@
+import fetchAPI from '@/lib/api/fetchAPI';
+import { dateFormatter } from '@/lib/utils';
 import ProfileIcon from '@/public/icons/default_profile.svg';
 import HeartIcon from '@/public/icons/heart.svg';
 import { Article } from '@ccc-types';
@@ -6,7 +8,9 @@ import Link from 'next/link';
 
 import BoardEditDropdown from './BoardEditDropdown';
 
-function BoardCard({ article }: { article: Article }) {
+async function BoardCard({ article }: { article: Article }) {
+  const { data } = await fetchAPI.User();
+
   return (
     <Link href={`/board/${article.id}`}>
       <div className="flex h-[162px] flex-col justify-between rounded-xl bg-background-secondary px-4 py-6 font-medium text-text-secondary md:h-[176px] md:px-8">
@@ -23,7 +27,7 @@ function BoardCard({ article }: { article: Article }) {
                 />
               )}
             </div>
-            <BoardEditDropdown />
+            {data?.id === article.writer.id && <BoardEditDropdown />}
           </div>
         </div>
         <div className="flex items-center justify-between text-xs md:text-sm">
@@ -33,7 +37,9 @@ function BoardCard({ article }: { article: Article }) {
               <p className="text-text-primary">{article.writer.nickname}</p>
             </div>
             <div className="h-[12px] w-[1px] bg-border" />
-            <p className="text-slate-400">{article.createdAt}</p>
+            <p className="text-slate-400">
+              {dateFormatter.toConvertDate(article.createdAt)}
+            </p>
           </div>
           <div className="flex items-center gap-1">
             <HeartIcon className="size-4" />
