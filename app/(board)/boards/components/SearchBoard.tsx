@@ -13,7 +13,11 @@ function SearchBoard({ searchParams }: { searchParams: { keyword?: string } }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSearch = useCallback(
     debounce((value: string) => {
-      router.push(`/boards?page=1&keyword=${value}`);
+      const keywordUrl = value
+        ? `/boards?page=1&keyword=${value}`
+        : '/boards?page=1';
+
+      router.push(keywordUrl);
     }, 300),
     [router]
   );
