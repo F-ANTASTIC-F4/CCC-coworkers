@@ -1,9 +1,12 @@
 import { cn } from '@/lib/utils';
 import EditButton from '@/public/icons/btn_edit.svg';
 
+import { Skeleton } from './skeleton';
+
 interface ImageInputWrapperProps {
   className?: string;
   children: React.ReactNode;
+  suspenseFallback?: React.ReactNode;
   [key: string]: unknown;
 }
 
@@ -11,6 +14,7 @@ interface ImageInputContentProps {
   className?: string;
   imagePreview?: string | null;
   children: React.ReactNode;
+  isUploading?: boolean;
 }
 
 const ImageInputWrapper = ({
@@ -18,15 +22,17 @@ const ImageInputWrapper = ({
   children,
   ...props
 }: ImageInputWrapperProps) => (
-  <div
-    className={cn(
-      'bg-customBackground-tertiary relative flex items-center justify-center',
-      className
-    )}
-    {...props}
-  >
-    {children}
-  </div>
+  <>
+    <div
+      className={cn(
+        'bg-customBackground-tertiary relative flex items-center justify-center',
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </div>
+  </>
 );
 
 const CircularImageInputWrapper = ({
@@ -52,17 +58,27 @@ const CircularImageInputWrapper = ({
 const ImageInputContent = ({
   className = '',
   imagePreview,
+  isUploading = false,
   children,
 }: ImageInputContentProps) => {
   if (imagePreview)
     return (
       // REVIEW - wrapper를 안에 넣어서 합성 패턴을 이용했는데 다른 좋은 방법이 있을까요?
       <CircularImageInputWrapper>
-        <img
-          src={imagePreview}
-          alt="Profile Preview"
-          className={cn('h-full w-full rounded-full object-cover', className)}
-        />
+        <>
+          {isUploading ? (
+            <Skeleton className="z-0 h-full w-full rounded-full" />
+          ) : (
+            <img
+              src={imagePreview}
+              alt="Profile Preview"
+              className={cn(
+                'h-full w-full rounded-full object-cover',
+                className
+              )}
+            />
+          )}
+        </>
       </CircularImageInputWrapper>
     );
 
