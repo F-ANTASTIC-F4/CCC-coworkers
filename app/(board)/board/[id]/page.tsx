@@ -18,7 +18,7 @@ async function BoardDetail({ params }: { params: { id: number } }) {
       <BoardDetailDescription article={data} />
       <BoardCommentInput />
       <hr className="my-8 md:my-10" />
-      <BoardComments />
+      <BoardComments articleId={id} />
     </div>
   );
 }
