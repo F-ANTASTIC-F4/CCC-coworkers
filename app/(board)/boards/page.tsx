@@ -7,10 +7,14 @@ import BoardList from './components/BoardList';
 import BoardPagination from './components/BoardPagination';
 import SearchBoard from './components/SearchBoard';
 
-async function BoardPage({ searchParams }: { searchParams: { page: string } }) {
+async function BoardPage({
+  searchParams,
+}: {
+  searchParams: { page: string; keyword?: string };
+}) {
   return (
     <>
-      <SearchBoard />
+      <SearchBoard searchParams={searchParams} />
       <BestBoards />
       <hr className="my-8 md:my-10" />
       {/* TODO - 스켈레톤 */}
