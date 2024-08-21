@@ -2,6 +2,7 @@
 
 import { Client, HttpClientConfig } from '@/lib/api/HttpClient';
 import FetchError from '@/lib/api/HttpClient/FetchError';
+import { captureException } from '@sentry/nextjs';
 import { cookies, headers } from 'next/headers';
 
 /* eslint-disable prefer-template */
@@ -47,6 +48,7 @@ const client = async <T = unknown>(url: string, options: HttpClientConfig) => {
     const response: T = await clientInstance.request(url, options);
     return { data: response };
   } catch (error: any) {
+    captureException(error);
     return {
       error: error as FetchError,
     };
