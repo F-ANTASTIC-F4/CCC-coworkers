@@ -7,10 +7,10 @@ import BoardSortDropdown from './BoardSortDropdown';
 async function BoardList({
   searchParams,
 }: {
-  searchParams: { page: string; keyword?: string };
+  searchParams: { page: string; keyword?: string; orderBy?: string };
 }) {
   const { data, error } = await fetchAPI.Articles(
-    `page=${searchParams.page}&pageSize=10${searchParams.keyword ? `&keyword=${searchParams.keyword}` : ''}`
+    `page=${searchParams.page}&pageSize=10${searchParams.keyword ? `&keyword=${searchParams.keyword}` : ''}&${searchParams.orderBy ? `&orderBy=${searchParams.orderBy}` : ''}`
   );
   if (error) {
     notFound();

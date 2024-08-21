@@ -10,7 +10,7 @@ import SearchBoard from './components/SearchBoard';
 async function BoardPage({
   searchParams,
 }: {
-  searchParams: { page: string; keyword?: string };
+  searchParams: { page: string; keyword?: string; orderBy?: string };
 }) {
   return (
     <>
