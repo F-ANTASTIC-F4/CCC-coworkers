@@ -22,40 +22,55 @@ function GroupEditDropdown({
   onClick: () => void;
 }) {
   const [open, setOpen] = React.useState<boolean>(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] =
+    React.useState<boolean>(false);
 
   return (
-    <DropdownMenu open={open} onOpenChange={setOpen}>
-      <DropdownMenuTrigger asChild>
-        <button
-          type="button"
-          aria-label="수정 및 삭제 기능 제공 드롭다운"
-          className="outline-none"
+    <>
+      <DropdownMenu open={open} onOpenChange={setOpen}>
+        <DropdownMenuTrigger asChild>
+          <button
+            type="button"
+            aria-label="수정 및 삭제 기능 제공 드롭다운"
+            className="outline-none"
+          >
+            <KebabIcon className={`${className} hover:fill-text-tertiary`} />
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent
+          align="end"
+          onClick={(e: React.MouseEvent<HTMLElement>) => {
+            e.stopPropagation();
+          }}
         >
-          <KebabIcon className={`${className} hover:fill-text-tertiary`} />
-        </button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="end"
-        onClick={(e: React.MouseEvent<HTMLElement>) => {
-          e.stopPropagation();
-        }}
-      >
-        <DropdownMenuItem
-          className="flex cursor-pointer flex-col justify-center"
-          asChild
-        >
-          {/* TODO - 팀 수정 페이지 구현 시 연결 */}
-          <Link href={`/${groupId}/edit`}>수정하기</Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="flex flex-col justify-center">
-          <DeleteTodoModal
-            title={title}
-            className="w-full cursor-pointer"
-            onClick={onClick}
-          />
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+          <DropdownMenuItem
+            className="flex cursor-pointer flex-col justify-center"
+            asChild
+          >
+            {/* TODO - 팀 수정 페이지 구현 시 연결 */}
+            <Link href={`/${groupId}/edit`}>수정하기</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="flex cursor-pointer flex-col justify-center"
+            onClick={() => {
+              setIsDeleteDialogOpen(true);
+              setOpen(false);
+            }}
+          >
+            삭제하기
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      {isDeleteDialogOpen && (
+        <DeleteTodoModal
+          title={title}
+          className="w-full cursor-pointer"
+          onClick={onClick}
+          onClose={() => setIsDeleteDialogOpen(false)}
+        />
+      )}
+    </>
   );
 }
 
