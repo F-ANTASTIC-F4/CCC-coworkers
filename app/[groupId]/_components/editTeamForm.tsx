@@ -11,55 +11,63 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import useImageFile from '@/hooks/useImagePreview';
 import useRequestFunction from '@/hooks/useRequestFunction';
-import uploadImage from '@/lib/api/common';
-import { createGroup } from '@/lib/api/group';
+import { updateGroup } from '@/lib/api/group';
 import { createTeamValidationSchema } from '@/lib/schema/auth';
 import TeamProfile from '@/public/icons/group_profile.svg';
+import { Group } from '@ccc-types';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
-export default function CreateTeamForm() {
-  const api = useRequestFunction(createGroup);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+type EditTeamProps = {
+  groupData: Group;
+};
+export default function EditTeamForm({ groupData }: EditTeamProps) {
   const form = useForm<z.infer<typeof createTeamValidationSchema>>({
     resolver: zodResolver(createTeamValidationSchema),
+    defaultValues: {
+      name: groupData.name,
+      image: groupData.image || undefined,
+    },
   });
+  const currentImage = form.watch('image');
+  const router = useRouter();
+  const { isUploading, uploadedImage, imagePreview } =
+    useImageFile(currentImage);
+
+  const api = useRequestFunction(updateGroup);
 
   const onSubmit = async (data: z.infer<typeof createTeamValidationSchema>) => {
-    let imageUrl: string | undefined;
+    const editTeamData: { name?: string; image?: string } = {};
 
-    if (data.image) {
-      const imageResult = await uploadImage(data.image);
-      if ('data' in imageResult) {
-        imageUrl = imageResult.data;
-      }
+    // 데이터 세팅
+    if (groupData.name !== data.name) editTeamData.name = data.name;
+    if (data?.image !== groupData.image && typeof uploadedImage === 'string') {
+      editTeamData.image = uploadedImage;
     }
-    const teamData = {
-      name: data.name,
-      image: imageUrl,
-    };
 
-    await api.request(teamData);
+    // 변경사항이 없을 경우 toast
+    if (!editTeamData.image && !editTeamData.name) {
+      toast.error('변경된 내용이 없습니다');
+      return;
+    }
+
+    await api.request(groupData.id, editTeamData);
   };
-
-  const currentImage = form.watch('image');
-
-  // 이미지 프리뷰 설정
-  useEffect(() => {
-    if (!currentImage || typeof currentImage === 'string') return;
-    setImagePreview(URL.createObjectURL(currentImage));
-  }, [currentImage]);
 
   // API 요청 결과에 따른 alert
   useEffect(() => {
     if (api.isError) {
-      alert(api.error?.message || api.error?.info);
+      toast.error(api.error?.message || api.error?.info);
     }
     if (api.isSuccess) {
-      alert('팀 생성이 완료되었습니다.');
+      toast.success('팀 수정이 완료되었습니다.');
+      router.push(`/${groupData.id}`);
     }
   }, [
     api.isError,
@@ -67,6 +75,8 @@ export default function CreateTeamForm() {
     api.data,
     api.error?.info,
     api.error?.message,
+    router,
+    groupData.id,
   ]);
 
   return (
@@ -79,7 +89,10 @@ export default function CreateTeamForm() {
             <FormItem>
               <FormLabel className="inline-block w-[max-content]">
                 <ImageInputUI variants="circular" className="cursor-pointer">
-                  <ImageInputUI.Content imagePreview={imagePreview}>
+                  <ImageInputUI.Content
+                    imagePreview={imagePreview}
+                    isUploading={isUploading}
+                  >
                     <TeamProfile width="60" height="60" />
                   </ImageInputUI.Content>
                 </ImageInputUI>
@@ -112,8 +125,8 @@ export default function CreateTeamForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={api.isPending}>
-          {api.isPending ? '저장중...' : '생성하기'}
+        <Button type="submit" disabled={api.isPending || isUploading}>
+          {api.isPending ? '저장중...' : '수정하기'}
         </Button>
       </form>
     </Form>
