@@ -1,4 +1,5 @@
 import fetchAPI from '@/lib/api/fetchAPI';
+import { isUserAdminOfGroup } from '@/lib/utils';
 
 import TeamMember from './_components/TeamMember';
 import TeamReport from './_components/TeamReport';
@@ -17,10 +18,7 @@ async function TeamPage({ params }: { params: { groupId: number } }) {
 
   const { taskLists = [], members = [] } = data || {};
 
-  const isAdmin = userData?.memberships.some(
-    (membership) =>
-      +membership.group.id === +params.groupId && membership.role === 'ADMIN'
-  );
+  const isAdmin = isUserAdminOfGroup(userData, params.groupId);
 
   return (
     <div>

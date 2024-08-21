@@ -1,5 +1,5 @@
 import colors from '@/constants/Color';
-import { DateFormatType } from '@ccc-types';
+import { DateFormatType, UserWithMemberships } from '@ccc-types';
 import { type ClassValue, clsx } from 'clsx';
 import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
@@ -148,3 +148,21 @@ export const copyText = (text: string, label: string) => {
       toast.error(`${label} 복사에 실패했습니다!`);
     });
 };
+
+/**
+ * 사용자가 주어진 그룹의 관리자인지 확인합니다.
+ * @param {UserWithMemberships | undefined} userData - 사용자 데이터
+ * @param {number | string} groupId - 그룹 ID
+ * @returns {boolean} 사용자가 그룹의 관리자이면 true, 아니면 false
+ */
+export function isUserAdminOfGroup(
+  userData: UserWithMemberships | undefined,
+  groupId: number | string
+): boolean {
+  return (
+    userData?.memberships.some(
+      (membership) =>
+        membership.role === 'ADMIN' && +membership.group.id === +groupId
+    ) ?? false
+  );
+}

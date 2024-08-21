@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/dialog';
 import useRequestFunction from '@/hooks/useRequestFunction';
 import { deleteMember } from '@/lib/api/group';
+import { isUserAdminOfGroup } from '@/lib/utils';
 import WarningIcon from '@/public/icons/modal/warning_icon.svg';
 import { UserWithMemberships } from '@ccc-types';
 import { Ban, UserX } from 'lucide-react';
@@ -35,10 +36,7 @@ function DeleteMemberModal({
   const router = useRouter();
   const api = useRequestFunction(deleteMember);
 
-  const isAdmin = userData?.memberships.some(
-    (membership) =>
-      membership.role === 'ADMIN' && +membership.group.id === +groupId
-  );
+  const isAdmin = isUserAdminOfGroup(userData, groupId);
 
   useEffect(() => {
     if (api.isError) {
