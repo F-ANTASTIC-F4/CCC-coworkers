@@ -86,8 +86,12 @@
     background: #334155;
   }
 
-  .rolling-gear {
-    animation: 10s rolling infinite linear;
+  .task-list-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .rolling {
+    animation: 1s rolling infinite ease-in-out;
   }
 
   @keyframes rolling {
@@ -95,7 +99,7 @@
       transform: rotate(0deg);
     }
     to {
-      transform: rotate(3600deg);
+      transform: rotate(360deg);
     }
   }
 }
