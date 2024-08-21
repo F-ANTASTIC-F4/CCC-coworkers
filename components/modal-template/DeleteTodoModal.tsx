@@ -12,17 +12,20 @@ import React, { MouseEvent } from 'react';
 function DeleteTodoModal({
   title,
   onClick,
+  className,
   onClose,
   type = 'task',
 }: {
   title?: string;
   type?: 'task' | 'comment';
+  className?: string;
   onClick: () => void;
   onClose: () => void;
 }) {
   return (
     <Dialog open onOpenChange={onClose}>
       <DialogContent
+        className={className}
         onClick={(e: MouseEvent<HTMLElement>) => {
           e.stopPropagation();
         }}
