@@ -87,7 +87,7 @@ export default function EditTeamForm({ groupData }: EditTeamProps) {
           render={({ field: { value, onChange, ...fieldProps } }) => (
             <FormItem>
               <FormLabel className="inline-block w-[max-content]">
-                <ImageInputUI className="cursor-pointer">
+                <ImageInputUI variants="circular" className="cursor-pointer">
                   <ImageInputUI.Content imagePreview={imagePreview}>
                     <TeamProfile width="60" height="60" />
                   </ImageInputUI.Content>
