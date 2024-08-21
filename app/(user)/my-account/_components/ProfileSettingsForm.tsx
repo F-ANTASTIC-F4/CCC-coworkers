@@ -114,7 +114,7 @@ const ProfileSettingsForm = ({ image, nickname }: ProfileSettingsFormProps) => {
         <Button
           type="submit"
           className="absolute bottom-0 z-10"
-          disabled={api.isPending}
+          disabled={api.isPending || isUploading}
         >
           {api.isPending ? '저장중...' : '변경사항 저장하기'}
         </Button>
