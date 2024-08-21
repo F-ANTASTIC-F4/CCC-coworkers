@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
 import BestBoards from './components/BestBoards';
 import BoardList from './components/BoardList';
@@ -12,8 +13,13 @@ async function BoardPage({ searchParams }: { searchParams: { page: string } }) {
       <SearchBoard />
       <BestBoards />
       <hr className="my-8 md:my-10" />
-      <BoardList searchParams={searchParams} />
-      <BoardPagination />
+      {/* TODO - 스켈레톤 */}
+      <Suspense key={searchParams.page} fallback={<div>Loading...</div>}>
+        <BoardList searchParams={searchParams} />
+      </Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
+        <BoardPagination />
+      </Suspense>
       <Link href="/addboard">
         <Button
           variant="floating"
