@@ -31,7 +31,7 @@ export async function createArticle(data: CreateArticleBody) {
 
 export async function updateArticle(articleId: Id, data: UpdateArticleBody) {
   const { data: response, error } = await client<ArticleDetail>(
-    ENDPOINTS.ARTICLE.ACTIONS_ITEM(articleId),
+    ENDPOINTS.ARTICLE.ACTIONS_ITEM(`${articleId}`),
     {
       method: 'patch',
       data,
@@ -51,7 +51,7 @@ export async function updateArticle(articleId: Id, data: UpdateArticleBody) {
 
 export async function deleteArticle(articleId: Id) {
   const { data, error } = await client<{ id: Id }>(
-    ENDPOINTS.ARTICLE.ACTIONS_ITEM(articleId),
+    ENDPOINTS.ARTICLE.ACTIONS_ITEM(`${articleId}`),
     {
       method: 'delete',
     }
