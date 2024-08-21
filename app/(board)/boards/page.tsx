@@ -21,8 +21,8 @@ async function BoardPage({
       <Suspense key={searchParams.page} fallback={<div>Loading...</div>}>
         <BoardList searchParams={searchParams} />
       </Suspense>
-      <Suspense fallback={<div>Loading...</div>}>
-        <BoardPagination />
+      <Suspense key={searchParams.keyword} fallback={<div>Loading...</div>}>
+        <BoardPagination searchParams={searchParams} />
       </Suspense>
       <Link href="/addboard">
         <Button

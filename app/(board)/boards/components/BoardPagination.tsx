@@ -1,5 +1,3 @@
-'use client';
-
 import {
   Pagination,
   PaginationContent,
@@ -10,24 +8,22 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination';
 import fetchAPI from '@/lib/api/fetchAPI';
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
-function BoardPagination() {
-  const [totalPages, setTotalPages] = useState(0);
-  const searchParams = useSearchParams();
-  const currentPage = Number(searchParams.get('page')) || 1;
+async function BoardPagination({
+  searchParams,
+}: {
+  searchParams: { page: string; keyword?: string };
+}) {
+  const { data, error } = await fetchAPI.Articles(
+    `page=${searchParams.page}&pageSize=10${searchParams.keyword ? `&keyword=${searchParams.keyword}` : ''}`
+  );
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data } = await fetchAPI.Articles();
-      if (data) {
-        setTotalPages(Math.ceil(data.totalCount / 10) || 0);
-      }
-    };
+  if (error) {
+    return <div>Error</div>;
+  }
 
-    fetchData();
-  }, []);
+  const currentPage = Number(searchParams.page) || 1;
+  const totalPages = Math.ceil(data.totalCount / 10) || 0;
 
   const createPageUrl = (page: number) => {
     const params = new URLSearchParams(searchParams);
