@@ -1,7 +1,11 @@
+import fetchAPI from '@/lib/api/fetchAPI';
+
 import BoardCard from './BoardCard';
 import BoardSortDropdown from './BoardSortDropdown';
 
-function BoardList() {
+async function BoardList() {
+  const { data } = await fetchAPI.Articles();
+
   return (
     <div>
       <div className="flex justify-between">
@@ -9,9 +13,9 @@ function BoardList() {
         <BoardSortDropdown />
       </div>
       <div className="mt-6 flex flex-col gap-y-4 md:mt-8 md:gap-y-6 xl:grid xl:grid-cols-2 xl:gap-6">
-        <BoardCard />
-        <BoardCard />
-        <BoardCard />
+        {data?.list.map((article) => (
+          <BoardCard key={article.id} article={article} />
+        ))}
       </div>
     </div>
   );

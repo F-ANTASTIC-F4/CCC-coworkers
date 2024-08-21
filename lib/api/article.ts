@@ -3,6 +3,7 @@
 import ENDPOINTS from '@/lib/api/ENDPOINTS';
 import client from '@/lib/api/client/client';
 import { Article, ArticleDetail, Id } from '@ccc-types';
+import { revalidatePath } from 'next/cache';
 
 type CreateArticleBody = Pick<Article, 'image' | 'content' | 'title'>;
 type UpdateArticleBody = Partial<CreateArticleBody>;
@@ -24,6 +25,7 @@ export async function createArticle(data: CreateArticleBody) {
       },
     };
   }
+  revalidatePath('/boards');
   return { data: response };
 }
 
