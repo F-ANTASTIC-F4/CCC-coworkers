@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/form';
 import { createTask } from '@/lib/api/task';
 import { todoModalFormSchema } from '@/lib/schema/task';
+import Spinner from '@/public/icons/spinner_icon.svg';
 import { Id } from '@ccc-types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
@@ -43,6 +44,7 @@ function MakeTodoModal({
 }) {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [isDayPickerOpen, setIsDayPickerOpen] = React.useState<boolean>(false);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof todoModalFormSchema>>({
@@ -71,10 +73,14 @@ function MakeTodoModal({
   }, [frequencyType, startDate, setValue]);
 
   const onSubmit = async (values: z.infer<typeof todoModalFormSchema>) => {
+    setIsLoading(true);
     await createTask(groupId, taskListId, values);
     form.reset();
-    setIsOpen(false);
     router.refresh();
+    setTimeout(() => {
+      setIsOpen(false);
+      setIsLoading(false);
+    }, 1000);
   };
 
   // NOTE - 모달의 요일 설정 부분 렌더링 여부 결정 함수
@@ -175,8 +181,8 @@ function MakeTodoModal({
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="mt-3">
-                만들기
+              <Button type="submit" className="mt-3" disabled={isLoading}>
+                {isLoading ? <Spinner className="rolling" /> : '만들기'}
               </Button>
             </form>
           </Form>

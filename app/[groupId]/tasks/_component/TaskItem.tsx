@@ -2,13 +2,12 @@
 
 import TaskEditDeleteDropdown from '@/components/dropdown-template/TaskEditDeleteDropdown';
 import frequencyTypeObj from '@/constants/frequencyType';
-import { deleteRecurringTask, deleteTask } from '@/lib/api/task';
+import { deleteRecurringTask } from '@/lib/api/task';
 import { dateFormatter } from '@/lib/utils';
-import GearIcon from '@/public/icons/gear.svg';
 import CalenderNoBtnIcon from '@/public/icons/list/calender_no_btn.svg';
-import ClockIcon from '@/public/icons/list/clock_icon.svg';
 import CommentIcon from '@/public/icons/list/comment_icon.svg';
 import DailyIcon from '@/public/icons/list/daily_task_icon.svg';
+import Spiner from '@/public/icons/spinner_icon.svg';
 import { DetailTask } from '@ccc-types';
 import { useRouter } from 'next/navigation';
 import React from 'react';
@@ -35,9 +34,7 @@ function TaskItem({ task }: { task: DetailTask }) {
 
   const handleDeleteClick = async () => {
     handleLoading(true);
-    const deleteFunction =
-      taskType === '한번' ? deleteRecurringTask : deleteTask;
-    const { error } = await deleteFunction(task.id);
+    const { error } = await deleteRecurringTask(task.id);
 
     if (error) {
       toast.error(`${error.info}`);
@@ -54,7 +51,7 @@ function TaskItem({ task }: { task: DetailTask }) {
         className={`relative flex w-full cursor-pointer flex-col gap-3 rounded-[10px] px-[14px] py-[12px] ${isLoading && 'opacity-50'} bg-background-secondary`}
       >
         {isLoading && (
-          <GearIcon className="rolling-gear absolute left-[50%] top-[35%]" />
+          <Spiner className="rolling absolute left-[50%] top-[35%]" />
         )}
         <div className="flex w-full justify-between">
           <CheckboxReactHookFormSingle
@@ -79,12 +76,9 @@ function TaskItem({ task }: { task: DetailTask }) {
           <div className="flex items-center gap-1">
             <CalenderNoBtnIcon />
             <p className={textClass}>
-              {dateFormatter.toConvertDate(task.updatedAt, 'koreanFullDate')}
+              {dateFormatter.toConvertDate(task.updatedAt, 'koreanFullDate')}{' '}
+              생성됨
             </p>
-          </div>
-          <div className="flex items-center gap-1">
-            <ClockIcon />
-            <p className={textClass}>{dateFormatter.toTime(task.updatedAt)}</p>
           </div>
           <div className="flex items-center gap-1">
             <DailyIcon />

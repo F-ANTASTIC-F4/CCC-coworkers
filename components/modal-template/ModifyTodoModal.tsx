@@ -14,6 +14,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { updateTask } from '@/lib/api/task';
+import Spinner from '@/public/icons/spinner_icon.svg';
 import { Id } from '@ccc-types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
@@ -44,6 +45,7 @@ function ModifyTodoModal({
   onClose: (value: boolean) => void;
 }) {
   const router = useRouter();
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -55,10 +57,14 @@ function ModifyTodoModal({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     if (taskId) {
+      setIsLoading(true);
       await updateTask(taskId, values);
       router.refresh();
-      form.reset();
-      onClose(true);
+      setTimeout(() => {
+        setIsLoading(false);
+        form.reset();
+        onClose(true);
+      }, 2000);
     }
   };
 
@@ -105,7 +111,9 @@ function ModifyTodoModal({
                   </FormItem>
                 )}
               />
-              <Button type="submit">만들기</Button>
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? <Spinner className="rolling" /> : '만들기'}
+              </Button>
             </form>
           </Form>
         </div>
