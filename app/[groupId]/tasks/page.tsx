@@ -1,6 +1,4 @@
-import Loading from '@/components/common/loading';
 import { DateString, Id } from '@ccc-types';
-import { Suspense } from 'react';
 
 import TaskDateController from './_component/TaskDateController';
 import TaskList from './_component/TaskList';
@@ -24,12 +22,7 @@ async function ListPage({
         <TaskDateController />
       </div>
       {groupId && <TaskListTags groupId={groupId} />}
-      <Suspense
-        key={`${groupId}-${searchParams?.['task-list']}-${searchParams?.date}`}
-        fallback={<Loading />}
-      >
-        <TaskList groupId={groupId} searchParams={searchParams} />
-      </Suspense>
+      <TaskList groupId={groupId} searchParams={searchParams} />
     </section>
   );
 }
