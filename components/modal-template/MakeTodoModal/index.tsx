@@ -22,6 +22,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import React, { MouseEvent } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
 import { Button } from '../../ui/button';
@@ -53,7 +54,7 @@ function MakeTodoModal({
       name: '',
       description: '',
       frequencyType: 'ONCE',
-      startDate: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(),
+      startDate: new Date(new Date().setHours(15, 0, 0, 0)).toISOString(),
     },
   });
 
@@ -74,13 +75,18 @@ function MakeTodoModal({
 
   const onSubmit = async (values: z.infer<typeof todoModalFormSchema>) => {
     setIsLoading(true);
-    await createTask(groupId, taskListId, values);
-    form.reset();
-    router.refresh();
-    setTimeout(() => {
+    const res = await createTask(groupId, taskListId, values);
+    if (res.data) {
+      form.reset();
+      router.refresh();
+      toast.success('할 일 만들기에 성공했습니다.');
       setIsOpen(false);
       setIsLoading(false);
-    }, 1000);
+    } else {
+      toast.error(res.error.info);
+      setIsOpen(false);
+      setIsLoading(false);
+    }
   };
 
   // NOTE - 모달의 요일 설정 부분 렌더링 여부 결정 함수
