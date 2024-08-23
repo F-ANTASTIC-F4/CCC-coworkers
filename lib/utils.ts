@@ -120,6 +120,9 @@ export const dateFormatter = {
     const month = formattedDate.getMonth() + 1;
     const day = formattedDate.getDate();
 
+    if (agoMin < 1) {
+      return '방금 전';
+    }
     if (agoMin < 60) {
       return `${agoMin}분 전`;
     }
