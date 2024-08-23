@@ -36,7 +36,7 @@ async function TaskList({
         </div>
       )}
 
-      <div className="absolute bottom-5 mx-auto flex w-full max-w-[1232px] justify-end xl:px-0">
+      <div className="fixed bottom-5 mx-auto flex w-full justify-end px-[40px] xl:max-w-[1232px] xl:px-0">
         <MakeTodoModal
           className="z-10 ml-auto"
           groupId={groupId}

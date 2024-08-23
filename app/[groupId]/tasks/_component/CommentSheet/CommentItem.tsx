@@ -3,23 +3,45 @@
 import CommentEditDeleteDropdown from '@/components/dropdown-template/CommentEditDeleteDropdown';
 import { deleteComment } from '@/lib/api/comment';
 import { dateFormatter, lineBreaker } from '@/lib/utils';
-import { Comment } from '@ccc-types';
+import { Comment, DateString, Id, User } from '@ccc-types';
 import Image from 'next/image';
 import React from 'react';
+import { toast } from 'sonner';
 
 import CommentModify from './CommentModify';
 
-function CommentItem({ content, user, createdAt, id, updatedAt }: Comment) {
+function CommentItem({
+  content,
+  user,
+  createdAt,
+  id,
+  handleData,
+}: {
+  content: string;
+  user: Pick<User, 'id' | 'image' | 'nickname'>;
+  createdAt: DateString;
+  id: Id;
+  handleData: (
+    type: 'post' | 'patch' | 'delete',
+    value?: Comment,
+    id?: Id
+  ) => void;
+}) {
   const [isEditing, setIsEditing] = React.useState<boolean>(false);
-
-  const isUpdated = createdAt === updatedAt;
 
   const handleEditMode = (value: boolean) => {
     setIsEditing(value);
   };
 
   const handleDelete = async () => {
-    await deleteComment(id);
+    const { error } = await deleteComment(id);
+    if (error) {
+      console.log(id);
+      toast.error('댓글 삭제에 실패하였습니다.');
+    } else {
+      handleData('delete', undefined, id);
+      toast.success('댓글 삭제에 성공하였습니다.');
+    }
   };
 
   return (
@@ -29,6 +51,7 @@ function CommentItem({ content, user, createdAt, id, updatedAt }: Comment) {
           handleEditMode={handleEditMode}
           commentId={id}
           content={content}
+          handleData={handleData}
         />
       ) : (
         <>
@@ -56,9 +79,7 @@ function CommentItem({ content, user, createdAt, id, updatedAt }: Comment) {
               <span className="text-sm font-medium">{user.nickname}</span>
             </div>
             <span className="mr-1 text-sm font-medium text-text-default">
-              {isUpdated
-                ? `${dateFormatter.toTimeDifference(createdAt)} 등록됨`
-                : `${dateFormatter.toTimeDifference(updatedAt)} 수정됨`}
+              {dateFormatter.toTimeDifference(createdAt)}
             </span>
           </div>
         </>

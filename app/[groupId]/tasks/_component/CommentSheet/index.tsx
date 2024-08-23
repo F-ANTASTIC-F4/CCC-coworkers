@@ -13,9 +13,11 @@ import fetchAPI from '@/lib/api/fetchAPI';
 import { deleteTask, updateTask } from '@/lib/api/task';
 import CheckIcon from '@/public/icons/button/check_icon.svg';
 import NoCommentIcon from '@/public/icons/no_comment_icon.svg';
+import Spinner from '@/public/icons/spinner_icon.svg';
 import { Comment, DetailTask, Id } from '@ccc-types';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
+import { toast } from 'sonner';
 
 import CommentForm from './CommentForm';
 import CommentItem from './CommentItem';
@@ -26,6 +28,8 @@ interface FormData {
   description?: string;
   done: boolean;
 }
+
+type OmiitedComment = Omit<Comment, 'taskId' | 'userId'>;
 
 export default function CommentSheet({
   children,
@@ -38,20 +42,31 @@ export default function CommentSheet({
   task: DetailTask;
   handleClick: (value: boolean) => void;
 }) {
-  const [commentList, setCommentList] = React.useState<Comment[] | null>(null);
+  const [commentList, setCommentList] = React.useState<
+    Comment[] | OmiitedComment[] | null
+  >(null);
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [isDeleting, setIsDeleting] = React.useState<boolean>(false);
   const [formData, setFormData] = React.useState<FormData>({
     done: isDone,
   });
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const router = useRouter();
 
   const fetchData = async (idValue: Id) => {
+    setIsLoading(true);
     const res = await fetchAPI.Comments(idValue);
     if (res.error) {
-      console.error(res.error);
+      setIsLoading(false);
+      toast.error(`${res.error.info}`);
     } else {
-      setCommentList(res.data);
+      setIsLoading(false);
+      const newCommentList = res.data;
+      newCommentList.sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+      setCommentList(newCommentList);
     }
   };
 
@@ -80,17 +95,35 @@ export default function CommentSheet({
     }
   };
 
-  // const handleCommentList = (value: Comment) => {
-  //   if (commentList) {
-  //     setCommentList((prev) => [value, ...(prev || [])]);
-  //   }
-  // };
+  const handleCommentList = (
+    type: 'post' | 'patch' | 'delete',
+    value?: Comment,
+    id?: Id
+  ) => {
+    if (type === 'post' && value) {
+      setCommentList((prev) => [value, ...(prev || [])]);
+    } else if (type === 'patch' && value) {
+      const updatedCommentList = commentList?.map((comment) =>
+        comment.id === id ? { ...comment, content: value.content } : comment
+      );
+      if (updatedCommentList) {
+        setCommentList(updatedCommentList);
+      }
+    } else if (type === 'delete') {
+      const updatedComment = commentList?.filter(
+        (comment) => comment.id !== id
+      );
+      if (updatedComment) {
+        setCommentList(updatedComment);
+      }
+    }
+  };
 
   useEffect(() => {
-    if (isOpen && task.id) {
+    if (isOpen && task.id && commentList === null) {
       fetchData(task.id);
     }
-  }, [isOpen, task.id]);
+  }, [isOpen, task.id, commentList]);
 
   return (
     <Sheet onOpenChange={setIsOpen}>
@@ -128,23 +161,37 @@ export default function CommentSheet({
             &nbsp;{isDone ? '완료 취소하기' : '완료하기'}
           </Button>
         </SheetDescription>
-        <CommentForm id={task.id} />
-        {commentList?.length !== 0 ? (
-          <div className="custom-scroll mt-[-20px] h-full w-full overflow-scroll pb-[40px]">
-            {commentList?.map((comment) => (
-              <CommentItem key={comment.id} {...comment} />
-            ))}
-          </div>
-        ) : (
-          <div className="mb-[60px] flex h-full flex-col items-center justify-center gap-3">
-            <NoCommentIcon
-              width={80}
-              height={80}
-              className="fill-brand-primary"
-            />
-            <p className="text-text-default">아직 작성된 댓글이 없습니다.</p>
+        <CommentForm id={task.id} handleData={handleCommentList} />
+
+        {isLoading && commentList === null && (
+          <div className="mb-[60px] flex h-full items-center justify-center">
+            <Spinner className="rolling" width={36} height={36} />
           </div>
         )}
+
+        {commentList !== null &&
+          (commentList?.length !== 0 ? (
+            <div className="custom-scroll mt-[-20px] h-full w-full overflow-scroll pb-[40px]">
+              {commentList?.map((comment) => (
+                <CommentItem
+                  key={comment.id}
+                  {...comment}
+                  handleData={handleCommentList}
+                />
+              ))}
+            </div>
+          ) : (
+            <div
+              className={`${isLoading && 'hidden'} mb-[60px] flex h-full flex-col items-center justify-center gap-3`}
+            >
+              <NoCommentIcon
+                width={80}
+                height={80}
+                className="fill-brand-primary"
+              />
+              <p className="text-text-default">아직 작성된 댓글이 없습니다.</p>
+            </div>
+          ))}
       </SheetContent>
     </Sheet>
   );

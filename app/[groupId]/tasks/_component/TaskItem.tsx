@@ -34,14 +34,14 @@ function TaskItem({ task }: { task: DetailTask }) {
 
   const handleDeleteClick = async () => {
     handleLoading(true);
-    const { error } = await deleteRecurringTask(task.id);
+    const { error } = await deleteRecurringTask(task.recurringId);
 
     if (error) {
       toast.error(`${error.info}`);
       setIsLoading(false);
     } else {
       router.refresh();
-      setTimeout(() => toast.success('할 일 삭제에 성공했습니다!'), 1000);
+      toast.success('할 일 삭제에 성공했습니다!');
     }
   };
 
