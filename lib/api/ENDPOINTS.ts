@@ -50,7 +50,8 @@ const ENDPOINTS = {
   },
   COMMENT: {
     TASK: (taskId: Id) => `/tasks/${taskId}/comments`,
-    ARTICLE: (articleId: Id) => `/articles/${articleId}/comments`,
+    ARTICLE: (articleId: Id, limit: number) =>
+      `/articles/${articleId}/comments?limit=${limit}`,
     ACTIONS: (taskId: Id) => `/tasks/${taskId}/comments/`,
     DETAIL_ACTION: (commentId: Id, taskId?: Id) =>
       `/tasks/${taskId}/comments/${commentId}`,
