@@ -57,7 +57,7 @@ const BoardAddForm = () => {
     const result = await api.request(requestData);
 
     if (!result?.error) {
-      router.push('/boards');
+      router.push('/boards?page=1');
     }
   }
 
@@ -75,7 +75,7 @@ const BoardAddForm = () => {
       toast.error(api.error?.message || api.error?.info);
     }
     if (api.isSuccess) {
-      toast.success('변경사항이 저장되었습니다');
+      toast.success('글이 등록되었습니다');
     }
   }, [
     api.isError,
@@ -143,13 +143,13 @@ const BoardAddForm = () => {
           render={({ field: { value, onChange, ...fieldProps } }) => (
             <Form.FormItem>
               <Form.FormLabel className="inline-block w-[max-content]">
-                <ImageInputUI>
-                  <ImageInputUI.BoardContent imagePreview={imagePreview}>
+                <ImageInputUI variants="board">
+                  <ImageInputUI.Content imagePreview={imagePreview}>
                     <div className="flex size-40 cursor-pointer flex-col items-center justify-center gap-y-3 rounded-xl bg-background-secondary text-[#9CA3AF] md:size-60">
                       <p className="text-2xl md:text-5xl">+</p>
                       <p className="text-sm md:text-base">이미지 등록</p>
                     </div>
-                  </ImageInputUI.BoardContent>
+                  </ImageInputUI.Content>
                 </ImageInputUI>
               </Form.FormLabel>
               <Form.FormControl>

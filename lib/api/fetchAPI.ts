@@ -97,9 +97,9 @@ async function getComments(taskId: T.Id) {
   return handleApiResponse(res, '댓글을 가져오는 중 에러가 발생했습니다.');
 }
 
-async function getArticles() {
+async function getArticles(params?: string) {
   const res = await client<T.OffsetBasedPagination<T.Article>>(
-    ENDPOINTS.ARTICLE.ACTIONS,
+    ENDPOINTS.ARTICLE.ACTIONS(params),
     {
       method: 'get',
     }
@@ -113,7 +113,7 @@ async function getArticles() {
 
 async function getArticle(articleID: T.Id) {
   const res = await client<T.ArticleDetail>(
-    ENDPOINTS.ARTICLE.ACTIONS_ITEM(articleID),
+    ENDPOINTS.ARTICLE.ACTIONS_ITEM(`${articleID}`),
     {
       method: 'get',
     }
@@ -125,9 +125,9 @@ async function getArticle(articleID: T.Id) {
   );
 }
 
-async function getArticleComments(articleID: T.Id) {
-  const res = await client<T.CursorBasedPagination<T.Comment>>(
-    ENDPOINTS.COMMENT.ARTICLE(articleID),
+async function getArticleComments(articleID: T.Id, limit: number) {
+  const res = await client<T.CursorBasedPagination<T.ArticleComment>>(
+    ENDPOINTS.COMMENT.ARTICLE(articleID, limit),
     {
       method: 'get',
     }

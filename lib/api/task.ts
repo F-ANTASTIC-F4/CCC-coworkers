@@ -65,16 +65,13 @@ export async function deleteTask(taskId: Id) {
 }
 
 // 반복할일 삭제
-export async function deleteTaskAll(groupId: Id, taskListId: Id, taskId: Id) {
+export async function deleteRecurringTask(taskId: Id) {
   const res = await client<void>(
-    ENDPOINTS.TASK.DELETE_ALL_TASKS(groupId, taskListId, taskId),
+    ENDPOINTS.TASK.DELETE_RECURRING_TASKS(taskId),
     {
       method: 'delete',
     }
   );
 
-  return handleApiResponse(
-    res,
-    `TaskList${taskListId}의 tasks를 반복 삭제하는 중 에러가 발생했습니다.`
-  );
+  return handleApiResponse(res, `할일을 삭제하는 도중 에러가 발생했습니다.`);
 }
