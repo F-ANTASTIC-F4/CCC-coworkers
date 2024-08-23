@@ -11,7 +11,10 @@ export async function createTaskList(groupId: Id, data: { name: string }) {
     data,
   });
 
-  handleApiResponse(res, 'TaskList를 생성하는 중 중 에러가 발생했습니다.');
+  return handleApiResponse(
+    res,
+    'TaskList를 생성하는 중 중 에러가 발생했습니다.'
+  );
 }
 
 export async function updateTaskList(
