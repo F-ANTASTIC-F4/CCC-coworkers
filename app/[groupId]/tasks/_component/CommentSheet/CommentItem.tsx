@@ -16,6 +16,7 @@ function CommentItem({
   createdAt,
   id,
   handleData,
+  userId,
 }: {
   content: string;
   user: Pick<User, 'id' | 'image' | 'nickname'>;
@@ -26,6 +27,7 @@ function CommentItem({
     value?: Comment,
     id?: Id
   ) => void;
+  userId?: Id;
 }) {
   const [isEditing, setIsEditing] = React.useState<boolean>(false);
 
@@ -61,10 +63,12 @@ function CommentItem({
                 <p className="min-h-[20px]">{contentItem}</p>
               ))}
             </p>
-            <CommentEditDeleteDropdown
-              handleEdit={handleEditMode}
-              handleDelete={handleDelete}
-            />
+            {userId === user.id && (
+              <CommentEditDeleteDropdown
+                handleEdit={handleEditMode}
+                handleDelete={handleDelete}
+              />
+            )}
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">

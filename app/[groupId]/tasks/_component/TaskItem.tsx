@@ -8,7 +8,7 @@ import CalenderNoBtnIcon from '@/public/icons/list/calender_no_btn.svg';
 import CommentIcon from '@/public/icons/list/comment_icon.svg';
 import DailyIcon from '@/public/icons/list/daily_task_icon.svg';
 import Spiner from '@/public/icons/spinner_icon.svg';
-import { DetailTask } from '@ccc-types';
+import { DetailTask, Id } from '@ccc-types';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { toast } from 'sonner';
@@ -18,7 +18,7 @@ import CommentSheet from './CommentSheet';
 
 const textClass = `text-xs font-normal text-text-default`;
 
-function TaskItem({ task }: { task: DetailTask }) {
+function TaskItem({ task, userId }: { task: DetailTask; userId?: Id }) {
   const [isDone, setIsDone] = React.useState<boolean>(!!task.doneAt);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const taskType = frequencyTypeObj[task.frequency];
@@ -46,7 +46,12 @@ function TaskItem({ task }: { task: DetailTask }) {
   };
 
   return (
-    <CommentSheet isDone={isDone} task={task} handleClick={handleDoneState}>
+    <CommentSheet
+      isDone={isDone}
+      task={task}
+      handleClick={handleDoneState}
+      userId={userId}
+    >
       <div
         className={`relative flex w-full cursor-pointer flex-col gap-3 rounded-[10px] px-[14px] py-[12px] ${isLoading && 'opacity-50'} bg-background-secondary`}
       >
@@ -65,11 +70,13 @@ function TaskItem({ task }: { task: DetailTask }) {
               <CommentIcon />
               <p className={textClass}>{task.commentCount}</p>
             </div>
-            <TaskEditDeleteDropdown
-              title={task.name}
-              onClick={handleDeleteClick}
-              taskId={task.id}
-            />
+            {userId === task.writer.id && (
+              <TaskEditDeleteDropdown
+                title={task.name}
+                onClick={handleDeleteClick}
+                taskId={task.id}
+              />
+            )}
           </div>
         </div>
         <div className="flex gap-3">

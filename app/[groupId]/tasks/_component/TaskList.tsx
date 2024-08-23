@@ -12,19 +12,24 @@ async function TaskList({
   groupId: Id;
   searchParams?: { 'task-list': Id; date: DateString };
 }) {
-  const tasksRes = await fetchAPI.TaskList(
-    groupId,
-    Number(searchParams?.['task-list']),
-    searchParams!.date
-  );
+  const [tasksRes, userRes] = await Promise.all([
+    fetchAPI.TaskList(
+      groupId,
+      Number(searchParams?.['task-list']),
+      searchParams!.date
+    ),
+    fetchAPI.User(),
+  ]);
+
   const tasksData = tasksRes.data;
+  const userData = userRes.data;
 
   return (
     <div className="relative flex h-full flex-grow flex-col">
       {tasksData?.tasks?.length !== 0 ? (
         <div className="mt-3 flex flex-col gap-5 pb-[45px]">
           {tasksData?.tasks?.map((task) => (
-            <TaskItem key={task.id} task={task} />
+            <TaskItem key={task.id} task={task} userId={userData?.id!} />
           ))}
         </div>
       ) : (
