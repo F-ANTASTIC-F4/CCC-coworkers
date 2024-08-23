@@ -36,11 +36,13 @@ export default function CommentSheet({
   isDone,
   task,
   handleClick,
+  userId,
 }: {
   children: React.ReactNode;
   isDone: boolean;
   task: DetailTask;
   handleClick: (value: boolean) => void;
+  userId?: Id;
 }) {
   const [commentList, setCommentList] = React.useState<
     Comment[] | OmiitedComment[] | null
@@ -80,7 +82,7 @@ export default function CommentSheet({
     try {
       await updateTask(task.id, newFormData);
     } catch (error) {
-      console.error(error);
+      toast.error('할 일 완료 여부 변경에 실패하였습니다.');
     }
   };
 
@@ -91,7 +93,7 @@ export default function CommentSheet({
       await deleteTask(task.id);
       router.refresh();
     } catch (e) {
-      alert('할 일 삭제에 실패하였습니다.');
+      toast.error('할 일 삭제에 실패하였습니다.');
     }
   };
 
@@ -142,12 +144,14 @@ export default function CommentSheet({
         )}
         <SheetTitle className="flex items-center justify-between">
           <p className={isDone ? 'line-through' : ''}>{task.name}</p>
-          <TaskEditDeleteDropdown
-            title={task.name}
-            taskId={task.id}
-            className="h-[24px] w-[24px]"
-            onClick={handleDeleteClick}
-          />
+          {userId === task.writer.id && (
+            <TaskEditDeleteDropdown
+              title={task.name}
+              taskId={task.id}
+              className="h-[24px] w-[24px]"
+              onClick={handleDeleteClick}
+            />
+          )}
         </SheetTitle>
         <CommentMeta task={task} />
         <SheetDescription className="relative mt-2 min-h-[150px]">
@@ -177,6 +181,7 @@ export default function CommentSheet({
                   key={comment.id}
                   {...comment}
                   handleData={handleCommentList}
+                  userId={userId}
                 />
               ))}
             </div>
