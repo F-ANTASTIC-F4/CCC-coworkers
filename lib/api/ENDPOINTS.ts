@@ -50,7 +50,7 @@ const ENDPOINTS = {
   },
   COMMENT: {
     TASK: (taskId: Id) => `/tasks/${taskId}/comments`,
-    ARTICLE: (articleId: Id, limit: number) =>
+    ARTICLE: (articleId: Id, limit: number, cursor?: number) =>
       `/articles/${articleId}/comments?limit=${limit}`,
     ACTIONS: (taskId: Id) => `/tasks/${taskId}/comments/`,
     DETAIL_ACTION: (commentId: Id, taskId?: Id) =>
@@ -65,6 +65,7 @@ const ENDPOINTS = {
   },
   ARTICLE: {
     ACTIONS: (params?: string) => `/articles?${params}`,
+    DETAIL_ACTIONS: (commentId: Id) => `/comments/${commentId}`,
     ACTIONS_ITEM: (url: string) => `/articles/${url}`,
     LIKE: (articleId: Id) => `/articles/${articleId}/like`,
   },
