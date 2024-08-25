@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { updateArticleComment } from '@/lib/api/articleComment';
 import { Id } from '@ccc-types';
 import { useRouter } from 'next/navigation';
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, FormEvent } from 'react';
 import { toast } from 'sonner';
 
 function BoardCommentModify({
@@ -19,14 +19,16 @@ function BoardCommentModify({
   const [formData, setFormData] = React.useState<string>(content);
   const router = useRouter();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const { data } = await updateArticleComment(commentId, formData);
     if (data) {
       toast.success('댓글 수정에 성공하였습니다.');
-      router.refresh();
     } else {
       toast.error('댓글 수정에 실패하였습니다.');
     }
+    handleEdit(false);
+    router.refresh();
   };
 
   return (
