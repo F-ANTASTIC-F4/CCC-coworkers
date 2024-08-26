@@ -25,25 +25,17 @@ export async function postArticleComment(articleId: Id, comment: string) {
 }
 
 export async function deleteArticleComment(commentId: Id) {
-  const { data: response, error } = await client<ArticleComment>(
+  const res = await client<ArticleComment>(
     ENDPOINTS.ARTICLE.DETAIL_ACTIONS(commentId),
     {
       method: 'delete',
     }
   );
-  if (error) {
-    return {
-      error: {
-        info: '댓글 삭제중 에러가 발생했습니다.',
-        message: error.message,
-      },
-    };
-  }
-  return { data: response };
+  return handleApiResponse(res, '댓글 삭제중 에러가 발생했습니다.');
 }
 
 export async function updateArticleComment(commentId: Id, comment: string) {
-  const { data: res, error } = await client<ArticleComment>(
+  const res = await client<ArticleComment>(
     ENDPOINTS.ARTICLE.DETAIL_ACTIONS(commentId),
     {
       method: 'patch',
@@ -52,13 +44,5 @@ export async function updateArticleComment(commentId: Id, comment: string) {
       },
     }
   );
-  if (error) {
-    return {
-      error: {
-        info: '댓글 삭제중 에러가 발생했습니다.',
-        message: error.message,
-      },
-    };
-  }
-  return { data: res };
+  return handleApiResponse(res, '댓글 수정중 에러가 발생했습니다.');
 }

@@ -22,7 +22,9 @@ async function BoardComments({
       {data?.list.map((comment) => (
         <BoardComment key={comment.id} comment={comment} userId={userId} />
       ))}
-      {data?.nextCursor && commentCount > 10 && <GetNextCommentInfo />}
+      {data?.nextCursor && data.list.length !== commentCount && (
+        <GetNextCommentInfo />
+      )}
     </div>
   );
 }
