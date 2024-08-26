@@ -59,6 +59,7 @@ function BoardDetailDescription({
             <ArticleEditDeleteDropdown
               className="h-[24px] w-[24px]"
               handleDelete={handleDeleteArticle}
+              article={article}
             />
           )}
         </div>

@@ -5,21 +5,27 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import KebabIcon from '@/public/icons/kebab_icon.svg';
+import { ArticleDetail } from '@ccc-types';
 import * as React from 'react';
 
+import BoardModifyModal from '../modal-template/BoardModifyModal';
 import DeleteTodoModal from '../modal-template/DeleteTodoModal';
 
 function ArticleEditDeleteDropdown({
   title = '',
   className = 'w-[16px] h-[16px]',
   handleDelete,
+  article,
 }: {
   title?: string;
   className?: string;
   handleDelete: () => void;
+  article: ArticleDetail;
 }) {
   const [open, setOpen] = React.useState<boolean>(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] =
+    React.useState<boolean>(false);
+  const [isModifyDialogOpen, setIsModifyDialogOpen] =
     React.useState<boolean>(false);
 
   return (
@@ -43,6 +49,7 @@ function ArticleEditDeleteDropdown({
           <DropdownMenuItem
             className="flex cursor-pointer flex-col justify-center"
             onClick={() => {
+              setIsModifyDialogOpen(true);
               setOpen(false);
             }}
           >
@@ -66,6 +73,12 @@ function ArticleEditDeleteDropdown({
           title={title}
           onClick={handleDelete}
           onClose={() => setIsDeleteDialogOpen(false)}
+        />
+      )}
+      {isModifyDialogOpen && (
+        <BoardModifyModal
+          onClose={() => setIsModifyDialogOpen(false)}
+          article={article}
         />
       )}
     </>
