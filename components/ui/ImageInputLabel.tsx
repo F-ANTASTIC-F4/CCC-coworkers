@@ -1,6 +1,5 @@
 import { cn } from '@/lib/utils';
 import EditButton from '@/public/icons/btn_edit.svg';
-import { MouseEvent } from 'react';
 
 import { Skeleton } from './skeleton';
 
