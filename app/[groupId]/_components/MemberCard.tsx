@@ -27,15 +27,14 @@ function MemberCard({
     }) => {
       if (userId === member.userId) {
         setUserOnlineState(isOnline);
-        console.log(
-          `userId: ${userId} / member.userId ${member.userId} isOnline : ${isOnline}`
-        );
       }
     };
 
+    // 구독하고 있는 채널에 유저 접속 상태가 변경될 때마다 데이터 다시 가져옴
     pusherClient.bind('user-connected', handleUserStatus);
     pusherClient.bind('user-disconnected', handleUserStatus);
     return () => {
+      // 언마운트시 해제
       pusherClient.unbind('user-connected', handleUserStatus);
       pusherClient.unbind('user-disconnected', handleUserStatus);
     };

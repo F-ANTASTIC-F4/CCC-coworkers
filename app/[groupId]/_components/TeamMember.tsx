@@ -11,11 +11,13 @@ async function TeamMember({
   members: Member[];
   groupId: number;
 }) {
+  // DB 데이터 가져옴
   const dbMembers = await db.member.findMany({
     where: {
       groupId: groupId.toString(),
     },
   });
+  // 온라인 상태인 멤버들 가져오기
   const onlineMembers = dbMembers
     .filter((member) => member.isOnline)
     .map((member) => member.id);

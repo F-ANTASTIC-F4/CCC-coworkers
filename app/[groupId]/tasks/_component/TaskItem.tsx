@@ -1,9 +1,11 @@
 'use client';
 
+import emitGroups from '@/app/api/pusher/group/emit';
 import EditDeleteDropdown from '@/components/dropdown-template/EditDeleteDropdown';
 import frequencyTypeObj from '@/constants/frequencyType';
 import useRequestFunction from '@/hooks/useRequestFunction';
 import { deleteTask } from '@/lib/api/task';
+import usePusherStore from '@/lib/store';
 import { dateFormatter } from '@/lib/utils';
 import CalenderNoBtnIcon from '@/public/icons/list/calender_no_btn.svg';
 import ClockIcon from '@/public/icons/list/clock_icon.svg';
@@ -18,20 +20,28 @@ import CommentSheet from './CommentSheet';
 
 const textClass = `text-xs font-normal text-text-default`;
 
-function TaskItem({ task }: { task: Task }) {
+function TaskItem({ task, groupId }: { task: Task; groupId: number }) {
   const [isDone, setIsDone] = React.useState<boolean>(!!task.doneAt);
   const taskType = frequencyTypeObj[task.frequency];
   const router = useRouter();
+  const { socketId } = usePusherStore();
 
   const handleDoneState = (value: boolean) => {
     setIsDone(value);
   };
 
   const { isLoading, request } = useRequestFunction(deleteTask);
-
+  console.log(task);
   const handleDeleteClick = async () => {
     try {
       await request(task.id);
+      await emitGroups({
+        member: task.name,
+        action: 'delete',
+        task: task.name,
+        roomId: String(groupId),
+        socketId: socketId as string,
+      });
       router.refresh();
     } catch (e) {
       console.error(e);

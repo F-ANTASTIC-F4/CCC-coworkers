@@ -14,6 +14,8 @@ const ConnectUser = ({ groupId, userId }: ConnectUserProps) => {
 
   useEffect(() => {
     const unsubscribePusher = initializePusher(groupId.toString());
+
+    // 유저 접속
     const handleConnect = async () => {
       if (socketId) {
         await emitConnect({
@@ -25,7 +27,7 @@ const ConnectUser = ({ groupId, userId }: ConnectUserProps) => {
         });
       }
     };
-
+    // 유저 접속 해제
     const handleDisconnect = async () => {
       if (socketId) {
         await emitConnect({
