@@ -10,11 +10,9 @@ type ConnectUserProps = {
 };
 
 const ConnectUser = ({ groupId, userId }: ConnectUserProps) => {
-  const { socketId, initializePusher } = usePusherStore();
+  const { socketId } = usePusherStore();
 
   useEffect(() => {
-    const unsubscribePusher = initializePusher(groupId.toString());
-
     // 유저 접속
     const handleConnect = async () => {
       if (socketId) {
@@ -44,9 +42,8 @@ const ConnectUser = ({ groupId, userId }: ConnectUserProps) => {
     }
     return () => {
       handleDisconnect();
-      unsubscribePusher();
     };
-  }, [groupId, socketId, userId, initializePusher]);
+  }, [groupId, socketId, userId]);
 
   return null; // 이 컴포넌트는 화면에 렌더링되지 않습니다
 };

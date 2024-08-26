@@ -1,3 +1,4 @@
+import InitializePusher from '@/components/InitializePusher';
 import SocketBind from '@/components/socket-bind';
 import fetchAPI from '@/lib/api/fetchAPI';
 
@@ -22,7 +23,7 @@ async function TeamPage({ params }: { params: { groupId: number } }) {
   return (
     <div>
       <TeamTitle groupData={data} />
-
+      <InitializePusher groupId={params.groupId} />
       <SocketBind groupId={params.groupId} />
       <ConnectUser groupId={params.groupId} userId={userData.id} />
       {/* REVIEW - groupId params vs useParams (프롭 드릴링 때문) */}

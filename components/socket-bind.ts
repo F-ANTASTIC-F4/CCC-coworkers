@@ -1,7 +1,6 @@
 'use client';
 
 import { pusherClient } from '@/lib/pusher';
-import usePusherStore from '@/lib/store';
 import { useEffect } from 'react';
 import { toast } from 'sonner';
 
@@ -10,7 +9,6 @@ type SocketBindProps = {
 };
 
 const SocketBind = ({ groupId }: SocketBindProps) => {
-  const { initializePusher } = usePusherStore();
   const pusherListener = () => {
     pusherClient.bind('group', (message: string) => {
       // TODO: UI 에서 Toast notification
@@ -23,11 +21,8 @@ const SocketBind = ({ groupId }: SocketBindProps) => {
   };
 
   useEffect(() => {
-    const unsubscribePusher = initializePusher(groupId.toString());
     pusherListener();
-
-    return unsubscribePusher;
-  }, [groupId, initializePusher]);
+  }, [groupId]);
 
   return null;
 };
