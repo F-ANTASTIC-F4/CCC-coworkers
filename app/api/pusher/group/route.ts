@@ -7,7 +7,7 @@ export async function POST(req: Request) {
   if (action === 'create') {
     await pusherServer.trigger(
       String(roomId),
-      'cards',
+      'group',
       `${member} 님이 ${task} 를 생성하였습니다.`,
       {
         socket_id: socketId,
@@ -18,8 +18,8 @@ export async function POST(req: Request) {
   if (action === 'edit') {
     await pusherServer.trigger(
       String(roomId),
-      'cards',
-      `${member} 님이 ${task} 를 수정하였습니다.`,
+      'group',
+      `${member} 님이 ${task} 를 완료하였습니다.`,
       {
         socket_id: socketId,
       }
@@ -29,7 +29,7 @@ export async function POST(req: Request) {
   if (action === 'delete') {
     await pusherServer.trigger(
       String(roomId),
-      'cards',
+      'group',
       `${member} 님이 ${task} 를 삭제하였습니다.`,
       {
         socket_id: socketId,

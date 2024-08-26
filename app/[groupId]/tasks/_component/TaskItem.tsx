@@ -20,7 +20,17 @@ import CommentSheet from './CommentSheet';
 
 const textClass = `text-xs font-normal text-text-default`;
 
-function TaskItem({ task, userId }: { task: DetailTask; userId?: Id }) {
+function TaskItem({
+  task,
+  userId,
+  userName,
+  groupId,
+}: {
+  task: DetailTask;
+  userId?: Id;
+  userName?: string;
+  groupId: number;
+}) {
   const [isDone, setIsDone] = React.useState<boolean>(!!task.doneAt);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const taskType = frequencyTypeObj[task.frequency];
@@ -43,14 +53,14 @@ function TaskItem({ task, userId }: { task: DetailTask; userId?: Id }) {
       toast.error(`${error.info}`);
       setIsLoading(false);
     } else {
-      router.refresh();
       await emitGroups({
-        member: task.name,
+        member: userName,
         action: 'delete',
         task: task.name,
-        roomId: String(task.name),
+        roomId: String(groupId),
         socketId: socketId as string,
       });
+      router.refresh();
       toast.success('할 일 삭제에 성공했습니다!');
     }
   };
@@ -74,6 +84,8 @@ function TaskItem({ task, userId }: { task: DetailTask; userId?: Id }) {
             task={task.name}
             isDone={isDone}
             handleClick={handleDoneState}
+            userName={userName}
+            groupId={groupId}
           />
           <div className="flex items-center gap-2">
             <div className="flex gap-[2px]">

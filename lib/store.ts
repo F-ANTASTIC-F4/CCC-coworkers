@@ -21,6 +21,7 @@ const usePusherStore = create<PusherState>((set) => ({
     });
     return () => {
       pusherClient.connection.unbind('connected');
+      pusherClient.connection.unbind('groups');
       pusherClient.unsubscribe(groupId);
     };
   },

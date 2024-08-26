@@ -16,5 +16,5 @@ export default async function emitGroups(data: Params): Promise<void> {
 
   obj.body = JSON.stringify({ ...data });
 
-  await fetch('/api/pusher/dashboards', obj);
+  await fetch('/api/pusher/group', obj);
 }

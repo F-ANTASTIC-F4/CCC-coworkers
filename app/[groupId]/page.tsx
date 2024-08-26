@@ -1,3 +1,4 @@
+import SocketBind from '@/components/socket-bind';
 import fetchAPI from '@/lib/api/fetchAPI';
 
 import ConnectUser from './_components/ConnectUser';
@@ -21,6 +22,8 @@ async function TeamPage({ params }: { params: { groupId: number } }) {
   return (
     <div>
       <TeamTitle groupData={data} />
+
+      <SocketBind groupId={params.groupId} />
       <ConnectUser groupId={params.groupId} userId={userData.id} />
       {/* REVIEW - groupId params vs useParams (프롭 드릴링 때문) */}
       <TeamToDoList taskLists={taskLists} groupId={params.groupId} />
