@@ -1,5 +1,5 @@
 import { pusherServer } from '@/lib/pusher';
-import { nanoid } from 'nanoid';
+import { v4 as uuidv4 } from 'uuid';
 
 export default async function POST(req: Request) {
   const data = await req.text();
@@ -9,7 +9,7 @@ export default async function POST(req: Request) {
     .map((str) => str.split('=')[1]);
 
   // 유저별 고유 식별 아이디 적용
-  const id = nanoid();
+  const id = uuidv4();
 
   const presenceData = {
     user_id: id,
