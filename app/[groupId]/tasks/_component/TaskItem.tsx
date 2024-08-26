@@ -1,27 +1,28 @@
 'use client';
 
 import emitGroups from '@/app/api/pusher/group/emit';
-import EditDeleteDropdown from '@/components/dropdown-template/EditDeleteDropdown';
+import TaskEditDeleteDropdown from '@/components/dropdown-template/TaskEditDeleteDropdown';
 import frequencyTypeObj from '@/constants/frequencyType';
-import useRequestFunction from '@/hooks/useRequestFunction';
-import { deleteTask } from '@/lib/api/task';
+import { deleteRecurringTask } from '@/lib/api/task';
 import usePusherStore from '@/lib/store';
 import { dateFormatter } from '@/lib/utils';
 import CalenderNoBtnIcon from '@/public/icons/list/calender_no_btn.svg';
-import ClockIcon from '@/public/icons/list/clock_icon.svg';
 import CommentIcon from '@/public/icons/list/comment_icon.svg';
 import DailyIcon from '@/public/icons/list/daily_task_icon.svg';
-import { Task } from '@ccc-types';
+import Spiner from '@/public/icons/spinner_icon.svg';
+import { DetailTask, Id } from '@ccc-types';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { toast } from 'sonner';
 
 import CheckboxReactHookFormSingle from './Checkbox';
 import CommentSheet from './CommentSheet';
 
 const textClass = `text-xs font-normal text-text-default`;
 
-function TaskItem({ task, groupId }: { task: Task; groupId: number }) {
+function TaskItem({ task, userId }: { task: DetailTask; userId?: Id }) {
   const [isDone, setIsDone] = React.useState<boolean>(!!task.doneAt);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const taskType = frequencyTypeObj[task.frequency];
   const router = useRouter();
   const { socketId } = usePusherStore();
@@ -30,35 +31,43 @@ function TaskItem({ task, groupId }: { task: Task; groupId: number }) {
     setIsDone(value);
   };
 
-  const { isLoading, request } = useRequestFunction(deleteTask);
-  console.log(task);
+  const handleLoading = (value: boolean) => {
+    setIsLoading(value);
+  };
+
   const handleDeleteClick = async () => {
-    try {
-      await request(task.id);
+    handleLoading(true);
+    const { error } = await deleteRecurringTask(task.recurringId);
+
+    if (error) {
+      toast.error(`${error.info}`);
+      setIsLoading(false);
+    } else {
+      router.refresh();
       await emitGroups({
         member: task.name,
         action: 'delete',
         task: task.name,
-        roomId: String(groupId),
+        roomId: String(task.name),
         socketId: socketId as string,
       });
-      router.refresh();
-    } catch (e) {
-      console.error(e);
+      toast.success('할 일 삭제에 성공했습니다!');
     }
-    // await deleteTask(task.id);
-    // router.refresh();
   };
 
-  // if (isError) {
-  //   return <ErrorFallbackUI />;
-  // }
-
   return (
-    <CommentSheet isDone={isDone} task={task} handleClick={handleDoneState}>
+    <CommentSheet
+      isDone={isDone}
+      task={task}
+      handleClick={handleDoneState}
+      userId={userId}
+    >
       <div
-        className={`${isLoading && 'bg-white'}flex w-full cursor-pointer flex-col gap-3 rounded-[10px] bg-background-secondary px-[14px] py-[12px]`}
+        className={`relative flex w-full cursor-pointer flex-col gap-3 rounded-[10px] px-[14px] py-[12px] ${isLoading && 'opacity-50'} bg-background-secondary`}
       >
+        {isLoading && (
+          <Spiner className="rolling absolute left-[50%] top-[35%]" />
+        )}
         <div className="flex w-full justify-between">
           <CheckboxReactHookFormSingle
             id={task.id}
@@ -71,19 +80,22 @@ function TaskItem({ task, groupId }: { task: Task; groupId: number }) {
               <CommentIcon />
               <p className={textClass}>{task.commentCount}</p>
             </div>
-            <EditDeleteDropdown title={task.name} onClick={handleDeleteClick} />
+            {userId === task.writer.id && (
+              <TaskEditDeleteDropdown
+                title={task.name}
+                onClick={handleDeleteClick}
+                taskId={task.id}
+              />
+            )}
           </div>
         </div>
         <div className="flex gap-3">
           <div className="flex items-center gap-1">
             <CalenderNoBtnIcon />
             <p className={textClass}>
-              {dateFormatter.toConvertDate(task.updatedAt, 'koreanFullDate')}
+              {dateFormatter.toConvertDate(task.updatedAt, 'koreanFullDate')}{' '}
+              생성됨
             </p>
-          </div>
-          <div className="flex items-center gap-1">
-            <ClockIcon />
-            <p className={textClass}>{dateFormatter.toTime(task.updatedAt)}</p>
           </div>
           <div className="flex items-center gap-1">
             <DailyIcon />
