@@ -1,7 +1,8 @@
+/* eslint-disable import/prefer-default-export */
 import { pusherServer } from '@/lib/pusher';
 import { v4 as uuidv4 } from 'uuid';
 
-export default async function POST(req: Request) {
+export async function POST(req: Request) {
   const data = await req.text();
 
   const [socketId, channelName] = data
