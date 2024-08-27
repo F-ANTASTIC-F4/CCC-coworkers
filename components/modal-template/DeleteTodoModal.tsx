@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -21,7 +22,7 @@ function DeleteTodoModal({
   type = 'task',
 }: {
   title?: string;
-  type?: 'task' | 'comment';
+  type?: 'task' | 'comment' | 'article';
   className?: string;
   taskType: string;
   onClick: () => void;
@@ -45,6 +46,8 @@ function DeleteTodoModal({
               {title && <p>&apos;{title}&apos;</p>}
               <p>할 일을 정말 삭제하시겠어요?</p>
             </>
+          ) : type === 'article' ? (
+            <p>게시물을 정말 삭제하시겠어요?</p>
           ) : (
             <p>댓글을 정말 삭제하시겠어요?</p>
           )}

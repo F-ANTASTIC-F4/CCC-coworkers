@@ -59,6 +59,25 @@ export async function getMember(groupId: Id, memberId: Id) {
   return handleApiResponse(res, '멤버 정보를 가져오는 중 에러가 발생했습니다.');
 }
 
+export async function deleteMember(groupId: Id, memberId: Id) {
+  const { error } = await client<Member>(
+    ENDPOINTS.GROUP.MEMBER_ACTIONS(groupId, memberId),
+    {
+      method: 'delete',
+    }
+  );
+  if (error) {
+    return {
+      error: {
+        info: '멤버 삭제 중 에러가 발생했습니다.',
+        message: error.message,
+      },
+    };
+  }
+  revalidatePath('/', 'layout');
+  return { data: true };
+}
+
 // 초대 링크없이 그룹에 유저를 추가
 export async function createMember(groupId: Id, data: { userId: string }) {
   const res = await client<void>(ENDPOINTS.GROUP.MEMBER_POST(groupId), {
