@@ -1,4 +1,5 @@
 import InitializePusher from '@/components/InitializePusher';
+import ChatWrap from '@/components/modal-template/ChattingModal/ChatWrap';
 import SocketBind from '@/components/socket-bind';
 import fetchAPI from '@/lib/api/fetchAPI';
 
@@ -30,6 +31,11 @@ async function TeamPage({ params }: { params: { groupId: number } }) {
       <TeamToDoList taskLists={taskLists} groupId={params.groupId} />
       <TeamReport taskLists={taskLists} />
       <TeamMember members={members} groupId={params.groupId} />
+      <ChatWrap
+        groupId={params.groupId}
+        userId={userData.id}
+        userName={userData.nickname}
+      />
     </div>
   );
 }
