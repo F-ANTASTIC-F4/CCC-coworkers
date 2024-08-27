@@ -9,8 +9,10 @@ import {
 } from '@/components/ui/dialog';
 import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { createTaskList } from '@/lib/api/taskList';
+import Spinner from '@/public/icons/spinner_icon.svg';
+import { GroupTask } from '@ccc-types';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -28,12 +30,18 @@ const formSchema = z.object({
 function TodoListModal({
   groupId,
   className = '',
+  handleList,
 }: {
   groupId: number;
   className?: string;
+  handleList?: (value: Omit<GroupTask, 'tasks'>) => void;
 }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -42,13 +50,23 @@ function TodoListModal({
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // REVIEW: 한글이 안되는 문제가 있습니다. 추가로 post 에러는 어떻게 처리할까요??
-    createTaskList(groupId, { name: values.name });
-    router.refresh();
-
-    form.reset();
-    setIsOpen(false);
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setIsLoading(true);
+    const res = await createTaskList(groupId, { name: values.name });
+    if (res.data && handleList) {
+      handleList(res.data);
+      const params = new URLSearchParams(searchParams);
+      params.set('task-list', res.data.id.toString());
+      replace(`${pathname}?${params.toString()}`);
+      setIsOpen(false);
+    } else if (res.data) {
+      router.refresh();
+      form.reset();
+      setIsOpen(false);
+    }
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
   };
 
   return (
@@ -80,7 +98,9 @@ function TodoListModal({
                   </FormItem>
                 )}
               />
-              <Button type="submit">만들기</Button>
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? <Spinner className="rolling" /> : '만들기'}
+              </Button>
             </form>
           </Form>
         </div>

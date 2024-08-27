@@ -33,7 +33,7 @@ export default function CreateTeamForm() {
 
     if (data.image) {
       const imageResult = await uploadImage(data.image);
-      if ('data' in imageResult) {
+      if (imageResult.data) {
         imageUrl = imageResult.data;
       }
     }
@@ -78,7 +78,7 @@ export default function CreateTeamForm() {
           render={({ field: { value, onChange, ...fieldProps } }) => (
             <FormItem>
               <FormLabel className="inline-block w-[max-content]">
-                <ImageInputUI className="cursor-pointer">
+                <ImageInputUI variants="circular" className="cursor-pointer">
                   <ImageInputUI.Content imagePreview={imagePreview}>
                     <TeamProfile width="60" height="60" />
                   </ImageInputUI.Content>

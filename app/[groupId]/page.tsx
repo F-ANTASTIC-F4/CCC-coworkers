@@ -12,7 +12,7 @@ async function TeamPage({ params }: { params: { groupId: number } }) {
   const { data: userData } = await fetchAPI.User();
 
   // TODO: 에러 처리 추가
-  if (error) {
+  if (error || !data) {
     return <div>{error.info}</div>;
   }
 
