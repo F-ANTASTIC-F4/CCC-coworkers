@@ -3,7 +3,7 @@
 import emitGroups from '@/app/api/pusher/group/emit';
 import TaskEditDeleteDropdown from '@/components/dropdown-template/TaskEditDeleteDropdown';
 import frequencyTypeObj from '@/constants/frequencyType';
-import { deleteRecurringTask } from '@/lib/api/task';
+import { deleteRecurringTask, deleteTask } from '@/lib/api/task';
 import usePusherStore from '@/lib/store';
 import { dateFormatter } from '@/lib/utils';
 import CalenderNoBtnIcon from '@/public/icons/list/calender_no_btn.svg';
@@ -33,6 +33,7 @@ function TaskItem({
 }) {
   const [isDone, setIsDone] = React.useState<boolean>(!!task.doneAt);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [deleteAll, setDeleteAll] = React.useState<boolean>(false);
   const taskType = frequencyTypeObj[task.frequency];
   const router = useRouter();
   const { socketId } = usePusherStore();
@@ -45,13 +46,20 @@ function TaskItem({
     setIsLoading(value);
   };
 
+  const handleDeleteAll = (value: boolean) => {
+    setDeleteAll(value);
+  };
+
   const handleDeleteClick = async () => {
     handleLoading(true);
-    const { error } = await deleteRecurringTask(task.recurringId);
+
+    const deleteFunction = deleteAll ? deleteRecurringTask : deleteTask;
+    const { error } = await deleteFunction(
+      deleteAll ? task.recurringId : task.id
+    );
 
     if (error) {
       toast.error(`${error.info}`);
-      setIsLoading(false);
     } else {
       await emitGroups({
         member: userName,
@@ -63,6 +71,8 @@ function TaskItem({
       router.refresh();
       toast.success('할 일 삭제에 성공했습니다!');
     }
+
+    handleLoading(false);
   };
 
   return (
@@ -94,9 +104,11 @@ function TaskItem({
             </div>
             {userId === task.writer.id && (
               <TaskEditDeleteDropdown
+                taskType={taskType}
                 title={task.name}
                 onClick={handleDeleteClick}
                 taskId={task.id}
+                setDelete={{ deleteAll, handleDeleteAll }}
               />
             )}
           </div>

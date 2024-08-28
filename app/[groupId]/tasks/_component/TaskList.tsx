@@ -33,7 +33,7 @@ async function TaskList({
           {tasksData?.tasks?.map((task) => (
             <TaskItem
               key={task.id}
-              task={task}
+              task={task!}
               userId={userData?.id!}
               userName={userData?.nickname!}
               groupId={groupId}

@@ -1,4 +1,5 @@
 import InviteMemberModal from '@/components/modal-template/InviteMemberModal';
+import fetchAPI from '@/lib/api/fetchAPI';
 import { db } from '@/lib/db';
 import { Member } from '@ccc-types';
 
@@ -21,6 +22,8 @@ async function TeamMember({
   const onlineMembers = dbMembers
     .filter((member) => member.isOnline)
     .map((member) => member.id);
+
+  const { data } = await fetchAPI.User();
   return (
     <div>
       <div className="flex items-center justify-between">
@@ -35,6 +38,8 @@ async function TeamMember({
           <MemberCard
             key={member.userId}
             member={member}
+            groupId={groupId}
+            user={data!}
             initialOnlineState={onlineMembers.includes(member.userId)} // 온라인 상태 전달
           />
         ))}

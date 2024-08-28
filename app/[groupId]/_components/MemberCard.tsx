@@ -4,18 +4,31 @@ import { pusherClient } from '@/lib/pusher';
 import { cn } from '@/lib/utils';
 import DefaultProfile from '@/public/icons/default_profile.svg';
 import StateBullet from '@/public/icons/state_bullet.svg';
-import { Member } from '@ccc-types';
+import { Member, UserWithMemberships } from '@ccc-types';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
+
+import DeleteMemberModal from './DeleteMemberModal';
 
 function MemberCard({
   member,
+  groupId,
   className,
   initialOnlineState,
+  user,
 }: {
   member: Member;
+  groupId: number;
   className?: string;
   initialOnlineState: boolean;
+  user: UserWithMemberships;
 }) {
+  const isAdminOrOwner = user.memberships.some(
+    (membership) =>
+      +membership.groupId === +groupId &&
+      (+membership.userId === +member.userId || membership.role === 'ADMIN')
+  );
+
   const [userOnlineState, setUserOnlineState] = useState(initialOnlineState);
   useEffect(() => {
     const handleUserStatus = ({
@@ -42,31 +55,48 @@ function MemberCard({
   return (
     <div
       className={cn(
-        'flex h-[68px] flex-col gap-y-[6px] rounded-2xl bg-background-secondary px-4 py-3 md:h-[73px] md:px-6 md:py-5',
+        'flex h-[68px] items-center justify-between rounded-2xl bg-background-secondary px-4 py-3 md:h-[73px] md:px-6 md:py-5',
         className
       )}
     >
-      <div className="flex items-center justify-between gap-2">
-        <div className="flex gap-2">
-          <DefaultProfile className="size-6 md:size-8" />
-          <div className="flex flex-col">
-            <div className="flex items-center gap-2">
-              <p className="text-sm font-medium">{member.userName}</p>
-              <StateBullet
-                width={15}
-                height={15}
-                fill={userOnlineState ? '#10B981' : '#7c838e'}
-              />
-            </div>
-            <p className="hidden truncate text-xs text-text-secondary md:block">
-              {member.userEmail}
-            </p>
+      <div className="flex items-center gap-4">
+        {member.userImage ? (
+          <div className="relative size-6 rounded-full md:size-8">
+            <Image
+              src={member.userImage}
+              alt="유저 프로필 이미지"
+              fill
+              className="rounded-full"
+              style={{ objectFit: 'cover' }}
+            />
           </div>
+        ) : (
+          <DefaultProfile className="size-6 md:size-8" />
+        )}
+        <div className="flex flex-col">
+          <div className="flex items-center gap-2">
+            <p className="text-sm font-medium">{member.userName}</p>
+            <StateBullet
+              width={15}
+              height={15}
+              fill={userOnlineState ? '#10B981' : '#7c838e'}
+            />
+          </div>
+          <p className="hidden truncate text-xs text-text-secondary md:block">
+            {member.userEmail}
+          </p>
         </div>
+        <p className="truncate text-xs text-text-secondary md:hidden">
+          {member.userEmail}
+        </p>
       </div>
-      <p className="truncate text-xs text-text-secondary md:hidden">
-        {member.userEmail}
-      </p>
+      {isAdminOrOwner && (
+        <DeleteMemberModal
+          groupId={groupId}
+          memberId={member.userId}
+          userData={user}
+        />
+      )}
     </div>
   );
 }
