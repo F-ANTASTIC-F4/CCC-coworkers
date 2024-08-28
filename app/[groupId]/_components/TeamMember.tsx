@@ -33,7 +33,7 @@ async function TeamMember({
         </div>
         <InviteMemberModal groupId={groupId} />
       </div>
-      <div className="my-6 grid grid-cols-2 grid-rows-2 gap-6 md:grid-cols-3">
+      <div className="my-6 grid gap-6 md:grid-cols-2 md:grid-rows-2 lg:grid-cols-3">
         {members.map((member) => (
           <MemberCard
             key={member.userId}

@@ -82,13 +82,10 @@ function MemberCard({
               fill={userOnlineState ? '#10B981' : '#7c838e'}
             />
           </div>
-          <p className="hidden truncate text-xs text-text-secondary md:block">
+          <p className="truncate text-xs text-text-secondary">
             {member.userEmail}
           </p>
         </div>
-        <p className="truncate text-xs text-text-secondary md:hidden">
-          {member.userEmail}
-        </p>
       </div>
       {isAdminOrOwner && (
         <DeleteMemberModal
