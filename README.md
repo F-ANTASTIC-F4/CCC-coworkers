@@ -1,7 +1,7 @@
 
 # 코워커스(Coworkers)
 
-[코워커스]((https://ccc-coworkers.vercel.app/))는 함께 일하는 사람들끼리 효율적으로 업무를 관리하고 협업할 수 있도록 돕는 투두리스트 애플리케이션입니다. 
+<a href="https://ccc-coworkers.vercel.app/" target="_blank" rel="noopener noreferrer">코워커스 바로가기</a>
 
 
 ![초록 클래식한 서비스 소개 3단 브로슈어 리플렛 (3)](https://github.com/user-attachments/assets/b7375033-abb9-470f-9afa-bc567327b2c3)
@@ -28,7 +28,13 @@
 
 <details>
 <summary>  데일리스크럼 </summary>
-<div markdown="1">
+<div markdown="1" align=center>
+  <br/>
+  
+  매일 일정한 시간에 
+  
+  데일리스크럼을 통해 개발상황을 공유하고 기록을 남겼습니다.
+  
 <img width="736" alt="image" src="https://github.com/user-attachments/assets/ebb2a9cb-a658-4315-a41b-27f729b154e0">
 
 </div>
@@ -36,7 +42,13 @@
 
 <details>
 <summary>  지라 </summary>
-<div markdown="1">
+<div markdown="1" align=center>
+  <br/>
+
+  에픽단위로 큰 틀을 나누어 
+  
+  애자일하게 개발을 진행했습니다.
+  
 <img width="861" alt="image" src="https://github.com/user-attachments/assets/d8936402-7246-46ee-b470-03ac213376c4">
 
 </div>
@@ -44,19 +56,28 @@
 
 <details>
 <summary>  허스키를 통한 커밋린트 </summary>
-<div markdown="1">
-<img width="776" alt="image" src="https://github.com/user-attachments/assets/18ebd274-0834-4e86-9e00-b12694c30fcf">
-  <img width="776" alt="image" src="https://github.com/user-attachments/assets/fe731fa7-78d9-41f6-84ab-38faf67e19a3">
+<div markdown="1" align=center>
+  <br/>
+  
+허스키를 이용해 깃허브 커밋, 푸시 과정을 자동적으로 관리했습니다.
 
+커밋메세지를 자동으로 포맷팅하게 만들어 DX를 높였습니다.
+
+push전 build를 실행하게만들어 오류를 줄였습니다.
+  
+<img width="776" alt="image" src="https://github.com/user-attachments/assets/18ebd274-0834-4e86-9e00-b12694c30fcf">
 </div>
 </details>
 
 <details>
 <summary>  센트리 </summary>
-<div markdown="1">
-
+<div markdown="1" align=center>
+  <br/>
+  
 프로젝트 1차 개발 이후, 
-센트리를 도입하고 디스코드 웹훅으로 연동해
+
+센트리를 도입하고 디스코드와 연동해
+
 개발시 확인하지 못한 에러를 자동으로 관리했습니다.
   
 <img width="430" alt="image" src="https://github.com/user-attachments/assets/b6dc043a-d379-491e-822c-ec4b7af953d2">
@@ -100,27 +121,6 @@
 <br/>
 
 <br/>
-
-## 회고
-
-<br/>
-
-> 팀 회고
-
-저희 팀의 가장 큰 장점은 팀원들 각자의 작업 퀄리티가 매우 높았다는 점입니다. 또한, 팀원들은 탐구심이 강해 프로젝트에 도움이 될 만한 여러 가지 정보를 적극적으로 찾고 공유하여 과정을 원활하게 진행할 수 있었습니다.
-
-또한, 데일리 스크럼을 하루도 빼먹지 않고 참여하며 각자의 진행 상황을 가감 없이 공유하여 프로젝트 진행에 막힘이 없었습니다. 이러한 각자의 장점이 잘 어우러져 이번 프로젝트를 성공적으로 마칠 수 있었다고 생각합니다.
-
-하지만 성공적으로 프로젝트를 마친 만큼 아쉬움도 컸습니다. 마지막이면서도 기간이 길었다 보니 상대적으로 늘어지는 느낌이 없지 않아 있었습니다. 또한 기능에 비해 개발 기간이 조금 길었다는 점도 아쉬운 점으로 남았습니다.
-
-> 개인적인 소감
-  
-프로젝트를 진행하면서 이론적으로만 알고 있던 기술들을 실제 기능에 접목시켜보며 해당 기술을 더 깊이 이해할 수 있었습니다. 힘들 때도 있긴 했지만, 그만큼 성장할 수 있었던 시간이었습니다.
-
-팀원들과 함께 목표를 이루어가는 과정에서 많은 것을 배웠고, 정말 좋은 추억으로 남을 것 같습니다. 다들 너무 고생 많으셨고, 개인적으로 더 열심히 할 수 있었을 것 같은데 늘어져서 더 못한 것 또한 아쉽습니다.
-
-
-
 
 
 
