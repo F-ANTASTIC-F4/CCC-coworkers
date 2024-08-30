@@ -124,7 +124,7 @@ push전 build를 실행하게만들어 오류를 줄였습니다.
 
 ## 🥊 트러블 슈팅 
 
-[노션 페이지](bd8ea2843fd246e6b0faffa769b248e9)
+<a href="https://discreet-eyebrow-e47.notion.site/bd8ea2843fd246e6b0faffa769b248e9" target="_blank" rel="noopener noreferrer">노션 페이지 바로가기</a>
 
 
 <br/>
@@ -134,7 +134,8 @@ push전 build를 실행하게만들어 오류를 줄였습니다.
 
 ## 😺 발표자료
 
-[발표 자료 전체보기](https://www.canva.com/design/DAGPBGD-KmM/mbhvD1JIpZj808tMcjgs3Q/view?utm_content=DAGPBGD-KmM&utm_campaign=designshare&utm_medium=link&utm_source=editor)
+<a href="https://www.canva.com/design/DAGPBGD-KmM/mbhvD1JIpZj808tMcjgs3Q/view?utm_content=DAGPBGD-KmM&utm_campaign=designshare&utm_medium=link&utm_source=editor" target="_blank" rel="noopener noreferrer">발표 자료 전체보기</a>
+
 
 
 
