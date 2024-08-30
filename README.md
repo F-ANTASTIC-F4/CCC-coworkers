@@ -11,18 +11,18 @@
 
 <br/>
 
-## 팀원
+## 🍀 팀원 소개 
 
 |<img src="https://avatars.githubusercontent.com/u/50002974?v=4" alt="kim-hye-sun의 프로필 이미지" width="100" height="100"/>|<img src="https://avatars.githubusercontent.com/u/154623483?v=4" alt="oris8의 프로필 이미지" width="100" height="100"/>|<img src="https://avatars.githubusercontent.com/u/49199024?v=4" alt="CitrusSoda의 프로필 이미지" width="100" height="100"/>|<img src="https://avatars.githubusercontent.com/u/113000290?v=4" alt="WooGi1020의 프로필 이미지" width="100" height="100"/>|
 |:-:|:-:|:-:|:-:|
 |김혜선 <br/> [@kim-hye-sun](https://github.com/kim-hye-sun)|이정민<br/>[@oris8](https://github.com/oris8)|장준혁<br/>[@CitrusSoda](https://github.com/CitrusSoda)| 👑 정우기<br/>[@WooGi1020](https://github.com/WooGi1020)|
-|  유저 인증관리 <br/> (oAuth, 로그인, 회원가입) <br/> 팀 생성/수정/참여 <br/> 로딩 <br/> 채팅, 접속상태  |  API/type설정 <br/> 에러관리(센트리) <br/> 계정설정페이지 <br/> 비밀번호재설정 페이지 <br/> 리드미 작성  | 랜딩페이지 <br/> 팀 페이지(dnd 구현) <br/> 자유게시판 <br/> 스토리북 <br/> 헤더, 인풋 <br/> QA관리/버그fix/최적화 <br/> 프로젝트 초기설정, 발표  |  팀장 <br/> 할일리스트 페이지 <br/> 유저 히스토리 <br/> 모달, 드롭다운, 버튼 구현 <br/> 프로젝트 초기설정  |
+|  유저 인증관리 <br/> (oAuth, 로그인, 회원가입) <br/> 팀 생성/수정/참여 <br/> 로딩 컴포넌트 <br/> 채팅, 접속상태  |  API/type설정 <br/> 에러관리 <br/> 계정설정페이지 <br/> 비밀번호재설정 페이지 <br/> 리드미 작성  | 랜딩페이지 <br/> 팀 페이지(dnd 구현) <br/> 자유게시판 <br/> 스토리북 <br/> 헤더, 인풋 <br/> QA관리/버그fix/최적화 <br/> 프로젝트 초기설정, 발표  |  팀장 <br/> 할일리스트 페이지 <br/> 유저 히스토리 <br/> 모달, 드롭다운, 버튼 <br/> 프로젝트 초기설정  |
 
 <br/>
 
 <br/>
 
-## 개발도구
+## ⚙️ 개발도구
 
 <br/>
 
@@ -89,7 +89,7 @@ push전 build를 실행하게만들어 오류를 줄였습니다.
 
 <br/>
 
-## 기술스택
+## 🛠️ 기술스택
 
 <br/>
 
@@ -99,7 +99,7 @@ push전 build를 실행하게만들어 오류를 줄였습니다.
 
 <br/>
 
-## 기능구현
+## 📌 기능구현
 
 <br/>
 
@@ -122,5 +122,24 @@ push전 build를 실행하게만들어 오류를 줄였습니다.
 
 <br/>
 
+## 🥊 트러블 슈팅 
+
+[노션 페이지](bd8ea2843fd246e6b0faffa769b248e9)
+
+
+<br/>
+
+<br/>
+
+
+## 😺 발표자료
+
+[발표 자료 전체보기](https://www.canva.com/design/DAGPBGD-KmM/mbhvD1JIpZj808tMcjgs3Q/view?utm_content=DAGPBGD-KmM&utm_campaign=designshare&utm_medium=link&utm_source=editor)
+
+
+
+<br/>
+
+<br/>
 
 
